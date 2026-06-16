@@ -365,7 +365,8 @@ function renderGate(main){
   setTimeout(function(){si.focus();},50);
 }
 
-
+/* ============ Render ============ */
+function render(){
   var route=buildRoute(S.items,S.specials);
   var normal=route.filter(function(g){return !g.special;});
   var special=route.filter(function(g){return g.special;});
@@ -559,10 +560,4 @@ function renderCart(main,cart,clients,total){
   main.appendChild(zoneCard("Canasta pequeña","Cesta de arriba · chico / frágil",cart.zones.canasta,"▢"));
   main.appendChild(zoneCard("Rejilla inferior","Bandeja de abajo · pesado / voluminoso",cart.zones.rejilla,"▤"));
   main.appendChild(h('<p class="hint" style="margin-top:14px">El bulto se estima del tamaño en el nombre (lb, oz, fl oz, gallon, count) × cantidad. Es una guía.</p>'));
-  var vb=h('<button class="ghost">Ver ruta</button>');vb.onclick=function(){set("view","route");};main.appendChild(vb);
-}
-
-render();
-</script>
-</body>
-</html>
+  var vb=h('<button class="ghost">Ver ruta</button>');vb.onclick=function(){set("view","route");};main
