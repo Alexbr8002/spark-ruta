@@ -179,7 +179,7 @@ function extractFromImages(files){
   if(!S.apiKey){return Promise.reject(new Error("falta tu clave de API (ábrela en Ajustes ⚙)"));}
   return Promise.all(Array.prototype.map.call(files,function(f){return fileToB64(f).then(function(d){return{type:"image",source:{type:"base64",media_type:(f.type&&f.type.indexOf("image/")===0)?f.type:"image/jpeg",data:d}};});})).then(function(imgs){
     var prompt='Eres un extractor de pedidos de Walmart Spark. De estas capturas devuelve SOLO un arreglo JSON, sin texto ni markdown. Cada elemento: {"name":string,"aisle":string (ej "A31","AB5","H11","AC4"),"section":number|null,"modular":number|null,"qty":number,"perishable":boolean,"client":"A"|"B"|"C"|null}. Si junto al item hay etiqueta de cliente (A,B,C) ponla en client; si no, null. Usa el Aisle exacto. No inventes items.';
-    var body={model:S.model,max_tokens:1200,messages:[{role:"user",content:imgs.concat([{type:"text",text:prompt}])}]};
+    var body={model:S.model,max_tokens:4096,messages:[{role:"user",content:imgs.concat([{type:"text",text:prompt}])}]};
     return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)}).then(function(resp){
       if(!resp.ok){return resp.json().catch(function(){return null;}).then(function(ej){var d="HTTP "+resp.status;if(ej&&ej.error&&ej.error.message)d+=" · "+ej.error.message;throw new Error(d);});}
       return resp.json();
