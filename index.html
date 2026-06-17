@@ -700,6 +700,25 @@ function parseBulk(){
 }
 function addBlank(){S.items.push({name:"",aisle:"",section:null,modular:null,qty:1,perishable:false,client:null,done:false});save();}
 
+function findWalmartLocation(idx){
+  var it=S.items[idx];if(!it)return;
+  if(!S.apiKey){it._locErr="Falta clave de API (Ajustes ⚙)";render();return;}
+  it._locBusy=true;it._locErr="";render();
+  var prompt='Busca en walmart.com la ubicación en tienda (aisle/pasillo) del producto "'+it.name+'" en la tienda Walmart Supercenter #2483, Las Vegas NV (Blue Diamond Rd / Enterprise). Devuelve SOLO JSON sin texto extra ni markdown: {"found":boolean,"aisle":string|null,"section":number|null,"note":string}. note = explicación breve en español. Si Walmart.com no publica ubicación de pasillo específica por tienda (es común), pon found:false y explica eso brevemente en note.';
+  fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:S.model,max_tokens:600,tools:[{type:"web_search_20250305",name:"web_search"}],messages:[{role:"user",content:prompt}]})})
+  .then(function(r){if(!r.ok)return r.json().catch(function(){return null;}).then(function(ej){throw new Error("HTTP "+r.status+(ej&&ej.error?" · "+ej.error.message:""));});return r.json();})
+  .then(function(data){
+    if(data&&data.error)throw new Error(data.error.message||"error IA");
+    var text=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("\n");
+    var clean=text.replace(/```json/gi,"").replace(/```/g,"").trim();var a=clean.indexOf("{"),b=clean.lastIndexOf("}");var js=(a>=0&&b>=0)?clean.slice(a,b+1):clean;var parsed;try{parsed=JSON.parse(js);}catch(e){parsed={found:false,note:"respuesta no entendible de la IA"};}
+    it._locBusy=false;
+    if(parsed.found&&parsed.aisle){it.aisle=String(parsed.aisle).toUpperCase().replace(/\s+/g,"");if(parsed.section!=null)it.section=Number(parsed.section);it._locErr="";}
+    else{it._locErr=parsed.note||"No se encontró ubicación específica para esta tienda.";}
+    save();render();
+  })
+  .catch(function(err){it._locBusy=false;it._locErr="Error: "+(err&&err.message?err.message:"error");render();});
+}
+
 function renderReview(main,total){
   if(total===0){main.appendChild(h('<div class="empty">Aún no hay items. Ve a <b>Cargar</b>.</div>'));return;}
   main.appendChild(h('<p class="lead">Revisa lo extraído y corrige lo necesario antes de armar la ruta.</p>'));
@@ -714,6 +733,13 @@ function renderReview(main,total){
     var lq=h('<label>Cant<input class="in" type="number" value="'+it.qty+'"></label>');lq.querySelector("input").oninput=function(e){it.qty=Number(e.target.value);save();};
     var del=h('<button class="del">✕</button>');del.onclick=function(){S.items.splice(i,1);save();render();};
     row.appendChild(la);row.appendChild(ls);row.appendChild(lq);row.appendChild(del);card.appendChild(row);
+    if(!it.aisle){
+      var wb=h('<button class="ghost sm" style="margin-top:6px;width:100%">'+(it._locBusy?"Buscando…":"🔍 Buscar ubicación en Walmart")+'</button>');
+      if(it._locBusy)wb.disabled=true;
+      wb.onclick=function(){findWalmartLocation(i);};
+      card.appendChild(wb);
+      if(it._locErr)card.appendChild(h('<p class="hint" style="margin-top:4px">'+esc(it._locErr)+'</p>'));
+    }
     var cr=h('<div class="client-row"><span class="client-lbl">Cliente</span></div>');
     ["A","B","C"].forEach(function(c){var b=h('<button class="client-btn">'+c+'</button>');if(it.client===c){b.style.background=CLIENT_COLORS[c];b.style.color="#1A1300";b.style.borderColor=CLIENT_COLORS[c];}b.onclick=function(){it.client=it.client===c?null:c;save();render();};cr.appendChild(b);});
     card.appendChild(cr);
