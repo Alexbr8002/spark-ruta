@@ -163,6 +163,15 @@ ORIENTACIÓN INTERNA - Pasillos A:
 ├─ Secciones 20+ = LADO DERECHO (pared derecha tienda)
 └─ Conforme sube la sección, se va hacia la derecha
 
+PARED DERECHA (desde entrada hacia fondo):
+├─ A36 — pegado a pared derecha, frente a AP (Frutas/Verduras)
+│  ├─ Secciones DESCENDENTES desde entrada: 5→4→3→2→1
+│  └─ A36-5 (cerca entrada) → A36-1 (fondo/pared derecha)
+├─ [puerta de almacén/backroom Walmart]
+└─ A35 parcial (secciones 14→8 pegadas a la pared)
+   ├─ A35-14 (más cerca entrada) → A35-8 (más al fondo)
+   └─ NOTA: A35 también tiene sección de Deli (separada)
+
 ============================================== */
 
 var ZONE_BASE={Y:10,I:20,L:30,K:40,H:50,F:60,E:70,D:80,C:90,B:100,J:110,G:120,GR:115};
@@ -172,19 +181,37 @@ var CLIENT_COLORS={A:"#FFD23F",B:"#7CC8FF",C:"#C4B5FD"};
 /* ---- REFERENCIA VISUAL - Geometría Walmart #2483 ----
    PUERTA DERECHA (entrada/salida)
    └─────────────────────────────
-      FRENTE: AP1←...→AP9 (Frutas/Verduras, derecha entrada)
-              ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
+      [A36-5] pared ──→ A36-4 → A36-3 → A36-2 → A36-1
+              [backroom door]
+      [A35-14]pared ──→ A35-13 → ... → A35-8
+      
+      FRENTE PARED: AP1←...→AP9 (Frutas/Verduras)
+                    ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
       GR1 ── A1  A2  A3  A6  A7  ...  A30  A31 ── AC5, AC4
       GR2 ┘ (Pasillos enfrentados)
-      ...GR9 LATERAL IZQUIERDO (hacia fondo)
               
       En cada pasillo A:
         Sección 1 = lado izquierdo (cerca GR)
         Sección 20+ = lado derecho (pared derecha tienda)
 ---------------------------------------------------- */
 function parseAisle(code){var m=String(code||"").trim().toUpperCase().match(/^([A-Z]+)\s*(\d+)?$/);if(!m)return{prefix:String(code||"").toUpperCase(),num:null};return{prefix:m[1],num:m[2]!=null?parseInt(m[2],10):null};}
-function baseSeq(p,n){if(p==="A"&&n!=null)return 200+n;if(p==="AC")return 233+(n||0)/1000;if(p==="AB")return 234+(n||0)/1000;if(p==="AD")return 235+(n||0)/1000;if(p==="AP")return 235.5+(n||0)/1000;if(ZONE_BASE[p]!=null)return ZONE_BASE[p]+(n!=null?n/100:0);if(p==="Z")return 900+(n||0)/100;return 500;}
-function sectionDir(p,n){if(p==="A"&&n!=null&&n<=29&&n%2===1){var v=(n-1)/2;return v%2===0?1:-1;}return 1;}
+function baseSeq(p,n){
+  if(p==="A"&&n!=null){
+    // A36 y A35 son pared derecha — van ANTES de los pasillos (cerca entrada)
+    if(n===36)return 196; // pared derecha, primera desde entrada
+    if(n===35)return 197; // pared derecha, segunda (después de backroom)
+    return 200+n;
+  }
+  if(p==="AC")return 233+(n||0)/1000;if(p==="AB")return 234+(n||0)/1000;if(p==="AD")return 235+(n||0)/1000;if(p==="AP")return 235.5+(n||0)/1000;if(ZONE_BASE[p]!=null)return ZONE_BASE[p]+(n!=null?n/100:0);if(p==="Z")return 900+(n||0)/100;return 500;
+}
+function sectionDir(p,n){
+  if(p==="A"&&n!=null){
+    // A36 y A35 pared derecha: secciones DESCENDENTES (mayor número cerca entrada)
+    if(n===36||n===35)return -1;
+    if(n<=29&&n%2===1){var v=(n-1)/2;return v%2===0?1:-1;}
+  }
+  return 1;
+}
 function zoneOf(p){if(["A","AP","AB","AD","AC"].indexOf(p)>=0)return p==="A"?"A":p;return p;}
 function isSpecial(it,specials){var a=String(it.aisle||"").toUpperCase();for(var i=0;i<specials.length;i++){var s=specials[i];if(s.aisle.toUpperCase()!==a)continue;if(it.section==null)return true;if(it.section>=s.from&&it.section<=s.to)return true;}return false;}
 function buildRoute(items,specials){var en=items.map(function(it,i){var pa=parseAisle(it.aisle);var sp=isSpecial(it,specials);return Object.assign({},it,{_i:i,prefix:pa.prefix,num:pa.num,seq:baseSeq(pa.prefix,pa.num)+(sp?9000:0),special:sp});});var g={};en.forEach(function(it){var k=String(it.aisle||"?").toUpperCase();if(!g[k])g[k]={aisle:k,prefix:it.prefix,num:it.num,seq:it.seq,special:it.special,items:[]};g[k].items.push(it);});var arr=Object.keys(g).map(function(k){return g[k];}).sort(function(a,b){return a.seq-b.seq;});arr.forEach(function(gr){var d=sectionDir(gr.prefix,gr.num);gr.items.sort(function(x,y){return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));});});return arr;}
@@ -233,21 +260,65 @@ load(); if(S.items.length)S.view="review";
 
 /* ============ Lectura IA ============ */
 function fileToB64(file){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(){res(String(r.result).split(",")[1]);};r.onerror=function(){rej(new Error("no se pudo leer la imagen"));};r.readAsDataURL(file);});}
-function extractFromImages(files){
-  if(!S.apiKey){return Promise.reject(new Error("falta tu clave de API (ábrela en Ajustes ⚙)"));}
-  return Promise.all(Array.prototype.map.call(files,function(f){return fileToB64(f).then(function(d){return{type:"image",source:{type:"base64",media_type:(f.type&&f.type.indexOf("image/")===0)?f.type:"image/jpeg",data:d}};});})).then(function(imgs){
-    var prompt='Eres un extractor de pedidos de Walmart Spark. De estas capturas devuelve SOLO un arreglo JSON, sin texto ni markdown. Cada elemento: {"name":string,"aisle":string (ej "A31","AB5","H11","AC4"),"section":number|null,"modular":number|null,"qty":number,"perishable":boolean,"client":"A"|"B"|"C"|null}. Si junto al item hay etiqueta de cliente (A,B,C) ponla en client; si no, null. Usa el Aisle exacto. No inventes items.';
-    var body={model:S.model,max_tokens:1200,messages:[{role:"user",content:imgs.concat([{type:"text",text:prompt}])}]};
-    return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)}).then(function(resp){
-      if(!resp.ok){return resp.json().catch(function(){return null;}).then(function(ej){var d="HTTP "+resp.status;if(ej&&ej.error&&ej.error.message)d+=" · "+ej.error.message;throw new Error(d);});}
+function extractOneImage(file){
+  var prompt='Eres un extractor de pedidos de Walmart Spark. De esta captura devuelve SOLO un arreglo JSON, sin texto ni markdown. Cada elemento: {"name":string,"aisle":string (ej "A31","AB5","H11","AC4"),"section":number|null,"modular":number|null,"qty":number,"perishable":boolean,"client":"A"|"B"|"C"|null}. Si junto al item hay etiqueta de cliente (A,B,C) ponla en client; si no, null. Usa el Aisle exacto. No inventes items.';
+  return fileToB64(file).then(function(d){
+    var img={type:"image",source:{type:"base64",media_type:(file.type&&file.type.indexOf("image/")===0)?file.type:"image/jpeg",data:d}};
+    var body={model:S.model,max_tokens:1200,messages:[{role:"user",content:[img,{type:"text",text:prompt}]}]};
+    return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)})
+    .then(function(resp){
+      if(!resp.ok)return resp.json().catch(function(){return null;}).then(function(ej){var d="HTTP "+resp.status;if(ej&&ej.error&&ej.error.message)d+=" · "+ej.error.message;throw new Error(d);});
       return resp.json();
     }).then(function(data){
       if(data&&data.error)throw new Error(data.error.message||"error de la IA");
       var text=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("\n");
-      var clean=text.replace(/```json/gi,"").replace(/```/g,"").trim();var a=clean.indexOf("["),b=clean.lastIndexOf("]");var js=(a>=0&&b>=0)?clean.slice(a,b+1):clean;var arr;try{arr=JSON.parse(js);}catch(e){throw new Error("respuesta no entendible de la IA");}if(!Array.isArray(arr))arr=[];
+      var clean=text.replace(/```json/gi,"").replace(/```/g,"").trim();var a=clean.indexOf("["),b=clean.lastIndexOf("]");var js=(a>=0&&b>=0)?clean.slice(a,b+1):clean;
+      var arr;try{arr=JSON.parse(js);}catch(e){throw new Error("respuesta no entendible");}
+      if(!Array.isArray(arr))arr=[];
       return arr.map(function(x){return{name:x.name||"Item",aisle:(x.aisle||"").toString().toUpperCase().replace(/\s+/g,""),section:x.section==null?null:x.section,modular:x.modular==null?null:x.modular,qty:x.qty?Number(x.qty):1,perishable:!!x.perishable,client:x.client?String(x.client).toUpperCase().replace(/[^ABC]/g,"")||null:null,done:false};});
     });
   });
+}
+/* estado de imágenes: S.imgQueue = [{name,status,items,error}] */
+function processImageQueue(queue){
+  var pending=queue.filter(function(e){return e.status==="pending"||e.status==="error";});
+  if(!pending.length)return;
+  pending.forEach(function(entry){entry.status="processing";});
+  render();
+  var chain=Promise.resolve();
+  pending.forEach(function(entry){
+    chain=chain.then(function(){
+      entry.status="processing";render();
+      return extractOneImage(entry.file).then(function(items){
+        entry.status="done";entry.items=items;
+        var got=items.filter(function(it){return it.name&&it.name!=="Item";});
+        entry.count=got.length;
+        S.items=S.items.concat(got);
+        save();render();
+      }).catch(function(err){
+        var msg=(err&&err.message)||"error";
+        if(/timeout/i.test(msg))entry.status="timeout";
+        else if(/HTTP 4/i.test(msg))entry.status="error_api";
+        else entry.status="error";
+        entry.error=msg;
+        render();
+      });
+    });
+  });
+  chain.then(function(){
+    var allDone=queue.every(function(e){return e.status==="done"||e.status==="error"||e.status==="timeout"||e.status==="error_api";});
+    if(allDone&&S.items.length){S.view="review";}
+    S.loading=false;render();
+  });
+}
+function startImageQueue(files){
+  if(!files||!files.length)return;
+  if(!S.apiKey){S.error="Falta clave de API (abre Ajustes ⚙)";render();return;}
+  var arr=Array.prototype.slice.call(files);
+  if(!S.imgQueue)S.imgQueue=[];
+  arr.forEach(function(f){S.imgQueue.push({name:f.name||"imagen",file:f,status:"pending",items:[],count:0,error:""});});
+  S.loading=true;S.error="";
+  processImageQueue(S.imgQueue);
 }
 
 /* ============ Helpers de render ============ */
@@ -706,8 +777,19 @@ function renderNotesList(main){
 function renderNoteForm(main,note,idx){
   var back=h('<button class="oos-back">← Volver a la lista</button>');back.onclick=function(){S.notesActive=null;render();};main.appendChild(back);
 
+  // ── Tarjeta de contexto: info extraída / resumen actual ──
+  var ctxParts=[];
+  if(note.complex_name)ctxParts.push(note.complex_name);
+  if(note.full_address)ctxParts.push(note.full_address);
+  if(note.building_number)ctxParts.push("Edificio "+note.building_number);
+  if(note.apartment_number)ctxParts.push("Apto "+note.apartment_number);
+  if(note._gateCode)ctxParts.push("Código: "+note._gateCode);
+  if(ctxParts.length){
+    main.appendChild(h('<div style="background:rgba(255,210,63,.1);border:1px solid var(--acc);border-radius:12px;padding:11px 14px;margin-bottom:14px"><div style="font-size:10px;color:var(--acc);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">📍 Estás editando</div><div style="font-size:14px;font-weight:700;line-height:1.5">'+esc(ctxParts.join(' · '))+'</div></div>'));
+  }
+
   var addrIn=h('<input class="in name" placeholder="Dirección completa" value="'+esc(note.full_address)+'">');
-  addrIn.oninput=function(){note.full_address=addrIn.value;note.normalized_address=normalizeAddress(addrIn.value);note.updated_at=new Date().toISOString();save();drawMatch();};
+  addrIn.oninput=function(){note.full_address=addrIn.value;note.normalized_address=normalizeAddress(addrIn.value);drawMatch();};
   main.appendChild(addrIn);
   var matchBox=h('<div></div>');main.appendChild(matchBox);
   function drawMatch(){
@@ -726,20 +808,24 @@ function renderNoteForm(main,note,idx){
   drawMatch();
 
   var row=h('<div class="edit-row"></div>');
-  var la=h('<label>Apto/Unidad<input class="in" value="'+esc(note.apartment_number)+'"></label>');la.querySelector("input").oninput=function(e){note.apartment_number=e.target.value;note.updated_at=new Date().toISOString();save();};
-  var lb=h('<label>Edificio<input class="in" value="'+esc(note.building_number)+'"></label>');lb.querySelector("input").oninput=function(e){note.building_number=e.target.value;note.updated_at=new Date().toISOString();save();};
+  var la=h('<label>Apto/Unidad<input class="in" value="'+esc(note.apartment_number)+'"></label>');la.querySelector("input").oninput=function(e){note.apartment_number=e.target.value;};
+  var lb=h('<label>Edificio<input class="in" value="'+esc(note.building_number)+'"></label>');lb.querySelector("input").oninput=function(e){note.building_number=e.target.value;};
   row.appendChild(la);row.appendChild(lb);main.appendChild(row);
 
   var lc=h('<label style="display:block;margin-top:8px"><span style="font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase">Complejo / Condominio</span><input class="in" value="'+esc(note.complex_name)+'"></label>');
-  lc.querySelector("input").oninput=function(e){note.complex_name=e.target.value;note.updated_at=new Date().toISOString();save();};
+  lc.querySelector("input").oninput=function(e){note.complex_name=e.target.value;};
   main.appendChild(lc);
+
+  var lcg=h('<label style="display:block;margin-top:8px"><span style="font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase">Código de acceso / Gate</span><input class="in" value="'+esc(note._gateCode||"")+'"></label>');
+  lcg.querySelector("input").oninput=function(e){note._gateCode=e.target.value;};
+  main.appendChild(lcg);
 
   var geoRow=h('<div class="row-btns" style="margin-top:10px"></div>');
   var geoBtn=h('<button class="ghost sm">📍 Usar mi ubicación</button>');
   geoBtn.onclick=function(){
     if(!navigator.geolocation){geoBtn.textContent="Sin GPS";return;}
     geoBtn.textContent="Ubicando…";
-    navigator.geolocation.getCurrentPosition(function(pos){note.latitude=pos.coords.latitude;note.longitude=pos.coords.longitude;note.updated_at=new Date().toISOString();save();render();},function(){geoBtn.textContent="Error GPS";});
+    navigator.geolocation.getCurrentPosition(function(pos){note.latitude=pos.coords.latitude;note.longitude=pos.coords.longitude;render();},function(){geoBtn.textContent="Error GPS";});
   };
   geoRow.appendChild(geoBtn);
   if(note.latitude!=null){geoRow.appendChild(h('<a class="ghost sm" style="text-align:center;text-decoration:none" target="_blank" href="https://maps.google.com/?q='+note.latitude+','+note.longitude+'">🗺 Abrir en Maps</a>'));}
@@ -749,7 +835,7 @@ function renderNoteForm(main,note,idx){
   function ta(field,placeholder,labelTxt){
     main.appendChild(h('<div class="section-title">'+labelTxt+'</div>'));
     var t=h('<textarea class="ta" rows="2" placeholder="'+esc(placeholder)+'">'+esc(note[field])+'</textarea>');
-    t.oninput=function(){note[field]=t.value;note.updated_at=new Date().toISOString();save();};
+    t.oninput=function(){note[field]=t.value;};
     main.appendChild(t);
   }
   ta("parking_notes","Ej: estacionar frente al buzón, no bloquear garage…","🚗 Dónde parquear");
@@ -761,7 +847,22 @@ function renderNoteForm(main,note,idx){
   imgGrid(main,note,"map_images","🗺 Mapa del complejo",1280);
   imgGrid(main,note,"images","📷 Fotos de referencia",900);
 
-  var delBtn=h('<button class="ghost" style="margin-top:18px;color:var(--sp);border-color:var(--sp)">🗑 Eliminar esta dirección</button>');
+  // ── Botón de guardado explícito ──
+  main.appendChild(h('<hr style="border:none;border-top:1px solid var(--line);margin:20px 0 14px">'));
+  var saveConfirm=h('<div></div>');
+  var saveBtn=h('<button class="big">💾 Guardar información</button>');
+  saveBtn.onclick=function(){
+    note.updated_at=new Date().toISOString();
+    note.normalized_address=normalizeAddress(note.full_address);
+    save();
+    saveBtn.textContent="✓ Guardado";saveBtn.style.background="var(--ok)";
+    saveConfirm.innerHTML='<div class="status" style="margin-top:8px">✓ Información guardada correctamente para esta dirección.</div>';
+    setTimeout(function(){saveBtn.textContent="💾 Guardar información";saveBtn.style.background="";saveConfirm.innerHTML="";},3000);
+  };
+  main.appendChild(saveBtn);
+  main.appendChild(saveConfirm);
+
+  var delBtn=h('<button class="ghost" style="margin-top:10px;color:var(--sp);border-color:var(--sp)">🗑 Eliminar esta dirección</button>');
   delBtn.onclick=function(){if(confirm("¿Eliminar esta nota de dirección?")){S.addressNotes.splice(idx,1);S.notesActive=null;save();render();}};
   main.appendChild(delBtn);
 }
@@ -957,18 +1058,58 @@ function render(){
 }
 
 function renderLoad(main){
-  main.appendChild(h('<p class="lead">Sube las capturas de tu pedido de Spark y la app las lee. La primera vez, pon tu clave de IA en Ajustes (abajo).</p>'));
+  main.appendChild(h('<p class="lead">Sube las capturas de tu pedido de Spark. Cada imagen se procesa por separado para no perder datos si alguna falla.</p>'));
+
+  // Panel de estado de imágenes
+  if(S.imgQueue&&S.imgQueue.length){
+    var STATUS_ICON={pending:"⏳",processing:"🔄",done:"✓",error:"❌",error_api:"❌",timeout:"⏱"};
+    var STATUS_LABEL={pending:"Pendiente",processing:"Procesando…",done:"Lista",error:"Error de lectura",error_api:"Error de API",timeout:"Timeout"};
+    var qCard=h('<div class="opt"></div>');
+    var done=S.imgQueue.filter(function(e){return e.status==="done";}).length;
+    var errs=S.imgQueue.filter(function(e){return e.status==="error"||e.status==="timeout"||e.status==="error_api";}).length;
+    var proc=S.imgQueue.filter(function(e){return e.status==="processing";}).length;
+    qCard.appendChild(h('<div class="opt-h">'+done+'/'+S.imgQueue.length+' imágenes procesadas'+(errs?' · <span style="color:var(--sp)">'+errs+' fallaron</span>':'')+(proc?' · <span style="color:var(--acc)">procesando…</span>':'')+'</div>'));
+    S.imgQueue.forEach(function(entry,i){
+      var row=h('<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line)"></div>');
+      var icon=STATUS_ICON[entry.status]||"?";
+      var col=entry.status==="done"?"var(--ok)":entry.status==="processing"?"var(--acc)":entry.status==="pending"?"var(--mut)":"var(--sp)";
+      row.appendChild(h('<span style="font-size:16px;flex:none">'+icon+'</span>'));
+      var statusTxt=STATUS_LABEL[entry.status]||"?";
+      var countTxt=entry.status==="done"?(" \u2014 "+entry.count+" item(s)"):"";
+      var errTxt=entry.error?(" \u2014 "+esc(entry.error)):"";
+      var nameTxt=esc(entry.name);
+      var info=document.createElement("div");info.style.cssText="flex:1;min-width:0";
+      var d1=document.createElement("div");d1.style.cssText="font-size:12px;font-weight:700;color:"+col;d1.textContent=statusTxt;
+      var d2=document.createElement("div");d2.style.cssText="font-size:11px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap";d2.textContent=entry.name+countTxt+(entry.error?" \u2014 "+entry.error:"");
+      info.appendChild(d1);info.appendChild(d2);
+      row.appendChild(info);
+      if(entry.status==="error"||entry.status==="timeout"||entry.status==="error_api"){
+        var rb=h('<button style="background:transparent;border:1px solid var(--acc);color:var(--acc);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;flex:none">🔁</button>');
+        rb.onclick=function(){entry.status="pending";entry.error="";S.loading=true;processImageQueue(S.imgQueue);};
+        row.appendChild(rb);
+      }
+      qCard.appendChild(row);
+    });
+    var qBtns=h('<div class="row-btns" style="margin-top:10px"></div>');
+    if(errs){var retr=h('<button class="ghost sm">🔁 Reintentar fallidas</button>');retr.onclick=function(){S.imgQueue.filter(function(e){return e.status!=="done";}).forEach(function(e){e.status="pending";e.error="";});S.loading=true;processImageQueue(S.imgQueue);};qBtns.appendChild(retr);}
+    var clrQ=h('<button class="ghost sm">Limpiar cola</button>');clrQ.onclick=function(){S.imgQueue=[];S.loading=false;render();};qBtns.appendChild(clrQ);
+    qCard.appendChild(qBtns);
+    if(S.items.length){var goBtn=h('<button class="big" style="margin-top:8px">Ver items extraídos ('+S.items.length+')</button>');goBtn.onclick=function(){S.view="review";render();};qCard.appendChild(goBtn);}
+    main.appendChild(qCard);
+    main.appendChild(h('<hr style="border:none;border-top:1px solid var(--line);margin:16px 0">'));
+  }
+
   var opt=h('<div class="opt"><div class="opt-h">Subir capturas (lee con IA)</div></div>');
   var fi=h('<input class="file" type="file" accept="image/*" multiple'+(S.loading?" disabled":"")+'>');
   fi.onchange=function(e){onPick(e.target);};
   opt.appendChild(fi);
   if(!S.apiKey)opt.appendChild(h('<p class="hint">⚠ Falta tu clave de IA. Ábrela en <b>Ajustes</b> abajo.</p>'));
-  if(S.status)opt.appendChild(h('<div class="status">'+esc(S.status)+'</div>'));
+  opt.appendChild(h('<p class="hint">Sube hasta 12 imágenes. Cada una se analiza por separado.</p>'));
   if(S.error)opt.appendChild(h('<div class="error">'+esc(S.error)+'</div>'));
   main.appendChild(opt);
 
   var ex=h('<button class="ghost">Cargar ejemplo (pedido Emily Y.)</button>');
-  ex.onclick=function(){S.items=EXAMPLE.map(function(g){return Object.assign({},g,{done:false});});S.view="review";S.error="";save();render();};
+  ex.onclick=function(){S.items=EXAMPLE.map(function(g){return Object.assign({},g,{done:false});});S.imgQueue=[];S.view="review";S.error="";save();render();};
   main.appendChild(ex);
 
   var opt2=h('<div class="opt"><div class="opt-h">Escribir / pegar lista (respaldo)</div><p class="hint">Una línea por item: <code>Nombre | Aisle | Sección | Cant | Cliente</code></p></div>');
@@ -984,16 +1125,9 @@ function renderLoad(main){
 
 function onPick(input){
   var files=Array.prototype.slice.call(input.files||[]);
-  if(!files.length){S.status="No se seleccionó ninguna imagen.";render();return;}
-  S.loading=true;S.error="";S.status="Recibí "+files.length+" imagen(es). Analizando con IA…";render();
-  extractFromImages(files).then(function(got){
-    S.loading=false;S.status="";
-    if(!got.length){S.error="La IA no detectó items. Prueba capturas más nítidas.";}
-    else{S.items=S.items.concat(got);S.view="review";save();}
-    render();
-  }).catch(function(err){
-    S.loading=false;S.status="";S.error="Falló la lectura: "+(err&&err.message?err.message:"error")+". Revisa tu clave en Ajustes.";render();
-  });
+  if(!files.length){S.error="No se seleccionó ninguna imagen.";render();return;}
+  S.error="";
+  startImageQueue(files);
   try{input.value="";}catch(e){}
 }
 
