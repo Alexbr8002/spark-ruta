@@ -268,14 +268,17 @@ function itemKey(it){
 }
 function isValidItem(x){
   var name=String(x.name||"").trim();
-  // Rechazar nombre vacío, muy corto o solo precio
   if(!name||name.length<4)return false;
-  // Rechazar si parece fragmento: solo "Item" + precio, o solo precio
-  if(/^item\s*\$?[\d.]+$/i.test(name))return false;
+  // "Item $1.97" · "Item at $1.97" · "Item @ $1.97" · cualquier variante
+  if(/^item\b.{0,20}\$?[\d.]+$/i.test(name))return false;
+  // Solo precio suelto
   if(/^\$[\d.]+$/.test(name))return false;
+  // Solo número + unidad
   if(/^[\d.]+\s*(oz|fl|lb|g|kg|ml|l|ct|pk)?$/i.test(name))return false;
-  // Rechazar si el nombre empieza con símbolo de precio suelto
+  // Nombre empieza con precio y es muy corto
   if(/^\$\d/.test(name)&&name.split(" ").length<3)return false;
+  // Fragmento genérico: "<N> oz bag", "<N> oz bag, sec N" sin marca
+  if(/^\d+\s*oz\s*bag$/i.test(name))return false;
   return true;
 }
 /* ---- Deduplicación global cross-imagen ---- */
@@ -1246,21 +1249,4 @@ function zoneCard(title,hint,items,icon){
   var c=h('<div class="zone-card"></div>');
   c.appendChild(h('<div class="zone-h"><span class="zone-icon">'+icon+'</span><div><div class="zone-title">'+title+'</div><div class="zone-hint">'+hint+'</div></div><div class="zone-n">'+items.length+'</div></div>'));
   if(!items.length){c.appendChild(h('<div class="zone-empty">—</div>'));}
-  else{items.forEach(function(it){var cl=it.client?'<span class="cl" style="background:'+CLIENT_COLORS[it.client]+';color:#1A1300">'+it.client+'</span>':"";c.appendChild(h('<div class="zone-item">'+cl+'<span class="zone-name">'+esc(it.name)+'</span>'+(it.qty>1?'<span class="zone-qty">×'+it.qty+'</span>':"")+'</div>'));});}
-  return c;
-}
-function renderCart(main,cart,clients,total){
-  if(total===0){main.appendChild(h('<div class="empty">No hay items. Carga un pedido.</div>'));return;}
-  var lead=cart.mode==="multi"?("Pedido de "+clients.length+" clientes ("+clients.join(", ")+"). El de más bulto va al área grande; el resto se reparte por tamaño."):(clients.length===0?"Un solo pedido. Reparto por tamaño/peso.":("Un cliente ("+clients.join(", ")+"). Reparto por tamaño/peso."));
-  main.appendChild(h('<p class="lead">'+lead+'</p>'));
-  main.appendChild(zoneCard("Área grande","Canasta principal",cart.zones.grande,"▣"));
-  main.appendChild(zoneCard("Canasta pequeña","Cesta de arriba · chico / frágil",cart.zones.canasta,"▢"));
-  main.appendChild(zoneCard("Rejilla inferior","Bandeja de abajo · pesado / voluminoso",cart.zones.rejilla,"▤"));
-  main.appendChild(h('<p class="hint" style="margin-top:14px">El bulto se estima del tamaño en el nombre (lb, oz, fl oz, gallon, count) × cantidad. Es una guía.</p>'));
-  var vb=h('<button class="ghost">Ver ruta</button>');vb.onclick=function(){set("view","route");};main.appendChild(vb);
-}
-
-render();
-</script>
-</body>
-</html>
+  else{items.forEach(function(it){var cl=it.client?'<sp
