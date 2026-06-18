@@ -255,7 +255,18 @@ var S={view:"load",items:[],specials:[{aisle:"E1",from:1,to:5,label:"Caja"},{ais
   gateCodesCustom:[],imgQueue:[],
   addressNotes:[],notesActive:null};
 function save(){try{localStorage.setItem("spark2483",JSON.stringify({items:S.items,specials:S.specials,apiKey:S.apiKey,model:S.model,oosChats:S.oosChats,gateCodesCustom:S.gateCodesCustom,addressNotes:S.addressNotes}));}catch(e){}}
-function load(){try{var d=JSON.parse(localStorage.getItem("spark2483")||"{}");if(d.items)S.items=d.items;if(d.specials)S.specials=d.specials;if(d.apiKey)S.apiKey=d.apiKey;if(d.model)S.model=d.model;if(d.oosChats)S.oosChats=d.oosChats;if(d.gateCodesCustom)S.gateCodesCustom=d.gateCodesCustom;if(d.addressNotes)S.addressNotes=d.addressNotes;}catch(e){}}
+function load(){try{
+  var d=JSON.parse(localStorage.getItem("spark2483")||"{}");
+  if(Array.isArray(d.items))S.items=d.items;
+  if(Array.isArray(d.specials)&&d.specials.length)S.specials=d.specials;
+  if(d.apiKey)S.apiKey=d.apiKey;
+  if(d.model)S.model=d.model;
+  if(Array.isArray(d.oosChats))S.oosChats=d.oosChats;
+  if(Array.isArray(d.gateCodesCustom))S.gateCodesCustom=d.gateCodesCustom;
+  if(Array.isArray(d.addressNotes))S.addressNotes=d.addressNotes;
+  // Siempre resetear estado transitorio
+  S.oosPanel=null;S.loading=false;S.imgQueue=[];S.status="";S.error="";
+}catch(e){console.warn("load error",e);}}
 load(); if(S.items.length)S.view="review";
 
 /* ============ Lectura IA ============ */
@@ -1031,7 +1042,12 @@ function renderMsg(main){
 }
 
 /* ============ Render ============ */
-function render(){
+function render(){try{_render();}catch(e){
+  var app=document.getElementById("app");
+  if(app)app.innerHTML='<div style="padding:24px 16px;color:#FFD23F;font-family:monospace;font-size:13px;background:#0F1420;min-height:100vh"><b style="color:#FB7185">⚠ Error de render</b><br><br>'+String(e.message).replace(/</g,"&lt;")+'<br><br><button onclick="localStorage.removeItem(\'spark2483\');location.reload()" style="background:#FB7185;color:#fff;border:none;border-radius:8px;padding:10px 18px;font-weight:800;margin-top:8px">Limpiar datos y recargar</button><br><br><small style="color:#8C9BB8">O recarga la página manualmente si el botón no funciona.</small></div>';
+  console.error("render error",e);
+}}
+function _render(){
   var route=buildRoute(S.items,S.specials);
   var normal=route.filter(function(g){return !g.special;});
   var special=route.filter(function(g){return g.special;});
@@ -1237,15 +1253,4 @@ function aisleCard(g,step){
 
 function renderRoute(main,normal,special,total,units){
   if(total===0){main.appendChild(h('<div class="empty">No hay items para rutear.</div>'));return;}
-  main.appendChild(h('<div class="summary"><div><b>'+(normal.length+special.length)+'</b><span>aisles</span></div><div><b>'+total+'</b><span>productos</span></div><div><b>'+units+'</b><span>unidades</span></div></div>'));
-  normal.forEach(function(g,i){main.appendChild(aisleCard(g,i+1));});
-  if(special.length){main.appendChild(h('<div class="sp-head">🔒 Recoger en caja — al final</div>'));special.forEach(function(g,i){main.appendChild(aisleCard(g,normal.length+i+1));});}
-  main.appendChild(h('<div class="foot">Salida por la puerta derecha →</div>'));
-  var nb=h('<button class="ghost">Nuevo pedido</button>');nb.onclick=function(){S.items=[];S.view="load";save();render();};main.appendChild(nb);
-}
-
-function zoneCard(title,hint,items,icon){
-  var c=h('<div class="zone-card"></div>');
-  c.appendChild(h('<div class="zone-h"><span class="zone-icon">'+icon+'</span><div><div class="zone-title">'+title+'</div><div class="zone-hint">'+hint+'</div></div><div class="zone-n">'+items.length+'</div></div>'));
-  if(!items.length){c.appendChild(h('<div class="zone-empty">—</div>'));}
-  else{items.forEach(function(it){var cl=it.
+  main.appendChild(h('<div class="summary"><div><b>'+(normal.length+special.length)+'</b><span>aisles</span></div><div><b>'+total+'</b><span>productos</span></div
