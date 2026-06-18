@@ -132,10 +132,56 @@ body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,
 <div id="app"></div>
 
 <script>
-/* ============ Mapa 2483 ============ */
-var ZONE_BASE={Y:10,I:20,L:30,K:40,H:50,F:60,E:70,D:80,C:90,B:100,J:110,G:120};
-var ZONE_LABEL={Y:"Garden / Exterior",I:"Toys / Sports",L:"Auto / Hardware / Paint",K:"Electronics",H:"Home",F:"Office / Arts / Party / Seasonal",E:"Baby / Girls",D:"Mens / Boys",C:"Intimates / Jewelry",B:"Womens",J:"Shoes / Pets",G:"Health / Beauty / Personal Care",A:"Grocery",AP:"Fresh Produce",AB:"Bakery",AD:"Deli",AC:"Meat & Seafood",Z:"Checkout"};
+/* ============ Mapa 2483 ============
+GEOMETRÍA FÍSICA DE LA TIENDA:
+
+ENTRADA: Puerta derecha (vista desde afuera)
+└─ Al cruzar, justo a la derecha comienza ÁREA AP (Frutas/Verduras)
+
+ZONA AP (Fresh Produce):
+├─ AP1, AP2, AP3... AP9
+├─ AP1 = más cerca de la entrada derecha
+└─ AP9 = más lejos de la entrada derecha
+
+ZONA A (Pasillos Grocery):
+├─ A1 = frente al área AP (referencia visual principal)
+├─ Frente a A1 = AP (no hay otro pasillo A)
+├─ Patrón desde A2 en adelante (emparejados):
+│  ├─ A2 ↔ A3 (enfrentados, A3 = Congelados/Frozen)
+│  ├─ A6 ↔ A7 (enfrentados)
+│  └─ A30 ↔ A31 (enfrentados, cerca AC5, AC4)
+└─ Números A aumentan = internan más en la tienda
+
+ESTANTES GR (perpendicular a pasillos A):
+├─ GR1, GR2, GR3... (hasta cerca de A31)
+├─ Ubicados a la IZQUIERDA de los pasillos A (vista entrada)
+├─ GR1 = inicio/lado izquierdo de la zona A
+└─ Números GR aumentan hacia el fondo (dirección A31)
+
+ORIENTACIÓN INTERNA - Pasillos A:
+├─ Sección 1 de cada pasillo = LADO IZQUIERDO
+├─ Secciones 20+ = LADO DERECHO (pared derecha tienda)
+└─ Conforme sube la sección, se va hacia la derecha
+
+============================================== */
+
+var ZONE_BASE={Y:10,I:20,L:30,K:40,H:50,F:60,E:70,D:80,C:90,B:100,J:110,G:120,GR:115};
+var ZONE_LABEL={Y:"Garden / Exterior",I:"Toys / Sports",L:"Auto / Hardware / Paint",K:"Electronics",H:"Home",F:"Office / Arts / Party / Seasonal",E:"Baby / Girls",D:"Mens / Boys",C:"Intimates / Jewelry",B:"Womens",J:"Shoes / Pets",G:"Health / Beauty / Personal Care",A:"Grocery",AP:"Fresh Produce",AB:"Bakery",AD:"Deli",AC:"Meat & Seafood",GR:"Internal Ref (Grocery)",Z:"Checkout"};
 var CLIENT_COLORS={A:"#FFD23F",B:"#7CC8FF",C:"#C4B5FD"};
+
+/* ---- REFERENCIA VISUAL - Geometría Walmart #2483 ----
+   PUERTA DERECHA (entrada/salida)
+   └─────────────────────────────
+      FRENTE: AP1←...→AP9 (Frutas/Verduras, derecha entrada)
+              ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
+      GR1 ── A1  A2  A3  A6  A7  ...  A30  A31 ── AC5, AC4
+      GR2 ┘ (Pasillos enfrentados)
+      ...GR9 LATERAL IZQUIERDO (hacia fondo)
+              
+      En cada pasillo A:
+        Sección 1 = lado izquierdo (cerca GR)
+        Sección 20+ = lado derecho (pared derecha tienda)
+---------------------------------------------------- */
 function parseAisle(code){var m=String(code||"").trim().toUpperCase().match(/^([A-Z]+)\s*(\d+)?$/);if(!m)return{prefix:String(code||"").toUpperCase(),num:null};return{prefix:m[1],num:m[2]!=null?parseInt(m[2],10):null};}
 function baseSeq(p,n){if(p==="A"&&n!=null)return 200+n;if(p==="AC")return 233+(n||0)/1000;if(p==="AB")return 234+(n||0)/1000;if(p==="AD")return 235+(n||0)/1000;if(p==="AP")return 235.5+(n||0)/1000;if(ZONE_BASE[p]!=null)return ZONE_BASE[p]+(n!=null?n/100:0);if(p==="Z")return 900+(n||0)/100;return 500;}
 function sectionDir(p,n){if(p==="A"&&n!=null&&n<=29&&n%2===1){var v=(n-1)/2;return v%2===0?1:-1;}return 1;}
