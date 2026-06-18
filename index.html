@@ -260,8 +260,37 @@ load(); if(S.items.length)S.view="review";
 
 /* ============ Lectura IA ============ */
 function fileToB64(file){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(){res(String(r.result).split(",")[1]);};r.onerror=function(){rej(new Error("no se pudo leer la imagen"));};r.readAsDataURL(file);});}
+/* ---- Validación de item individual ---- */
+function itemKey(it){
+  return (it.name||"").toLowerCase().replace(/\s+/g," ").trim()
+    +"|"+(it.aisle||"").toUpperCase()
+    +"|"+(it.section!=null?it.section:"?");
+}
+function isValidItem(x){
+  var name=String(x.name||"").trim();
+  // Rechazar nombre vacío, muy corto o solo precio
+  if(!name||name.length<4)return false;
+  // Rechazar si parece fragmento: solo "Item" + precio, o solo precio
+  if(/^item\s*\$?[\d.]+$/i.test(name))return false;
+  if(/^\$[\d.]+$/.test(name))return false;
+  if(/^[\d.]+\s*(oz|fl|lb|g|kg|ml|l|ct|pk)?$/i.test(name))return false;
+  // Rechazar si el nombre empieza con símbolo de precio suelto
+  if(/^\$\d/.test(name)&&name.split(" ").length<3)return false;
+  return true;
+}
+/* ---- Deduplicación global cross-imagen ---- */
+function deduplicateItems(existing,incoming){
+  var keys=new Set(existing.map(function(it){return itemKey(it);}));
+  var added=[];
+  incoming.forEach(function(it){
+    var k=itemKey(it);
+    if(!keys.has(k)){keys.add(k);added.push(it);}
+  });
+  return added;
+}
+
 function extractOneImage(file){
-  var prompt='Eres un extractor de pedidos de Walmart Spark. De esta captura devuelve SOLO un arreglo JSON, sin texto ni markdown. Cada elemento: {"name":string,"aisle":string (ej "A31","AB5","H11","AC4"),"section":number|null,"modular":number|null,"qty":number,"perishable":boolean,"client":"A"|"B"|"C"|null}. Si junto al item hay etiqueta de cliente (A,B,C) ponla en client; si no, null. Usa el Aisle exacto. No inventes items.';
+  var prompt='Eres un extractor de pedidos de Walmart Spark. Analiza esta captura con MUCHO cuidado.\n\nREGLAS ESTRICTAS:\n1. Solo extrae items COMPLETOS. Un item completo tiene: nombre del producto legible + al menos Aisle o Sección visibles.\n2. RECHAZA fragmentos parciales. No es válido: "Item $1.97", solo un precio, solo una cantidad, texto cortado, producto sin nombre.\n3. RECHAZA items cortados por el borde superior o inferior de la imagen (filas incompletas).\n4. Si el mismo producto aparece varias veces en la imagen con el mismo Aisle y Sección, inclúyelo UNA sola vez.\n5. "?" como aisle es válido si el número de aisle no es legible.\n\nDevuelve SOLO un arreglo JSON, sin texto ni markdown:\n[{"name":string,"aisle":string,"section":number|null,"modular":number|null,"qty":number,"perishable":boolean,"client":"A"|"B"|"C"|null}]\n\nSi no hay items válidos, devuelve [].';
   return fileToB64(file).then(function(d){
     var img={type:"image",source:{type:"base64",media_type:(file.type&&file.type.indexOf("image/")===0)?file.type:"image/jpeg",data:d}};
     var body={model:S.model,max_tokens:1200,messages:[{role:"user",content:[img,{type:"text",text:prompt}]}]};
@@ -272,28 +301,46 @@ function extractOneImage(file){
     }).then(function(data){
       if(data&&data.error)throw new Error(data.error.message||"error de la IA");
       var text=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("\n");
-      var clean=text.replace(/```json/gi,"").replace(/```/g,"").trim();var a=clean.indexOf("["),b=clean.lastIndexOf("]");var js=(a>=0&&b>=0)?clean.slice(a,b+1):clean;
+      var clean=text.replace(/```json/gi,"").replace(/```/g,"").trim();
+      var a=clean.indexOf("["),b=clean.lastIndexOf("]");
+      var js=(a>=0&&b>=0)?clean.slice(a,b+1):clean;
       var arr;try{arr=JSON.parse(js);}catch(e){throw new Error("respuesta no entendible");}
       if(!Array.isArray(arr))arr=[];
-      return arr.map(function(x){return{name:x.name||"Item",aisle:(x.aisle||"").toString().toUpperCase().replace(/\s+/g,""),section:x.section==null?null:x.section,modular:x.modular==null?null:x.modular,qty:x.qty?Number(x.qty):1,perishable:!!x.perishable,client:x.client?String(x.client).toUpperCase().replace(/[^ABC]/g,"")||null:null,done:false};});
+      // Normalizar y validar cada item
+      return arr
+        .map(function(x){return{
+          name:String(x.name||"").trim(),
+          aisle:(x.aisle||"").toString().toUpperCase().replace(/\s+/g,""),
+          section:x.section==null?null:Number(x.section),
+          modular:x.modular==null?null:x.modular,
+          qty:x.qty?Number(x.qty):1,
+          perishable:!!x.perishable,
+          client:x.client?String(x.client).toUpperCase().replace(/[^ABC]/g,"")||null:null,
+          done:false
+        };})
+        .filter(isValidItem);
     });
   });
 }
-/* estado de imágenes: S.imgQueue = [{name,status,items,error}] */
+
+/* estado de imágenes: S.imgQueue = [{name,status,items,count,skipped,error}] */
 function processImageQueue(queue){
   var pending=queue.filter(function(e){return e.status==="pending"||e.status==="error";});
   if(!pending.length)return;
-  pending.forEach(function(entry){entry.status="processing";});
   render();
   var chain=Promise.resolve();
   pending.forEach(function(entry){
     chain=chain.then(function(){
       entry.status="processing";render();
       return extractOneImage(entry.file).then(function(items){
-        entry.status="done";entry.items=items;
-        var got=items.filter(function(it){return it.name&&it.name!=="Item";});
-        entry.count=got.length;
-        S.items=S.items.concat(got);
+        // Deduplicar contra lo ya guardado en S.items
+        var unique=deduplicateItems(S.items,items);
+        var skipped=items.length-unique.length;
+        entry.status="done";
+        entry.items=unique;
+        entry.count=unique.length;
+        entry.skipped=skipped;
+        S.items=S.items.concat(unique);
         save();render();
       }).catch(function(err){
         var msg=(err&&err.message)||"error";
@@ -316,7 +363,7 @@ function startImageQueue(files){
   if(!S.apiKey){S.error="Falta clave de API (abre Ajustes ⚙)";render();return;}
   var arr=Array.prototype.slice.call(files);
   if(!S.imgQueue)S.imgQueue=[];
-  arr.forEach(function(f){S.imgQueue.push({name:f.name||"imagen",file:f,status:"pending",items:[],count:0,error:""});});
+  arr.forEach(function(f){S.imgQueue.push({name:f.name||"imagen",file:f,status:"pending",items:[],count:0,skipped:0,error:""});});
   S.loading=true;S.error="";
   processImageQueue(S.imgQueue);
 }
@@ -1075,7 +1122,7 @@ function renderLoad(main){
       var col=entry.status==="done"?"var(--ok)":entry.status==="processing"?"var(--acc)":entry.status==="pending"?"var(--mut)":"var(--sp)";
       row.appendChild(h('<span style="font-size:16px;flex:none">'+icon+'</span>'));
       var statusTxt=STATUS_LABEL[entry.status]||"?";
-      var countTxt=entry.status==="done"?(" \u2014 "+entry.count+" item(s)"):"";
+      var countTxt=entry.status==="done"?(" \u2014 "+entry.count+" nuevo"+(entry.count!==1?"s":"")+(entry.skipped?" · "+entry.skipped+" omitido"+(entry.skipped!==1?"s":"")+" (dup/parcial)":"")):"";
       var errTxt=entry.error?(" \u2014 "+esc(entry.error)):"";
       var nameTxt=esc(entry.name);
       var info=document.createElement("div");info.style.cssText="flex:1;min-width:0";
