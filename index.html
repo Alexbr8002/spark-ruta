@@ -252,7 +252,7 @@ var EXAMPLE=[
 var S={view:"load",items:[],specials:[{aisle:"E1",from:1,to:5,label:"Caja"},{aisle:"A29",from:1,to:6,label:"Caja"}],status:"",error:"",bulk:"",showCfg:false,loading:false,
   apiKey:"",model:"claude-sonnet-4-6",
   oosChats:[],oosActive:null,oosStatus:"",oosError:"",oosPanel:null,
-  gateCodesCustom:[],
+  gateCodesCustom:[],imgQueue:[],
   addressNotes:[],notesActive:null};
 function save(){try{localStorage.setItem("spark2483",JSON.stringify({items:S.items,specials:S.specials,apiKey:S.apiKey,model:S.model,oosChats:S.oosChats,gateCodesCustom:S.gateCodesCustom,addressNotes:S.addressNotes}));}catch(e){}}
 function load(){try{var d=JSON.parse(localStorage.getItem("spark2483")||"{}");if(d.items)S.items=d.items;if(d.specials)S.specials=d.specials;if(d.apiKey)S.apiKey=d.apiKey;if(d.model)S.model=d.model;if(d.oosChats)S.oosChats=d.oosChats;if(d.gateCodesCustom)S.gateCodesCustom=d.gateCodesCustom;if(d.addressNotes)S.addressNotes=d.addressNotes;}catch(e){}}
@@ -1111,8 +1111,7 @@ function renderLoad(main){
   main.appendChild(h('<p class="lead">Sube las capturas de tu pedido de Spark. Cada imagen se procesa por separado para no perder datos si alguna falla.</p>'));
 
   // Panel de estado de imágenes
-  if(S.imgQueue&&S.imgQueue.length){
-    var STATUS_ICON={pending:"⏳",processing:"🔄",done:"✓",error:"❌",error_api:"❌",timeout:"⏱"};
+  if(S.imgQueue&&S.imgQueue.length){    var STATUS_ICON={pending:"⏳",processing:"🔄",done:"✓",error:"❌",error_api:"❌",timeout:"⏱"};
     var STATUS_LABEL={pending:"Pendiente",processing:"Procesando…",done:"Lista",error:"Error de lectura",error_api:"Error de API",timeout:"Timeout"};
     var qCard=h('<div class="opt"></div>');
     var done=S.imgQueue.filter(function(e){return e.status==="done";}).length;
@@ -1249,4 +1248,4 @@ function zoneCard(title,hint,items,icon){
   var c=h('<div class="zone-card"></div>');
   c.appendChild(h('<div class="zone-h"><span class="zone-icon">'+icon+'</span><div><div class="zone-title">'+title+'</div><div class="zone-hint">'+hint+'</div></div><div class="zone-n">'+items.length+'</div></div>'));
   if(!items.length){c.appendChild(h('<div class="zone-empty">—</div>'));}
-  else{items.forEach(function(it){var cl=it.client?'<sp
+  else{items.forEach(function(it){var cl=it.
