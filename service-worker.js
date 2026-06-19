@@ -1,39 +1,70 @@
 const CACHE_NAME = "spark-mileage-tax-app-v03";
-const ASSETS = ["./", "./index.html", "./manifest.json", "./icon.svg", "./icons/icon-192.png", "./icons/icon-512.png"];
+
+const ASSETS = [
+  "./",
+  "./index.html",
+  "./manifest.json",
+  "./icon.svg",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png"
+];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+  );
+
   self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))))
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys
+          .filter((key) => key !== CACHE_NAME)
+          .map((key) => caches.delete(key))
+      )
+    )
   );
+
   self.clients.claim();
 });
 
 self.addEventListener("fetch", (event) => {
-  const req = event.request;
+  const request = event.request;
 
-  if (req.mode === "navigate") {
+  if (request.mode === "navigate") {
     event.respondWith(
-      fetch(req, { cache: "no-store" })
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html", copy));
-          return res;
+      fetch(request, { cache: "no-store" })
+        .then((response) => {
+          const copy = response.clone();
+
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put("./index.html", copy);
+          });
+
+          return response;
         })
         .catch(() => caches.match("./index.html"))
     );
+
     return;
   }
 
   event.respondWith(
-    caches.match(req).then((cached) => cached || fetch(req).then((res) => {
-      const copy = res.clone();
-      caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
-      return res;
-    }))
+    caches.match(request).then((cached) => {
+      if (cached) return cached;
+
+      return fetch(request).then((response) => {
+        const copy = response.clone();
+
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(request, copy);
+        });
+
+        return response;
+      });
+    })
   );
 });
