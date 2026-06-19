@@ -126,6 +126,15 @@ body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,
 .thread-msg.suggestion{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);color:var(--ok)}
 .thread-role{font-size:10px;font-weight:800;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
 .section-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:16px 0 6px}
+.item-wrap{border-top:1px solid var(--line)}
+.item-row{display:flex;align-items:center;gap:11px;padding:12px 14px 8px;background:transparent}
+.item-acts{display:flex;gap:8px;padding:0 14px 12px;padding-left:51px}
+.act-btn{flex:1;border-radius:8px;padding:8px 6px;font-size:12px;font-weight:800;border:1px solid var(--line);background:var(--surf2);color:var(--tx)}
+.act-btn.pick{color:var(--ok);border-color:rgba(52,211,153,.4)}
+.act-btn.rm{color:var(--sp);border-color:rgba(251,113,133,.4)}
+.undo-toast{position:fixed;bottom:108px;left:16px;right:16px;max-width:528px;margin:0 auto;background:#1A2233;border:1px solid var(--acc);border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;z-index:20;box-shadow:0 6px 24px rgba(0,0,0,.4)}
+.undo-toast span{font-size:13px;font-weight:600}
+.undo-toast button{background:var(--acc);color:#1A1300;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:800;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -214,7 +223,7 @@ function sectionDir(p,n){
 }
 function zoneOf(p){if(["A","AP","AB","AD","AC"].indexOf(p)>=0)return p==="A"?"A":p;return p;}
 function isSpecial(it,specials){var a=String(it.aisle||"").toUpperCase();for(var i=0;i<specials.length;i++){var s=specials[i];if(s.aisle.toUpperCase()!==a)continue;if(it.section==null)return true;if(it.section>=s.from&&it.section<=s.to)return true;}return false;}
-function buildRoute(items,specials){var en=items.map(function(it,i){var pa=parseAisle(it.aisle);var sp=isSpecial(it,specials);return Object.assign({},it,{_i:i,prefix:pa.prefix,num:pa.num,seq:baseSeq(pa.prefix,pa.num)+(sp?9000:0),special:sp});});var g={};en.forEach(function(it){var k=String(it.aisle||"?").toUpperCase();if(!g[k])g[k]={aisle:k,prefix:it.prefix,num:it.num,seq:it.seq,special:it.special,items:[]};g[k].items.push(it);});var arr=Object.keys(g).map(function(k){return g[k];}).sort(function(a,b){return a.seq-b.seq;});arr.forEach(function(gr){var d=sectionDir(gr.prefix,gr.num);gr.items.sort(function(x,y){return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));});});return arr;}
+function buildRoute(items,specials){var en=items.map(function(it,i){if(it.status==="picked"||it.status==="manual_delete")return null;var pa=parseAisle(it.aisle);var sp=isSpecial(it,specials);return Object.assign({},it,{_i:i,prefix:pa.prefix,num:pa.num,seq:baseSeq(pa.prefix,pa.num)+(sp?9000:0),special:sp});}).filter(Boolean);var g={};en.forEach(function(it){var k=String(it.aisle||"?").toUpperCase();if(!g[k])g[k]={aisle:k,prefix:it.prefix,num:it.num,seq:it.seq,special:it.special,items:[]};g[k].items.push(it);});var arr=Object.keys(g).map(function(k){return g[k];}).sort(function(a,b){return a.seq-b.seq;});arr.forEach(function(gr){var d=sectionDir(gr.prefix,gr.num);gr.items.sort(function(x,y){return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));});});return arr;}
 /* ---- bulto ---- */
 function parseSize(name){var n=(name||"").toLowerCase(),bulk=1,heavy=false,large=false,fragile=false,m;
 m=n.match(/(\d+(?:\.\d+)?)\s*(?:lb|lbs|pound)/);if(m){var v=parseFloat(m[1]);bulk=Math.max(bulk,v/10);if(v>=15){heavy=true;large=true;}}
@@ -253,7 +262,9 @@ var S={view:"load",items:[],specials:[{aisle:"E1",from:1,to:5,label:"Caja"},{ais
   apiKey:"",model:"claude-sonnet-4-6",
   oosChats:[],oosActive:null,oosStatus:"",oosError:"",oosPanel:null,
   gateCodesCustom:[],imgQueue:[],
-  addressNotes:[],notesActive:null};
+  addressNotes:[],notesActive:null,
+  notesOcrStatus:"",notesOcrError:"",notesOcrPending:null,
+  undoToast:null};
 function save(){try{localStorage.setItem("spark2483",JSON.stringify({items:S.items,specials:S.specials,apiKey:S.apiKey,model:S.model,oosChats:S.oosChats,gateCodesCustom:S.gateCodesCustom,addressNotes:S.addressNotes}));}catch(e){}}
 function load(){try{
   var d=JSON.parse(localStorage.getItem("spark2483")||"{}");
@@ -264,8 +275,11 @@ function load(){try{
   if(Array.isArray(d.oosChats))S.oosChats=d.oosChats;
   if(Array.isArray(d.gateCodesCustom))S.gateCodesCustom=d.gateCodesCustom;
   if(Array.isArray(d.addressNotes))S.addressNotes=d.addressNotes;
+  // Migración: items viejos sin status → pending (o picked si done=true)
+  S.items.forEach(function(it){if(!it.status)it.status=it.done?"picked":"pending";});
   // Siempre resetear estado transitorio
-  S.oosPanel=null;S.loading=false;S.imgQueue=[];S.status="";S.error="";
+  S.oosPanel=null;S.loading=false;S.imgQueue=[];S.status="";S.error="";S.undoToast=null;
+  S.notesOcrStatus="";S.notesOcrError="";S.notesOcrPending=null;
 }catch(e){console.warn("load error",e);}}
 load(); if(S.items.length)S.view="review";
 
@@ -330,7 +344,8 @@ function extractOneImage(file){
           qty:x.qty?Number(x.qty):1,
           perishable:!!x.perishable,
           client:x.client?String(x.client).toUpperCase().replace(/[^ABC]/g,"")||null:null,
-          done:false
+          done:false,
+          status:"pending"
         };})
         .filter(isValidItem);
     });
@@ -441,14 +456,15 @@ var REASONS=[
   {key:"closest_available",label:"Más cercano al original"},
   {key:"no_good_match",label:"No había sustitución adecuada"}
 ];
-var REASON_PHRASES={
-  closest_match:"es muy similar al producto solicitado en tipo, tamaño y uso",
-  same_brand_diff_size:"es la misma marca en un tamaño diferente, la opción más cercana al producto solicitado",
-  diff_brand_same_type:"es el mismo tipo de producto en una marca diferente, la alternativa más parecida disponible",
-  better_price:"es una opción de mejor precio sin perder la similitud con lo solicitado",
-  similar_qty:"mantiene una cantidad similar a la solicitada",
-  store_recommended:"fue la opción recomendada por la tienda como reemplazo",
-  closest_available:"era la opción más cercana al producto original disponible en ese momento"
+/* Mensaje al cliente SIEMPRE en inglés; REASONS arriba (labels en español) son solo para la UI interna. */
+var REASON_PHRASES_EN={
+  closest_match:"it was the closest available option in type, size, and intended use",
+  same_brand_diff_size:"it is the same brand in a different size, the closest match to the original item",
+  diff_brand_same_type:"it is the same type of product from a different brand, the closest available alternative",
+  better_price:"it was a more cost-effective option without losing similarity to the original item",
+  similar_qty:"it keeps a similar quantity to what was originally requested",
+  store_recommended:"it was the option recommended by the store as a replacement",
+  closest_available:"it was the closest available option to the original product at the time"
 };
 function guessFallbackDefaults(chat){
   var fb=chat.fallback||"";
@@ -460,11 +476,11 @@ function guessFallbackDefaults(chat){
 function buildSubMessage(orig,sub,reasonKey){
   var origPart=orig?(' ("'+orig+'")'):"";
   if(reasonKey==="no_good_match"){
-    return "Hola. El producto original"+origPart+" no estaba disponible y no encontré una sustitución suficientemente parecida. Como no recibí respuesta dentro del tiempo disponible, decidí no sustituirlo para evitar enviarle un producto incorrecto. Si lo desea, puedo gestionar el reembolso de este artículo.";
+    return "Hi. The original item"+origPart+" was unavailable and I could not find a close enough substitute. Since I did not receive a response within the available time, I decided not to substitute it to avoid sending the wrong product. If you would like, I can process a refund for this item.";
   }
-  var subPart=sub?("lo sustituí por "+sub):"hice la sustitución por la opción más parecida disponible";
-  var phrase=REASON_PHRASES[reasonKey]||"era la opción más parecida o conveniente disponible";
-  return "Hola. El producto original"+origPart+" no estaba disponible. Como no recibí respuesta dentro del tiempo disponible, "+subPart+", porque "+phrase+". Elegí la opción que consideré más parecida o conveniente para su pedido. Cualquier duda, aquí estoy.";
+  var subPart=sub?("I substituted it with the "+sub):"I substituted it with the closest available option";
+  var phrase=REASON_PHRASES_EN[reasonKey]||"it seemed like the closest and most appropriate option available";
+  return "Hi. Since I did not receive a response within the available time, "+subPart+" because "+phrase+". I selected the option that seemed most similar and appropriate for your order. Let me know if you have any questions.";
 }
 function renderTimeoutPanel(main,chat,idx){
   var p=S.oosPanel;
@@ -500,7 +516,7 @@ function renderTimeoutPanel(main,chat,idx){
   main.appendChild(genBtn);
 
   if(p.generated){
-    main.appendChild(h('<div class="section-title">Mensaje para el cliente (revisa / edita antes de enviar)</div>'));
+    main.appendChild(h('<div class="section-title">Mensaje para el cliente (en inglés — revisa / edita antes de enviar)</div>'));
     var msgTa=h('<textarea class="ta" rows="5">'+esc(p.message)+'</textarea>');
     msgTa.oninput=function(){p.message=msgTa.value;};
     main.appendChild(msgTa);
@@ -774,7 +790,27 @@ function findAddressMatches(query,excludeIdx){
   if(!nq)return[];
   return S.addressNotes.map(function(n,i){return{n:n,i:i};}).filter(function(o){if(o.i===excludeIdx)return false;var na=o.n.normalized_address||"";return na&&(na.indexOf(nq)>=0||nq.indexOf(na)>=0);});
 }
-function newAddressNote(){var now=new Date().toISOString();return{id:Date.now(),full_address:"",normalized_address:"",apartment_number:"",building_number:"",complex_name:"",latitude:null,longitude:null,parking_notes:"",entry_instructions:"",walking_route_notes:"",building_location_notes:"",images:[],map_images:[],created_at:now,updated_at:now,last_used_at:now};}
+function newAddressNote(){var now=new Date().toISOString();return{id:Date.now(),full_address:"",normalized_address:"",apartment_number:"",building_number:"",complex_name:"",latitude:null,longitude:null,parking_notes:"",entry_instructions:"",walking_route_notes:"",building_location_notes:"",visual_references:"",images:[],map_images:[],created_at:now,updated_at:now,last_used_at:now};}
+/* ---- OCR de dirección desde captura(s) — Spark y/o mapa de condominio ---- */
+function ocrAddressFromImages(files){
+  if(!S.apiKey)return Promise.reject(new Error("Falta tu clave de API (Ajustes ⚙)"));
+  var imgFiles=Array.prototype.slice.call(files,0,2);
+  return Promise.all(imgFiles.map(function(f){return fileToB64(f).then(function(d){return{type:"image",source:{type:"base64",media_type:(f.type&&f.type.indexOf("image/")===0)?f.type:"image/jpeg",data:d}};});}))
+  .then(function(imgs){
+    var prompt='Analiza estas imágenes relacionadas con una entrega. Puede haber 1 o 2 imágenes: una captura de la app Spark (con dirección, unidad, edificio, notas del cliente) y/o una foto de un mapa de condominio (con nombre del complejo, edificios, entradas, estacionamiento). Extrae TODO lo que puedas reconocer. Devuelve SOLO JSON, sin texto ni markdown:\n{"full_address":string|null,"complex_name":string|null,"apartment_number":string|null,"building_number":string|null,"gate_code":string|null,"customer_note":string|null,"is_map_image":boolean,"map_notes":string|null}\nfull_address: dirección completa con ciudad/estado/zip si está visible. complex_name: nombre del condominio/complejo si aparece en cualquiera de las imágenes. is_map_image: true si alguna de las imágenes es un mapa/plano del condominio (no una captura de app). map_notes: si hay un mapa, describe en 1-2 frases breves la ubicación relativa (ej: "Entrada principal sobre Durango Dr; edificio 46 al lado izquierdo, cerca de la entrada"). Si algo no es visible, usa null.';
+    var body={model:S.model,max_tokens:500,messages:[{role:"user",content:imgs.concat([{type:"text",text:prompt}])}]};
+    return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)})
+    .then(function(r){if(!r.ok)return r.json().catch(function(){return null;}).then(function(ej){throw new Error("HTTP "+r.status+(ej&&ej.error?" · "+ej.error.message:""));});return r.json();})
+    .then(function(data){
+      if(data&&data.error)throw new Error(data.error.message||"error IA");
+      var txt=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("");
+      var clean=txt.replace(/```json/gi,"").replace(/```/g,"").trim();
+      var a=clean.indexOf("{"),b=clean.lastIndexOf("}");
+      var parsed=JSON.parse((a>=0&&b>=0)?clean.slice(a,b+1):clean);
+      return{parsed:parsed,imgFiles:imgFiles};
+    });
+  });
+}
 function imgGrid(container,note,field,label,maxW){
   container.appendChild(h('<div class="section-title">'+label+'</div>'));
   var grid=h('<div class="img-grid"></div>');
@@ -794,16 +830,28 @@ function imgGrid(container,note,field,label,maxW){
   container.appendChild(grid);
 }
 function renderNotes(main){
+  if(S.notesOcrPending){renderOcrValidation(main);return;}
   if(S.notesActive!=null&&S.notesActive<S.addressNotes.length){renderNoteForm(main,S.addressNotes[S.notesActive],S.notesActive);}
   else{S.notesActive=null;renderNotesList(main);}
 }
 function renderNotesList(main){
   main.appendChild(h('<p class="lead">Memoria de direcciones: mapas, parqueo, accesos y notas internas de cada complejo.</p>'));
-  var si=h('<input class="in" type="search" placeholder="Buscar dirección, complejo, apto…" style="font-size:15px;padding:12px;margin-bottom:10px" autocomplete="off">');
-  main.appendChild(si);
-  var nb=h('<button class="big">+ Nueva dirección</button>');
+
+  // ── Captura automática (opción primaria) ──
+  var capLabel=h('<label class="oos-new">📸 Capturar dirección — sube captura Spark y/o mapa<input type="file" accept="image/*" multiple style="display:none"></label>');
+  capLabel.querySelector("input").onchange=function(e){startAddressOCR(e.target.files);try{e.target.value="";}catch(x){}};
+  main.appendChild(capLabel);
+  main.appendChild(h('<p class="hint" style="margin-top:-6px;text-align:center">1-2 imágenes: app Spark y/o foto del mapa del condominio</p>'));
+  if(S.notesOcrStatus)main.appendChild(h('<div class="status">'+esc(S.notesOcrStatus)+'</div>'));
+  if(S.notesOcrError){var er=h('<div class="error">'+esc(S.notesOcrError)+'</div>');er.onclick=function(){S.notesOcrError="";render();};main.appendChild(er);}
+  if(!S.apiKey)main.appendChild(h('<p class="hint">⚠ Falta tu clave de API. Ábrela en <b>Ajustes</b> abajo.</p>'));
+
+  var nb=h('<button class="ghost" style="margin-top:4px">✏️ Escribir dirección manualmente</button>');
   nb.onclick=function(){var n=newAddressNote();S.addressNotes.unshift(n);S.notesActive=0;save();render();};
   main.appendChild(nb);
+
+  var si=h('<input class="in" type="search" placeholder="Buscar dirección, complejo, apto…" style="font-size:15px;padding:12px;margin:14px 0 10px" autocomplete="off">');
+  main.appendChild(si);
   var results=h('<div style="margin-top:10px"></div>');
   main.appendChild(results);
   function draw(){
@@ -834,6 +882,83 @@ function renderNotesList(main){
   }
   si.oninput=draw;
   draw();
+}
+function startAddressOCR(files){
+  if(!files||!files.length)return;
+  if(!S.apiKey){S.notesOcrError="Falta clave de API (abre Ajustes ⚙)";render();return;}
+  S.notesOcrStatus="Analizando imagen(es)…";S.notesOcrError="";render();
+  ocrAddressFromImages(files).then(function(res){
+    var p=res.parsed;
+    if(!p.full_address&&!p.complex_name){
+      S.notesOcrStatus="";S.notesOcrError="No se detectó dirección ni condominio en la imagen. Intenta con otra captura o escribe manualmente.";render();return;
+    }
+    var imgPromises=res.imgFiles.map(function(f,i){
+      var isMap=p.is_map_image&&i===res.imgFiles.length-1; // heurística simple: última imagen suele ser el mapa si is_map_image=true
+      return resizeImage(f,isMap?1280:900,0.72).then(function(dataUrl){return{dataUrl:dataUrl,isMap:isMap};});
+    });
+    Promise.all(imgPromises).then(function(imgResults){
+      S.notesOcrStatus="";
+      S.notesOcrPending={parsed:p,images:imgResults};
+      render();
+    });
+  }).catch(function(err){
+    S.notesOcrStatus="";S.notesOcrError="Error: "+(err&&err.message?err.message:"error");render();
+  });
+}
+function renderOcrValidation(main){
+  var pend=S.notesOcrPending;var p=pend.parsed;
+  main.appendChild(h('<div class="opt-h">📍 Dirección detectada</div>'));
+  main.appendChild(h('<div class="msg-box">'+esc([p.complex_name,p.full_address,p.building_number?("Edificio "+p.building_number):"",p.apartment_number?("Apto "+p.apartment_number):""].filter(Boolean).join(" · ")||"(sin datos claros)")+'</div>'));
+  if(p.map_notes)main.appendChild(h('<p class="hint">🗺 '+esc(p.map_notes)+'</p>'));
+  if(p.customer_note)main.appendChild(h('<p class="hint">📝 Nota del cliente: '+esc(p.customer_note)+'</p>'));
+
+  var rb=h('<div class="row-btns" style="margin-top:10px"></div>');
+  var bConfirm=h('<button class="big" style="margin:0">✓ Confirmar dirección</button>');
+  bConfirm.onclick=function(){
+    // ¿Ya existe nota similar? buscar match
+    var matches=p.full_address?findAddressMatches(p.full_address,-1):[];
+    var note;
+    if(matches.length){
+      note=matches[0].n;S.notesActive=matches[0].i;
+    } else {
+      note=newAddressNote();S.addressNotes.unshift(note);S.notesActive=0;
+    }
+    if(p.full_address)note.full_address=p.full_address;
+    if(p.complex_name)note.complex_name=p.complex_name;
+    if(p.apartment_number)note.apartment_number=p.apartment_number;
+    if(p.building_number)note.building_number=p.building_number;
+    if(p.gate_code)note._gateCode=p.gate_code;
+    note.normalized_address=normalizeAddress(note.full_address);
+    pend.images.forEach(function(img){
+      if(img.isMap)note.map_images=(note.map_images||[]).concat([img.dataUrl]);
+      else note.images=(note.images||[]).concat([img.dataUrl]);
+    });
+    note.updated_at=new Date().toISOString();note.last_used_at=note.updated_at;
+    S.notesOcrPending=null;save();render();
+  };
+  rb.appendChild(bConfirm);main.appendChild(rb);
+
+  var bCorrect=h('<button class="ghost" style="margin-top:8px">✏️ Corregir antes de continuar</button>');
+  bCorrect.onclick=function(){
+    var note=newAddressNote();
+    if(p.full_address)note.full_address=p.full_address;
+    if(p.complex_name)note.complex_name=p.complex_name;
+    if(p.apartment_number)note.apartment_number=p.apartment_number;
+    if(p.building_number)note.building_number=p.building_number;
+    if(p.gate_code)note._gateCode=p.gate_code;
+    note.normalized_address=normalizeAddress(note.full_address);
+    pend.images.forEach(function(img){
+      if(img.isMap)note.map_images=(note.map_images||[]).concat([img.dataUrl]);
+      else note.images=(note.images||[]).concat([img.dataUrl]);
+    });
+    S.addressNotes.unshift(note);S.notesActive=0;
+    S.notesOcrPending=null;save();render();
+  };
+  main.appendChild(bCorrect);
+
+  var bRetry=h('<button class="ghost" style="margin-top:8px">↻ Cargar otra imagen</button>');
+  bRetry.onclick=function(){S.notesOcrPending=null;render();};
+  main.appendChild(bRetry);
 }
 function renderNoteForm(main,note,idx){
   var back=h('<button class="oos-back">← Volver a la lista</button>');back.onclick=function(){S.notesActive=null;render();};main.appendChild(back);
@@ -903,6 +1028,42 @@ function renderNoteForm(main,note,idx){
   ta("entry_instructions","Ej: código de portón, timbre, llave debajo del tapete…","🔑 Instrucciones de acceso");
   ta("walking_route_notes","Ej: entrar por el pasillo derecho, subir escaleras B…","🚶 Cómo llegar caminando");
   ta("building_location_notes","Ej: edificio azul al fondo, puerta 204 es la segunda a la izquierda…","🏢 Ubicación del edificio/depto");
+  main.appendChild(h('<div class="section-title">📌 Referencias visuales</div>'));
+  if((note.map_images||[]).length&&S.apiKey){
+    var genRefBtn=h('<button class="ghost sm" style="width:100%;margin-bottom:8px">✨ Sugerir referencias desde el mapa</button>');
+    var refStatus=h('<div></div>');
+    genRefBtn.onclick=function(){
+      genRefBtn.textContent="Analizando mapa…";genRefBtn.disabled=true;
+      var imgBlock={type:"image",source:{type:"base64",media_type:"image/jpeg",data:note.map_images[note.map_images.length-1].split(",")[1]}};
+      var prompt='Mira este mapa/plano de un condominio. Identifica 3-5 referencias visuales simples y útiles para un repartidor (entradas, escaleras, parques, zonas de estacionamiento, esquinas de edificios). Responde SOLO JSON: {"references":["...","..."]} en español, frases cortas (máx 10 palabras cada una).';
+      fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:S.model,max_tokens:300,messages:[{role:"user",content:[imgBlock,{type:"text",text:prompt}]}]})})
+      .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+      .then(function(data){
+        var txt=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("");
+        var clean=txt.replace(/```json/gi,"").replace(/```/g,"").trim();
+        var a=clean.indexOf("{"),b=clean.lastIndexOf("}");
+        var parsed=JSON.parse((a>=0&&b>=0)?clean.slice(a,b+1):clean);
+        var refs=parsed.references||[];
+        genRefBtn.textContent="✨ Sugerir referencias desde el mapa";genRefBtn.disabled=false;
+        if(!refs.length){refStatus.innerHTML='<p class="hint">No se detectaron referencias claras.</p>';return;}
+        refStatus.innerHTML="";
+        refs.forEach(function(r){
+          var row=h('<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:13px;flex:1">'+esc(r)+'</span></div>');
+          var addBtn=h('<button class="ghost sm" style="flex:none;padding:6px 10px">+ Agregar</button>');
+          addBtn.onclick=function(){
+            note.visual_references=(note.visual_references?note.visual_references+"\n":"")+r;
+            render();
+          };
+          row.appendChild(addBtn);refStatus.appendChild(row);
+        });
+      })
+      .catch(function(err){genRefBtn.textContent="✨ Sugerir referencias desde el mapa";genRefBtn.disabled=false;refStatus.innerHTML='<div class="error">Error: '+esc(err.message||"error")+'</div>';});
+    };
+    main.appendChild(genRefBtn);main.appendChild(refStatus);
+  }
+  var refTa=h('<textarea class="ta" rows="3" placeholder="Ej: tercera entrada lado posterior, esquina derecha del edificio, escalera del medio, parque frente al edificio…">'+esc(note.visual_references||"")+'</textarea>');
+  refTa.oninput=function(){note.visual_references=refTa.value;};
+  main.appendChild(refTa);
 
   main.appendChild(h('<p class="hint" style="margin-top:14px">Las fotos se guardan en este teléfono (comprimidas).</p>'));
   imgGrid(main,note,"map_images","🗺 Mapa del complejo",1280);
@@ -1051,7 +1212,8 @@ function _render(){
   var route=buildRoute(S.items,S.specials);
   var normal=route.filter(function(g){return !g.special;});
   var special=route.filter(function(g){return g.special;});
-  var total=S.items.length, done=S.items.filter(function(it){return it.done;}).length;
+  var total=S.items.length, done=S.items.filter(function(it){return it.status==="picked";}).length;
+  var pending=S.items.filter(function(it){return it.status!=="picked"&&it.status!=="manual_delete";}).length;
   var cart=suggestCart(S.items);
   var clients=Array.from(new Set(S.items.map(function(it){return(it.client||"").toUpperCase();}).filter(Boolean))).sort();
   var units=S.items.reduce(function(s,it){return s+(Number(it.qty)||0);},0);
@@ -1121,6 +1283,15 @@ function _render(){
     cfg.appendChild(cb);
   }
   app.appendChild(cfg);
+
+  // toast deshacer (eliminar/recoger)
+  if(S.undoToast){
+    var label=S.undoToast.from==="picked"?"Producto marcado como recogido":"Producto eliminado";
+    var t=h('<div class="undo-toast"><span>'+esc(label)+'</span></div>');
+    var ub=h('<button>Deshacer</button>');ub.onclick=function(){undoLast();};
+    t.appendChild(ub);
+    app.appendChild(t);
+  }
 }
 
 function renderLoad(main){
@@ -1174,7 +1345,7 @@ function renderLoad(main){
   main.appendChild(opt);
 
   var ex=h('<button class="ghost">Cargar ejemplo (pedido Emily Y.)</button>');
-  ex.onclick=function(){S.items=EXAMPLE.map(function(g){return Object.assign({},g,{done:false});});S.imgQueue=[];S.view="review";S.error="";save();render();};
+  ex.onclick=function(){S.items=EXAMPLE.map(function(g){return Object.assign({},g,{done:false,status:"pending"});});S.imgQueue=[];S.view="review";S.error="";save();render();};
   main.appendChild(ex);
 
   var opt2=h('<div class="opt"><div class="opt-h">Escribir / pegar lista (respaldo)</div><p class="hint">Una línea por item: <code>Nombre | Aisle | Sección | Cant | Cliente</code></p></div>');
@@ -1198,10 +1369,10 @@ function onPick(input){
 
 function parseBulk(){
   var lines=S.bulk.split("\n").map(function(l){return l.trim();}).filter(Boolean);
-  var got=lines.map(function(l){var p=l.split("|").map(function(x){return x.trim();});return{name:p[0]||"Item",aisle:(p[1]||"").toUpperCase().replace(/\s+/g,""),section:p[2]?Number(p[2]):null,modular:null,qty:p[3]?Number(p[3]):1,perishable:false,client:p[4]?(p[4].toUpperCase().replace(/[^ABC]/g,"")||null):null,done:false};});
+  var got=lines.map(function(l){var p=l.split("|").map(function(x){return x.trim();});return{name:p[0]||"Item",aisle:(p[1]||"").toUpperCase().replace(/\s+/g,""),section:p[2]?Number(p[2]):null,modular:null,qty:p[3]?Number(p[3]):1,perishable:false,client:p[4]?(p[4].toUpperCase().replace(/[^ABC]/g,"")||null):null,done:false,status:"pending"};});
   if(got.length){S.items=S.items.concat(got);S.bulk="";S.view="review";save();render();}
 }
-function addBlank(){S.items.push({name:"",aisle:"",section:null,modular:null,qty:1,perishable:false,client:null,done:false});save();}
+function addBlank(){S.items.push({name:"",aisle:"",section:null,modular:null,qty:1,perishable:false,client:null,done:false,status:"pending"});save();}
 
 function renderReview(main,total){
   if(total===0){main.appendChild(h('<div class="empty">Aún no hay items. Ve a <b>Cargar</b>.</div>'));return;}
@@ -1230,22 +1401,33 @@ function renderReview(main,total){
   var gen=h('<button class="big">Generar ruta</button>');gen.onclick=function(){set("view","route");};main.appendChild(gen);
 }
 
+function pickItem(it){var orig=S.items[it._i]||it;orig.status="picked";orig.done=true;save();showUndo(orig,"picked");}
+function deleteItem(it){var orig=S.items[it._i]||it;orig.status="manual_delete";orig.done=false;save();showUndo(orig,"manual_delete");}
+function showUndo(it,fromStatus){S.undoToast={it:it,from:fromStatus};render();
+  clearTimeout(window._undoTimer);
+  window._undoTimer=setTimeout(function(){if(S.undoToast&&S.undoToast.it===it){S.undoToast=null;render();}},4000);
+}
+function undoLast(){if(!S.undoToast)return;var it=S.undoToast.it;it.status="pending";it.done=false;S.undoToast=null;clearTimeout(window._undoTimer);save();render();}
 function aisleCard(g,step){
   var z=ZONE_LABEL[zoneOf(g.prefix)]||"";
-  var allDone=g.items.every(function(it){return it.done;});
-  var card=h('<div class="aisle'+(allDone?" done":"")+(g.special?" sp":"")+'"></div>');
+  var card=h('<div class="aisle'+(g.special?" sp":"")+'"></div>');
   card.appendChild(h('<div class="aisle-head"><div class="aisle-id"><span class="step-no">'+step+'</span><span class="aisle-code">'+esc(g.aisle)+'</span></div><div class="aisle-meta"><div class="zone">'+esc(z)+'</div><div class="count">'+g.items.length+' '+(g.items.length===1?"producto":"productos")+'</div></div></div>'));
   var box=h('<div></div>');
   g.items.forEach(function(it){
-    var b=h('<button class="item'+(it.done?" done":"")+'"></button>');
+    var wrap=h('<div class="item-wrap"></div>');
+    var row=h('<div class="item-row"></div>');
     var sub="";
     if(it.client)sub+='<em class="cl" style="background:'+CLIENT_COLORS[it.client]+';color:#1A1300">Cliente '+it.client+'</em>';
     if(it.section!=null)sub+='<em>Sec '+it.section+'</em>';
     if(it.qty>1)sub+='<em>×'+it.qty+'</em>';
     if(it.perishable)sub+='<em class="frio">frío</em>';
-    b.innerHTML='<span class="check">'+(it.done?"✓":"")+'</span><span class="item-body"><span class="item-name">'+esc(it.name)+'</span><span class="item-sub">'+sub+'</span></span>';
-    b.onclick=function(){it.done=!it.done;save();render();};
-    box.appendChild(b);
+    row.innerHTML='<span class="check"></span><span class="item-body"><span class="item-name">'+esc(it.name)+'</span><span class="item-sub">'+sub+'</span></span>';
+    wrap.appendChild(row);
+    var acts=h('<div class="item-acts"></div>');
+    var bp=h('<button class="act-btn pick">✓ Recogido</button>');bp.onclick=function(){pickItem(it);};
+    var bd=h('<button class="act-btn rm">✕ Eliminar</button>');bd.onclick=function(){deleteItem(it);};
+    acts.appendChild(bp);acts.appendChild(bd);wrap.appendChild(acts);
+    box.appendChild(wrap);
   });
   card.appendChild(box);
   return card;
@@ -1253,7 +1435,9 @@ function aisleCard(g,step){
 
 function renderRoute(main,normal,special,total,units){
   if(total===0){main.appendChild(h('<div class="empty">No hay items para rutear.</div>'));return;}
-  main.appendChild(h('<div class="summary"><div><b>'+(normal.length+special.length)+'</b><span>aisles</span></div><div><b>'+total+'</b><span>productos</span></div><div><b>'+units+'</b><span>unidades</span></div></div>'));
+  var pendCount=normal.reduce(function(s,g){return s+g.items.length;},0)+special.reduce(function(s,g){return s+g.items.length;},0);
+  main.appendChild(h('<div class="summary"><div><b>'+(normal.length+special.length)+'</b><span>aisles</span></div><div><b>'+pendCount+'</b><span>pendientes</span></div><div><b>'+units+'</b><span>unidades</span></div></div>'));
+  if(pendCount===0){main.appendChild(h('<div class="empty">🎉 Todo recogido o gestionado.</div>'));}
   normal.forEach(function(g,i){main.appendChild(aisleCard(g,i+1));});
   if(special.length){main.appendChild(h('<div class="sp-head">🔒 Recoger en caja — al final</div>'));special.forEach(function(g,i){main.appendChild(aisleCard(g,normal.length+i+1));});}
   main.appendChild(h('<div class="foot">Salida por la puerta derecha →</div>'));
