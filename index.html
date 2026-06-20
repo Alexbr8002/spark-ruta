@@ -187,9 +187,10 @@ var EXAMPLE=[
 var S={view:"load",items:[],specials:[{aisle:"E1",from:1,to:5,label:"Caja"},{aisle:"A29",from:1,to:6,label:"Caja"}],status:"",error:"",bulk:"",showCfg:false,loading:false,
   apiKey:"",model:"claude-sonnet-4-6",
   oosChats:[],oosActive:null,oosStatus:"",oosError:"",
-  gateCodesCustom:[]};
-function save(){try{localStorage.setItem("spark2483",JSON.stringify({items:S.items,specials:S.specials,apiKey:S.apiKey,model:S.model,oosChats:S.oosChats,gateCodesCustom:S.gateCodesCustom}));}catch(e){}}
-function load(){try{var d=JSON.parse(localStorage.getItem("spark2483")||"{}");if(d.items)S.items=d.items;if(d.specials)S.specials=d.specials;if(d.apiKey)S.apiKey=d.apiKey;if(d.model)S.model=d.model;if(d.oosChats)S.oosChats=d.oosChats;if(d.gateCodesCustom)S.gateCodesCustom=d.gateCodesCustom;}catch(e){}}
+  gateCodesCustom:[],
+  notes:""};
+function save(){try{localStorage.setItem("spark2483",JSON.stringify({items:S.items,specials:S.specials,apiKey:S.apiKey,model:S.model,oosChats:S.oosChats,gateCodesCustom:S.gateCodesCustom,notes:S.notes}));}catch(e){}}
+function load(){try{var d=JSON.parse(localStorage.getItem("spark2483")||"{}");if(d.items)S.items=d.items;if(d.specials)S.specials=d.specials;if(d.apiKey)S.apiKey=d.apiKey;if(d.model)S.model=d.model;if(d.oosChats)S.oosChats=d.oosChats;if(d.gateCodesCustom)S.gateCodesCustom=d.gateCodesCustom;if(d.notes)S.notes=d.notes;}catch(e){}}
 load(); if(S.items.length)S.view="review";
 
 /* ============ Lectura IA ============ */
@@ -507,6 +508,16 @@ function copyText(txt,btn,label){
 }
 function getGreeting(){var hr=new Date().getHours();if(hr>=5&&hr<12)return"morning";if(hr>=12&&hr<18)return"afternoon";return"evening";}
 function buildETA(g,m){return"Good "+g+"! Your Spark driver here. I should arrive in about "+m+" minute"+(m===1?"":"s")+". Thank you!";}
+function renderNotes(main){
+  main.appendChild(h('<p class="lead">Dirección, código de acceso e instrucciones especiales del cliente.</p>'));
+  var ta=h('<textarea class="ta" rows="6" placeholder="Ej:\n📍 123 Main St, Unit 45\n🔑 Código: #8329\n📝 Timbrar 2 veces. Puerta lado derecho."></textarea>');
+  ta.value=S.notes;ta.oninput=function(){S.notes=ta.value;save();};
+  main.appendChild(ta);
+  var cp=h('<button class="copy-btn">Copiar notas</button>');cp.onclick=function(){copyText(S.notes,cp,"Copiar notas");};
+  main.appendChild(cp);
+  var clr=h('<button class="ghost" style="margin-top:8px;width:100%">Limpiar notas</button>');clr.onclick=function(){S.notes="";ta.value="";save();render();};
+  main.appendChild(clr);
+}
 function renderMsg(main){
   var g=getGreeting(),m=5;
   main.appendChild(h('<p class="lead">Mensajes listos para pegar en el chat de Spark.</p>'));
@@ -615,7 +626,7 @@ function render(){
 
   // steps
   var steps=h('<div class="steps"></div>');
-  [["load","1 · Cargar"],["review","2 · Revisar"],["route","3 · Ruta"],["cart","4 · Carrito"],["oos","5 · Subs"],["gate","🔑 Gate"],["msg","💬 ETA"]].forEach(function(p){
+  [["load","1 · Cargar"],["review","2 · Revisar"],["route","3 · Ruta"],["cart","4 · Carrito"],["oos","5 · Subs"],["gate","🔑 Gate"],["notes","📝 Notas"],["msg","💬 ETA"]].forEach(function(p){
     var openCount=p[0]==="oos"?S.oosChats.filter(function(c){return!c.closed;}).length:0;
     var label=p[1]+(openCount>0?' <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--sp);vertical-align:middle;margin-left:2px;margin-bottom:1px"></span>':"");
     var b=h('<button class="step'+(S.view===p[0]?" on":"")+'">'+label+'</button>');b.onclick=function(){set("view",p[0]);};steps.appendChild(b);
@@ -631,6 +642,7 @@ function render(){
   else if(S.view==="cart") renderCart(main,cart,clients,total);
   else if(S.view==="oos") renderOOS(main);
   else if(S.view==="gate") renderGate(main);
+  else if(S.view==="notes") renderNotes(main);
   else if(S.view==="msg") renderMsg(main);
 
   // config footer
