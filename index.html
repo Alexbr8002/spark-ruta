@@ -510,13 +510,48 @@ function getGreeting(){var hr=new Date().getHours();if(hr>=5&&hr<12)return"morni
 function buildETA(g,m){return"Good "+g+"! Your Spark driver here. I should arrive in about "+m+" minute"+(m===1?"":"s")+". Thank you!";}
 function renderNotes(main){
   main.appendChild(h('<p class="lead">Dirección, código de acceso e instrucciones especiales del cliente.</p>'));
-  var ta=h('<textarea class="ta" rows="6" placeholder="Ej:\n📍 123 Main St, Unit 45\n🔑 Código: #8329\n📝 Timbrar 2 veces. Puerta lado derecho."></textarea>');
+
+  var fileInput=h('<input class="file" type="file" accept="image/*">');
+  var addStatus=h('<div></div>');
+  main.appendChild(fileInput);
+  main.appendChild(addStatus);
+  main.appendChild(h('<p class="hint">Sube captura de Spark con dirección/instrucciones — la IA extrae y agrega a tus notas.</p>'));
+
+  var ta=h('<textarea class="ta" rows="6" placeholder="Ej:\n📍 123 Main St, Unit 45\n🔑 Código: #8329\n📝 Timbrar 2 veces. Puerta lado derecho." style="margin-top:10px"></textarea>');
   ta.value=S.notes;ta.oninput=function(){S.notes=ta.value;save();};
   main.appendChild(ta);
   var cp=h('<button class="copy-btn">Copiar notas</button>');cp.onclick=function(){copyText(S.notes,cp,"Copiar notas");};
   main.appendChild(cp);
   var clr=h('<button class="ghost" style="margin-top:8px;width:100%">Limpiar notas</button>');clr.onclick=function(){S.notes="";ta.value="";save();render();};
   main.appendChild(clr);
+
+  fileInput.onchange=function(e){
+    var files=Array.prototype.slice.call(e.target.files||[]);
+    if(!files.length)return;
+    if(!S.apiKey){addStatus.innerHTML='<div class="error" style="margin-top:8px">Falta clave de API (Ajustes ⚙)</div>';return;}
+    addStatus.innerHTML='<div class="status" style="margin-top:8px">Analizando…</div>';
+    fileToB64(files[0]).then(function(b64){
+      var prompt='Extract delivery info from this Walmart Spark screenshot. Return ONLY valid JSON: {"address":string|null,"code":string|null,"instructions":string|null,"customer":string|null}. address = full street address with unit if shown. code = gate/access/door code if shown. instructions = any delivery notes (where to leave it, how many times to ring, gate instructions, dog warnings, etc). customer = customer name if shown. Use null for anything not visible. Do not invent data.';
+      var body={model:S.model,max_tokens:300,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:files[0].type||"image/jpeg",data:b64}},{type:"text",text:prompt}]}]};
+      return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();});
+    }).then(function(data){
+      var txt=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("").trim();
+      var clean=txt.replace(/```json/gi,"").replace(/```/g,"").trim();
+      var parsed=JSON.parse(clean);
+      if(!parsed.address&&!parsed.code&&!parsed.instructions){addStatus.innerHTML='<div class="error" style="margin-top:8px">No encontré datos útiles en la captura.</div>';return;}
+      var lines=[];
+      if(parsed.customer)lines.push("👤 "+parsed.customer);
+      if(parsed.address)lines.push("📍 "+parsed.address);
+      if(parsed.code)lines.push("🔑 Código: "+parsed.code);
+      if(parsed.instructions)lines.push("📝 "+parsed.instructions);
+      var block=lines.join("\n");
+      S.notes=(S.notes?S.notes+"\n\n":"")+block;
+      ta.value=S.notes;save();
+      addStatus.innerHTML='<div class="status" style="margin-top:8px">✓ Agregado a notas.</div>';
+      fileInput.value="";
+      setTimeout(function(){addStatus.innerHTML="";},2500);
+    }).catch(function(err){addStatus.innerHTML='<div class="error" style="margin-top:8px">Error: '+esc(err&&err.message?err.message:"error")+'</div>';});
+  };
 }
 function renderMsg(main){
   var g=getGreeting(),m=5;
