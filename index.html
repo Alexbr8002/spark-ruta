@@ -183,8 +183,8 @@ PARED DERECHA (desde entrada hacia fondo):
 
 ============================================== */
 
-var ZONE_BASE={Y:10,I:20,L:30,K:40,H:50,F:60,E:70,D:80,C:90,B:100,J:110,G:120,GR:115};
-var ZONE_LABEL={Y:"Garden / Exterior",I:"Toys / Sports",L:"Auto / Hardware / Paint",K:"Electronics",H:"Home",F:"Office / Arts / Party / Seasonal",E:"Baby / Girls",D:"Mens / Boys",C:"Intimates / Jewelry",B:"Womens",J:"Shoes / Pets",G:"Health / Beauty / Personal Care",A:"Grocery",AP:"Fresh Produce",AB:"Bakery",AD:"Deli",AC:"Meat & Seafood",GR:"Internal Ref (Grocery)",Z:"Checkout"};
+var ZONE_BASE={Y:10,I:20,GM:25,L:30,K:40,H:50,F:60,E:70,BK:75,D:80,C:90,B:100,J:110,G:120,GR:115,FT:127};
+var ZONE_LABEL={Y:"Garden / Exterior",I:"Toys / Sports",GM:"Pasillo interno (I↔H)",L:"Auto / Hardware / Paint",K:"Electronics",H:"Home",F:"Office / Arts / Party / Seasonal",E:"Baby / Girls",BK:"Pasillo interno (E↔J)",D:"Mens / Boys",C:"Intimates / Jewelry",B:"Womens",J:"Shoes / Pets",G:"Health / Beauty / Personal Care",A:"Grocery",AP:"Fresh Produce",AB:"Bakery",AD:"Deli",AC:"Meat & Seafood",GR:"Pasillo interno (A↔E)",FT:"Pasillo interno (Z/G↔frente)",Z:"Checkout"};
 var CLIENT_COLORS={A:"#FFD23F",B:"#7CC8FF",C:"#C4B5FD"};
 
 /* ---- REFERENCIA VISUAL - Geometría Walmart #2483 ----
@@ -222,8 +222,120 @@ function sectionDir(p,n){
   return 1;
 }
 function zoneOf(p){if(["A","AP","AB","AD","AC"].indexOf(p)>=0)return p==="A"?"A":p;return p;}
+/* GR, BK, GM, FT: pasillos internos de picking, numeración lineal (no pares), ya cubiertos por ZONE_BASE+n/100 en baseSeq() */
+
+/* ---- Agrupación física de pasillos enfrentados (v3.0) ----
+   A, J: pares consecutivos (A2-A3, A4-A5 / J2-J3, J4-J5) — diferencia de 1, par+impar
+   I,H,L,K,F,D,C,B,Y,G: pares salteados (I1-I3, I5-I7) — ambos impares, diferencia de 2
+   Independientes (nunca agrupan): A1,A32,A33,A34,A35,A36, J1,J24, K25, G37, L27, todas E, AP, AB, AD, Z
+   Perpendiculares (GR,BK,GM,FT): numeración lineal, nunca agrupan en pares.
+   CASOS ESPECIALES:
+   - AC4/AC5 físicamente en el mismo tramo que A30-A31 (AC5 más cerca, AC4 más lejos).
+   - AC1/AC2/AC3 físicamente en el mismo tramo que A33 (Meat & Seafood).
+     A33 se camina 1→25 (ascendente, viniendo de A32). AC1 está cerca de A33-25 (al final del tramo),
+     AC3 está cerca de A33-1 (al inicio), AC2 en medio. Por eso el orden de salida es AC1→AC2→AC3. */
+var CONSEC_PAIR_PREFIXES={A:1,J:1};
+var SKIP_PAIR_PREFIXES={I:1,H:1,L:1,K:1,F:1,D:1,C:1,B:1,Y:1,G:1};
+var NEVER_PAIR_PREFIXES={E:1,AP:1,AB:1,AD:1,Z:1,GR:1,BK:1,GM:1,FT:1};
+var INDEPENDENT_AISLES={A1:1,A32:1,A33:1,A34:1,A35:1,A36:1,J1:1,J24:1,K25:1,G37:1,L27:1};
+function pairKey(prefix,num){
+  if(prefix==="AC"&&(num===4||num===5))return "A30-A31"; // mismo tramo físico que A30-A31
+  if(prefix==="AC"&&(num===1||num===2||num===3))return "A33"; // mismo tramo físico que A33
+  if(prefix==="AC")return "AC"+num;
+  if(num==null)return prefix+"-"+(num==null?"x":num);
+  var code=prefix+num;
+  if(NEVER_PAIR_PREFIXES[prefix])return prefix+num;
+  if(INDEPENDENT_AISLES[code])return code;
+  if(CONSEC_PAIR_PREFIXES[prefix]){
+    // par consecutivo: (2,3),(4,5)... el menor de cada par es par, el mayor impar
+    var lo=num%2===0?num:num-1;
+    var hi=lo+1;
+    if(INDEPENDENT_AISLES[prefix+hi]||INDEPENDENT_AISLES[prefix+lo])return code; // partner independiente: no agrupar
+    return prefix+lo+"-"+prefix+hi;
+  }
+  if(SKIP_PAIR_PREFIXES[prefix]){
+    // par salteado: ambos impares, diferencia 2. K empieza en 3 (no 1), resto empieza en 1.
+    var start=(prefix==="K")?3:1;
+    var base=Math.floor((num-start)/4)*4+start;
+    var top=base+2;
+    if(INDEPENDENT_AISLES[prefix+top]||INDEPENDENT_AISLES[prefix+base])return code; // partner independiente: no agrupar
+    return prefix+base+"-"+prefix+top;
+  }
+  return code;
+}
+
+/* ---- Pares físicos (v3.0) ----
+   Aisles frente a frente en el mismo corredor → 1 encabezado visual.
+   Confirmado: A y J usan paso-2 (A2-A3,A4-A5...). Resto (I,H,L,K,F,D,C,B,Y,G) usan paso-4 impar-impar (I1-I3,I5-I7...).
+   Independientes confirmados (no agrupan, quedan solos): A1,A32,A33,A34,A35,A36,J1,J24,Y5.
+   L27,K25,G37,D29,C37: quedan como fin de su par hasta verificación in situ — NO marcados independientes todavía. */
+var INDEPENDENT={A:[1,32,33,34,35,36],J:[1,24],Y:[5]};
+var PAIR_STEP2=["A","J"];
+var PAIR_STEP4=["I","H","L","K","F","D","C","B","Y","G"];
+function isIndependent(p,n){return INDEPENDENT[p]&&INDEPENDENT[p].indexOf(n)>=0;}
+function pairOf(p,n){
+  if(n==null)return p;
+  if(isIndependent(p,n))return p+n;
+  if(PAIR_STEP2.indexOf(p)>=0){
+    if(n<2)return p+n; // n=1 ya cubierto por independiente arriba en A/J; resguardo
+    var lo=n%2===0?n-1:n;return p+lo+"-"+p+(lo+1);
+  }
+  if(PAIR_STEP4.indexOf(p)>=0){
+    // K empieza en 3 (no 1); resto empiezan en 1. Detectamos el primer impar de la pareja módulo 4 sobre el offset correcto.
+    var off=(p==="K")?3:1;
+    var idx=Math.floor((n-off)/4);if(idx<0)idx=0;
+    var lo4=off+idx*4;
+    return p+lo4+"-"+p+(lo4+2);
+  }
+  return p+n;
+}
 function isSpecial(it,specials){var a=String(it.aisle||"").toUpperCase();for(var i=0;i<specials.length;i++){var s=specials[i];if(s.aisle.toUpperCase()!==a)continue;if(it.section==null)return true;if(it.section>=s.from&&it.section<=s.to)return true;}return false;}
-function buildRoute(items,specials){var en=items.map(function(it,i){if(it.status==="picked"||it.status==="manual_delete")return null;var pa=parseAisle(it.aisle);var sp=isSpecial(it,specials);return Object.assign({},it,{_i:i,prefix:pa.prefix,num:pa.num,seq:baseSeq(pa.prefix,pa.num)+(sp?9000:0),special:sp});}).filter(Boolean);var g={};en.forEach(function(it){var k=String(it.aisle||"?").toUpperCase();if(!g[k])g[k]={aisle:k,prefix:it.prefix,num:it.num,seq:it.seq,special:it.special,items:[]};g[k].items.push(it);});var arr=Object.keys(g).map(function(k){return g[k];}).sort(function(a,b){return a.seq-b.seq;});arr.forEach(function(gr){var d=sectionDir(gr.prefix,gr.num);gr.items.sort(function(x,y){return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));});});return arr;}
+function buildRoute(items,specials){
+  var en=items.map(function(it,i){
+    if(it.status==="picked"||it.status==="manual_delete")return null;
+    var pa=parseAisle(it.aisle);var sp=isSpecial(it,specials);
+    var pk=pairKey(pa.prefix,pa.num);
+    return Object.assign({},it,{_i:i,prefix:pa.prefix,num:pa.num,pairKey:pk,seq:baseSeq(pa.prefix,pa.num)+(sp?9000:0),special:sp});
+  }).filter(Boolean);
+  var g={};
+  en.forEach(function(it){
+    var k=it.pairKey||String(it.aisle||"?").toUpperCase();
+    if(!g[k])g[k]={aisle:k,prefix:it.prefix,num:it.num,seq:it.seq,special:it.special,items:[]};
+    g[k].items.push(it);
+    if(it.seq<g[k].seq)g[k].seq=it.seq; // grupo usa el seq menor (entrada al par)
+  });
+  var arr=Object.keys(g).map(function(k){return g[k];}).sort(function(a,b){return a.seq-b.seq;});
+  arr.forEach(function(gr){
+    if(gr.aisle==="A30-A31"){
+      // orden explícito: A30 (secciones) → A31 (secciones) → AC5 → AC4
+      var rank=function(it){if(it.prefix==="A"&&it.num===30)return 0;if(it.prefix==="A"&&it.num===31)return 1;if(it.prefix==="AC"&&it.num===5)return 2;if(it.prefix==="AC"&&it.num===4)return 3;return 4;};
+      gr.items.sort(function(x,y){
+        var rx=rank(x),ry=rank(y);
+        if(rx!==ry)return rx-ry;
+        if(rx<=1){var d=sectionDir(x.prefix,x.num);return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));}
+        return 0;
+      });
+      return;
+    }
+    if(gr.aisle==="A33"){
+      // orden explícito: A33 (secciones) → AC1 → AC2 → AC3
+      var rankAC=function(it){if(it.prefix==="A"&&it.num===33)return 0;if(it.prefix==="AC"&&it.num===1)return 1;if(it.prefix==="AC"&&it.num===2)return 2;if(it.prefix==="AC"&&it.num===3)return 3;return 4;};
+      gr.items.sort(function(x,y){
+        var rx=rankAC(x),ry=rankAC(y);
+        if(rx!==ry)return rx-ry;
+        if(rx===0){var d=sectionDir(x.prefix,x.num);return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));}
+        return 0;
+      });
+      return;
+    }
+    gr.items.sort(function(x,y){
+      if(x.num!==y.num)return (x.num==null?0:x.num)-(y.num==null?0:y.num); // primero por número de aisle dentro del par
+      var d=sectionDir(x.prefix,x.num);
+      return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));
+    });
+  });
+  return arr;
+}
 /* ---- bulto ---- */
 function parseSize(name){var n=(name||"").toLowerCase(),bulk=1,heavy=false,large=false,fragile=false,m;
 m=n.match(/(\d+(?:\.\d+)?)\s*(?:lb|lbs|pound)/);if(m){var v=parseFloat(m[1]);bulk=Math.max(bulk,v/10);if(v>=15){heavy=true;large=true;}}
@@ -1410,6 +1522,7 @@ function showUndo(it,fromStatus){S.undoToast={it:it,from:fromStatus};render();
 function undoLast(){if(!S.undoToast)return;var it=S.undoToast.it;it.status="pending";it.done=false;S.undoToast=null;clearTimeout(window._undoTimer);save();render();}
 function aisleCard(g,step){
   var z=ZONE_LABEL[zoneOf(g.prefix)]||"";
+  var isPair=g.aisle.indexOf("-")>=0;
   var card=h('<div class="aisle'+(g.special?" sp":"")+'"></div>');
   card.appendChild(h('<div class="aisle-head"><div class="aisle-id"><span class="step-no">'+step+'</span><span class="aisle-code">'+esc(g.aisle)+'</span></div><div class="aisle-meta"><div class="zone">'+esc(z)+'</div><div class="count">'+g.items.length+' '+(g.items.length===1?"producto":"productos")+'</div></div></div>'));
   var box=h('<div></div>');
@@ -1418,6 +1531,7 @@ function aisleCard(g,step){
     var row=h('<div class="item-row"></div>');
     var sub="";
     if(it.client)sub+='<em class="cl" style="background:'+CLIENT_COLORS[it.client]+';color:#1A1300">Cliente '+it.client+'</em>';
+    if(isPair)sub+='<em>'+esc(it.aisle)+'</em>'; // en pares, aclarar de qué lado exacto es
     if(it.section!=null)sub+='<em>Sec '+it.section+'</em>';
     if(it.qty>1)sub+='<em>×'+it.qty+'</em>';
     if(it.perishable)sub+='<em class="frio">frío</em>';
