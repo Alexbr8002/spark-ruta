@@ -1,1296 +1,1683 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#0F1420" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Spark Ruta" />
-<title>Spark Ruta · 2483</title>
-<link rel="manifest" href='data:application/manifest+json,{"name":"Spark Ruta 2483","short_name":"Spark Ruta","start_url":"./","display":"standalone","background_color":"%230F1420","theme_color":"%230F1420","icons":[{"src":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAFSklEQVR4nO3dPXbjRhCFUUobkAPl1lq8cK9FzhV4VqAJfDimMCIJEP1Thbo39wjB+9BNSuf46RTMy+vb5+xnoJ8fH+9Ps5/h0tSHMXZOp7lRDP/BRs8to2MY9sMMny1GhdD9hxg+e/QOods/bvi01CuE5v+o4dNT6xCeW/5jxk9vrTfWpCbDZ4YWp8HuE8D4maXF9nYFYPzMtneDDwdg/G38+/efsx8hvT1bfCgA4yeaRze5OQDjb+f89ncKtPHINjcFYPxEt3WjqwMwfrLYstVVARg/2azd7N0AjL+P5b3f54D21my36Z9CQDY3A/D2J7t7G74agPFzFLe27Ao0wbX7vs8B430bgLc/R3Nt004ASvstAG9/juq7bTsBBrt3z/c5YKwvAXj7c3TLjTsBKO1XAN7+/bnexHC5dSdAQEIZRwCU9nw6uf5Qz3nzToBBXGtiEkBQghlDAJQmAEp79gG4P9eZmF5e3z6dAIEJpz8BUJoAOvMWj00AlCaA4JwgfQmA0gTQkbd3fAKgNAEk4CTpRwCUJoBOvLVzEAClCSAJJ0ofAqA0AXTgbZ2HAChNAIk4WdoTQGNGmosAKE0AlCaAZFyx2hJAQ8aZjwAoTQCUJoCEXLXaEUAjRpmTAChNAJQmgAZmXH9cudoQAKUJgNIEQGkC2GnmXdzngP0EQGkCoDQBUJoAdohwB4/wDJkJgNIEQGkCoDQBPCjS3TvSs2QjAEp7enl9+5z9EBlke8v+8dc/sx8hBQHckG3014jhOgFcOMrg7xHE/0oHUGXw91QOolQABr9OpSAOH4DR73P0GA4XgMH3dbQg0gdg8HNlDyJlAEYfU8YYUgRg8DllCCJkAAZ/TBGDCBGAwdcUIYhpARg9l2bFMCwAg2eLUUF0C8DgaalXEM0CMHhGahXErgCMngj2xLApAIMngy1BOAFIb9gJcI8gGKHlB+KuX4MKghZ6fiU69BdhgmCNkb8Um/qnEILgdJr7JxEh/hboTBA1RPgboLNQASwJ4hgiDX4pdABLgsgh8uCXUgVwSQyxZBr9pbQBLAlirKyDXzpMAEuCaOsog186bABLgtjmqINfKhPAkiC+qjL4pbIBLFULourglwRwxdGCMPjvCWClbEEY/DoCeFC0IAz+Mf4fYZQmgAdFeuNGepZsBEBpAqA0AVCaAHaIcPeO8AyZCYDSBEBpAqA0Aew08w7u/r+fAChNAJQmAEoTQAMz7uLu/20IgNIEQGkCaMSVJCcBJCS2dgRAaQKgNAE05GqSjwCSEVlbAqA0AVCaABpzRclFAImIqz0BUJoAOvCmzkMAlCaAJJwqfQiA0gTQiTd2DgKgNAEk4DTpRwCUJoCOvLnjEwClCSA4p0hfAqA0AXTmDR6bAChNAIE5Pfp7/vHx/jT7IY7OkGP68fH+5ASgNAFQmgCCcm0aQwCDGHRMz6fTfx8GZj8IjHTevBOA0gQQkOvSOL8CcA3qz7BjuNy6E4DSvgTgFODolht3Agx27xrkmjTWbwE4BTiq77btBKC0bwNwCnA01zbtBJjg2j3f/X+8qwE4BTiKW1u+eQKIgOzubdgViNLuBuAU6GN533f/b2/NdledACIgm7WbXX0FEgFZbNnqps8AIiC6rRvd/CFYBO2c7/3u/208ss2HvgUSAdE8usldQ355ffvc899DC3teyLt+D+AkYLa9G9z9izARMEuL7TUdrysRI7R86Tb9UwinAb213li3wToNaKnXy7X7G1sI7NH7VjHsyiIEthh1nR5+ZxcCt4z+HDn1Q6sYOJ3mfnkS7lsbURxbtG8KfwJkgcu0Z20wbQAAAABJRU5ErkJggg==","sizes":"192x192","type":"image/png"},{"src":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAQl0lEQVR4nO3cu5kbZxKG0SYT4Br0l7Fs4BuL1pexioAy+EDCQACmL/+l6q9zIphpGt/b1SN92Qjp2/cfP2f/DAAt/PH7b19m/wz8k3+USQw8wC8CYQ4PfQBjD3CMKOjPA+7A4AO0JQja80AbMPgAYwmC6zzAk4w+QAxi4BwP7QCjDxCbGNjPg/qE0QfISQy85+G8YPgB1iAEnvNQ7hh9gLWJgb95EJvhB6hGCBQPAMMPUFvlECj5ixt+AO5VDIFSv7DhB+CdSiFQ4hc1/AAcUSEEvs7+AXoz/gAcVWE7li2cCv94APS36jVguV/K8APQw2ohsNQnAOMPQC+rbcwSNbPaPwoAsa1wDUh/ATD+AIy2wvakDoAV/gEAyCn7BqU8YWR/6ACsJeMngXQXAOMPQDQZtylVAGR8wADUkG2jUpwssj1UAGrL8Ekg/AXA+AOQTYbtCh0AGR4gADwTfcPCBkD0BwcAn4m8ZSEDIPIDA4Ajom5auACI+qBgRf//779n/whQQsRtCxUAER8QALQQbePCBEC0BwOru739uwLAOJG2LkQARHogANBTlM2bHgBRHgQAjBJh+6YGQIQHAAAzzN7AaQEw+xeHyh6/+/s7AJhj5hZOCQDjDwC/zNrE4QFg/AHgoxnbODQAjD8APDd6I4cFgPGHGF597/d3ADDfyK0cEgDGHwD2GbWZ0/8/AADAeN0DwNs/xOHMDzmM2M6uAWD8IReBAHH03tBuAWD8AeCanlvqbwAAoKAuAeDtH+Jx3oecem1q8wAw/pCbUIB4emxr0wAw/gDQR+uN9TcAAFBQswDw9g9xHT3r+wwAMbXc2iYBYPwBYIxWm+sTAAAUdDkAvP0DwFgtttcFABZ39nu+vwOAtV0KAG//ADDH1Q0+HQDGHwDmurLFPgHAwpzxgVdOBYC3f6hBQEB8ZzfZBQAACjocAN7+ASCWM9vsAgCLcr4H3jkUAN7+oR4hATkc3WgXAAAoaHcAePsHgNiObLULACyo9dneZwBYz64A8PYPADns3WwXAAAoSADAYpzrgT0+DQDnf2DbhAVksme7XQAAoKC3AeDtHwBy+mzDXQBgIc70wF4CANhNYMA6XgaA8z8A5PZuy10AAKAgAQCLcJ4HjngaAM7/wCtCA3J5tekuAABQkAAAgIL+EQDO/5CPszzwzrNtdwEADhMckJ8AAICCBAAk520cOONDAPj+D+wlPCCXx413AQCAggQAABQkACAxZ3jgrL8CwPd/4CgBArncb70LAAAUJAAAoCABAEk5vwNXCADgEiECOX3dNn8ACABV3DbfBQAS8tYNXCUAAKAgAQBc5iIB+QgAAChIAEAy3raBFgQAABQkAIAmXCYgl6/+HwAAUMu37z9+ugBAIt6ygVYEANCMQIE8BAAAFCQAAKAgAQBJOK8DLQkAoCmhAjkIAAAoSABAAt6qgdYEAAAUJACA5lwsID4BAAAFCQAIzts00IMAAICCBADQhcsFxCYAAKAgAQCBeYsGehEAAFCQAAC6ccGAuAQABGU8gZ4EAAAUJACArlwyICYBAAAFCQAIyFsz0JsAAICCBADQnYsGxCMAAKAgAQDBeFsGRhAAAFCQAACGcNmAWAQABGIkgVEEAAAUJAAAoCABAAzjEwfEIQAgCOMIjCQAAKAgAQAM5dIBMQgAAChIAEAA3oqB0QQAABQkAIDhXDxgPgEAAAUJAJjM2zAwgwAAgIIEADCFywfMJQBgIiMIzCIAAKAgAQAABQkAYBqfQGAeAQCTGD9gJgEAAAUJAAAoSAAAU/kUAnMIAJjA6AGzCQAAKEgAANO5iMB4AgAGM3ZABAIAAAoSAABQkAAAQvBpBMYSADCQkQOiEAAAUJAAAICCBAAQhk8kMI4AgEGMGxCJAACAggQAABQkAIBQfCqBMQQADGDUgGgEAAAUJAAAoCABAJ05/x/nmUF/AgAAChIAAFCQAABC8hkA+hIA0JERA6ISAABQkAAAgIIEABCWTyjQjwCATowXEJkAAICCBAAAFCQAoAPn/3Y8S+hDAABAQQIAAAoSAABQkACAxnyzbs8zhfYEAAAUJAAAoCABAKTgMwC0JQCgISMFZCEAAKAgAQAABQkAIA2fWKAdAQCNGCcgEwEAAAUJAAAoSABAA87/43jW0IYAAICCBAAAFCQAAKAgAQAX+SY9nmcO1wkAAChIAABAQQIAAAoSAHCBb9HzePZwjQAAgIK+fPv+4+fsHwKy8NYZ27/+87/ZPwKkIQDgE0Y/JzEA7wkAeGDw1yQI4CMBQHkGvyZBQHUCgHIMPs8IAqoRAJRg9DlCDFCBAGBJBp+WBAErEgAsweAzkiBgBQKAtIw+EYgBshIApGHwyUAQkIUAICyDzwoEAVEJAEIx+qxMDBCJAGAqg09lgoCZBABDGXx4TRAwkgCgK4MP5wkCehIANGf0oT0xQGsCgMsMPownCLhKAHCYwYd4BAFHCQB2MfqQhxhgDwHAUwYf1iEIeEYAsG2bwYdKBAHbJgDKMvjAjSCoSQAUYvSBz4iBOgTAwgw+cJUgWJcAWIjBB3oTBOsQAMkZfWAWMZCbAEjG4ANRCYJcBEBwBh/IShDEJgCCMfjAqgRBLAIgAKMPVCMG5hMAExh8gI8EwXgCYACDD3CMIOhPAHRi9AHaEAN9CIBGDD7AGIKgDQFwksEHiEEQnCMADjD6ALGJgf0EwBsGHyA3QfCaALhj8AHWJgj+VjoADD5AbZWDoFwAGH0AnqkWA8sHgMEH4IzVg2C5ADD4APSwWhAsEQBGH4CRVoiBlAFg8AGIJGMQpAgAgw9AJhmCIGQAGHwAVhIxCMIEgNEHoIIoMTAtAAw+AMwLAhcAABio/AXgM4IAgBVEGfxHYQPgnhgAIJOoo38vRQA8EgQARJJh8B+lDIBHggCAkTIO/qMlAuCRIACgpRUG/9GSAfBIEABwxIqD/6hEANwTAwA8U2H075ULgEeCAKCmaoP/qHwAPBIEAGuqPviPBMAnBAFATgb/PQFwgBgAiM3o7ycALhAEAHMZ/PMEQEOCAKAvg9+OAOhIEABcY/D7EQADCQKA9wz+OAJgEjEA8IvRn0MABCEIgCoMfgwCIChBAKzC4MckAJIQBEAWBj8HAZCUIACiMPg5CYAFiAFgNKOfnwBYkCAAWjP46xEABQgC4CiDvz4BUJAgAB4Z/HoEQHFiAOoy+rUJAD4QBLAug889AcBbggDyMvi8IwA4RBBAXAafIwQAlwgCmMfgc4UAoBkxAP0ZfVoRAHQjCOA6g08vAoBhBAF8zuAzigBgGkEABp95BABhCAIqMPhEIQAISQywEqNPRAKAFAQBmRh8MhAApCQIiMTgk5EAYAmCgJEMPisQACxHDNCD0Wc1AoDlCQLOMPisTgBQjiDgGYNPNQKA8gRBTQaf6gQAPBAEazL48JEAgDfEQG5GH14TAHCAIIjN4MN+AgAuEARzGXw47+vsHwAAGE8AwAXeQOfx7OEaAQAABQkAAChIAABAQQIALvItejzPHK4TAABQkAAAgIIEAAAUJACgAd+kx/GsoQ0BAAAFCQAAKEgAQCNO00AmAgBIQ2RBOwIAAAoSAABQkACAhpyogSwEAJCCuIK2BAAAFCQAAKAgAQCNOVW355lCewIAAAoSAABQkAAAgIIEAHTgm3U7niX0IQAAoCABAAAFCQDoxOkaiEwAAGGJKOhHAABAQQIAAAoSANCREzYQlQAAQhJP0JcAAICCBAAAFCQAoDOn7OM8M+hPAABAQQIAAAoSADCAkzYQjQAAQhFLMIYAAICCBAAAFCQAYBCnbSASAQCEIZJgHAEAAAUJAAAoSADAQE7cQBQCAAhBHMFYAgAAChIAAFCQAIDBnLqBCAQAMJ0ogvEEAAAUJABgAm+8wGwCAJhKDMEcAgAAChIAAFCQAIBJnL6BmQQAMI0IgnkEAAAUJAAAoCABABM5gQOzCABgCvEDcwkAAChIAMBk3oSBGQQAABQkAIDhXD1gPgEAAAUJAAjAGzEwmgAAgIIEADCUawfEIAAAoCABAEF4MwZGEgDAMCIH4hAAAFCQAACAggQABOJEDowiAIAhxA3EIgAAoCABAMF4UwZGEAAAUJAAALpz1YB4BAAAFCQAICBvzEBvAgAAChIAQFeuGRCTAACAggQABOXNGehJAADdiBiISwAAQEECAALzBg30IgAAoCABAHThegGxCQAAKEgAQHDepIEeBAAAFCQAgOZcLSA+AQAABQkASMAbNdCaAACAggQA0JRrBeQgACAJwwq0JAAAoCABAAAFCQCgGZ8pIA8BAIkYWKCVr3/8/tuX2T8EADDOH7//9sUFAGjCdQJyEQAAUJAAgGS8aQMtCAAAKEgAAJe5SkA+AgAAChIAkJA3buCqr9v2678HnP2DAAD93TbfBQC4xDUCchIAkJThBa4QAABQkAAAgIL+CgB/CAgc5TME5HK/9S4AkJgBBs4SAABQkAAAgII+BIC/AwD28vkBcnnceBcASM4QA2cIAAAoSAAAh7k6QH7/CAB/BwD5GGTgnWfb7gIAAAUJAAAo6GkA+AwAvOJzA+TyatNdAGARhhk4QgAAQEEvA8BnAADI7d2WuwAAu/nMAOsQALAQAw3s9TYAfAYAgJw+23AXAAAo6NMAcAUAts3nBchkz3a7AMBiDDWwhwAAgIJ2BYDPAACQw97NdgGABbX+DOCzAqxndwC4AgBAbEe22gUAAAo6FACuAFCP8z/kcHSjXQBgUYYbeOdwALgCAEAsZ7bZBQAACjoVAK4AUIPPCBDf2U12AYCFGXDgldMB4AoAAHNd2eJLFwARAABzXN1gnwBgcWc/A/h8AGu7HACuAAAwVovtdQEAgIKaBIArAACM0Wpzm10ARADEdfR7vu//EFPLrfUJAAAKahoArgAA0EfrjW1+ARABkJvzP8TTY1u7fAIQARCPYYecem2qvwEAgIK6BYArAABc03NLu14ARADk4jMBxNF7Q7t/AhABEIeBhxxGbKe/AQCAgoYEgCsAAOwzajOHXQBEAMTw6jOAzwMw38itHPoJQAQAwHOjN3L43wCIAAD4aMY2TvkjQBEAAL/M2sRp/xWACIB5Hr/3+/4Pc8zcwqn/GaAIAKCq2Rs4/f8DMPsBAMBoEbZvegBsW4wHAQAjRNm8EAGwbXEeCFRx++7v+z+ME2nrwgTAtsV6MADQUrSNC/XD3Hz7/uPn7J8BAFqJNv7bFuwCcBPxQQHAGVE3LWQAbFvcBwYAe0XesrABsG2xHxwAvBN9w0IHwLbFf4AA8CjDdoX/Ae/540AAIssw/DfhLwD3Mj1YAGrJtlGpAmDb8j1gANaXcZvS/cD3fBIAYKaMw3+T7gJwL/ODByC37BuUOgC2Lf8/AAD5rLA96X+Bez4JANDTCsN/k/4CcG+lfxgAYlltY5b6Ze65BgDQwmrDf7PkL3VPCABwxqrDf7PUJ4BnVv8HBKC9Ctux/C94zzUAgHcqDP9NmV/0nhAA4F6l4b8p9wvfEwIAtVUc/puyv/g9IQBQS+Xhvyn/AO4JAYC1Gf6/eRAviAGANRj95zyUTwgBgJwM/3sezgFiACA2o7+fB3WSGACIweif46E1IAYAxjL613mAHQgCgLYMfnse6ACCAOAYg9+fBzyJKAD4xdjP4aEHJRCAVRj4mP4EAELJhUeYMvgAAAAASUVORK5CYII=","sizes":"512x512","type":"image/png"}]}' />
-<style>
-:root{--bg:#0F1420;--surf:#1A2233;--surf2:#232E44;--line:#2C3852;--tx:#EAF0FF;--mut:#8C9BB8;--acc:#FFD23F;--ok:#34D399;--sp:#FB7185;}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased}
-#app{max-width:560px;margin:0 auto;min-height:100vh;padding-bottom:96px}
-.head{padding:16px 16px 12px;background:linear-gradient(180deg,#141B2B,#0F1420);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-.head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--acc);font-weight:800}
-.store{font-size:20px;font-weight:800;margin-top:2px}
-.entrada{font-size:11px;color:var(--mut);text-align:right;line-height:1.3;max-width:110px;border:1px solid var(--line);border-radius:8px;padding:5px 7px}
-.prog{display:flex;align-items:center;gap:10px;margin-top:12px}
-.prog-bar{flex:1;height:8px;background:var(--surf2);border-radius:99px;overflow:hidden}
-.prog-bar>span{display:block;height:100%;background:var(--ok);transition:width .3s}
-.prog-txt{font-size:12px;color:var(--mut);font-weight:600;white-space:nowrap}
-.steps{display:flex;gap:6px;padding:12px 16px}
-.step{flex:1;background:var(--surf);border:1px solid var(--line);color:var(--mut);padding:9px 4px;border-radius:10px;font-size:12px;font-weight:700}
-.step.on{background:var(--acc);color:#1A1300;border-color:var(--acc)}
-.pad{padding:4px 16px 24px}
-.lead{color:var(--mut);font-size:14px;line-height:1.5;margin:8px 0 18px}
-.big{width:100%;background:var(--acc);color:#1A1300;border:none;border-radius:14px;padding:16px;font-size:16px;font-weight:800;margin:4px 0}
-.ghost{width:100%;background:var(--surf);color:var(--tx);border:1px solid var(--line);border-radius:12px;padding:13px;font-size:14px;font-weight:700;margin:4px 0}
-.ghost.sm{width:auto;flex:1;padding:10px;font-size:13px}
-.opt{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 12px}
-.opt-h{font-size:13px;font-weight:800;margin-bottom:10px}
-.file{width:100%;background:var(--surf2);border:1px dashed var(--mut);color:var(--tx);border-radius:10px;padding:14px 12px;font-size:14px}
-.file::file-selector-button{background:var(--acc);color:#1A1300;border:none;border-radius:8px;padding:9px 14px;font-weight:800;font-size:13px;margin-right:12px}
-.status{margin-top:10px;background:rgba(255,210,63,.12);border:1px solid var(--acc);color:#FFE9A6;padding:10px 12px;border-radius:10px;font-size:13px;font-weight:600}
-.error{margin-top:10px;background:rgba(251,113,133,.12);border:1px solid var(--sp);color:#FFD7DE;padding:10px 12px;border-radius:10px;font-size:13px}
-.hint{color:var(--mut);font-size:12px;margin:10px 0 6px}
-.hint code{background:var(--surf2);padding:2px 6px;border-radius:5px;color:var(--acc);font-size:11px}
-.ta{width:100%;background:var(--surf);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px;font-size:13px;font-family:ui-monospace,monospace;resize:vertical}
-.row-btns{display:flex;gap:8px;margin:10px 0}
-.empty{color:var(--mut);text-align:center;padding:40px 20px;font-size:14px}
-.in{background:var(--surf2);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:8px;font-size:13px;width:100%}
-.edit{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px}
-.edit.sp{border-color:var(--sp)}
-.in.name{margin-bottom:8px;font-weight:600}
-.edit-row{display:flex;gap:6px;align-items:flex-end}
-.edit-row label{font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase;flex:1}
-.edit-row label:first-child{flex:1.4}
-.del{background:transparent;border:1px solid var(--line);color:var(--sp);border-radius:8px;width:38px;height:36px;font-size:14px;flex:none}
-.tag-sp{color:var(--sp);font-size:12px;font-weight:700;margin-top:8px}
-.client-row{display:flex;align-items:center;gap:6px;margin-top:8px}
-.client-lbl{font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase;margin-right:2px}
-.client-btn{width:34px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--surf2);color:var(--mut);font-weight:800;font-size:13px}
-.client-btn.clr{color:var(--sp)}
-.summary{display:flex;gap:8px;margin:6px 0 16px}
-.summary>div{flex:1;background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center}
-.summary b{display:block;font-size:22px;font-weight:800;color:var(--acc)}
-.summary span{font-size:11px;color:var(--mut);text-transform:uppercase}
-.aisle{background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
-.aisle.done{opacity:.5}.aisle.sp{border-color:var(--sp)}
-.aisle-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--surf2)}
-.aisle-id{display:flex;align-items:center;gap:10px}
-.step-no{background:var(--bg);color:var(--mut);width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
-.aisle-code{font-size:22px;font-weight:800;color:var(--acc)}
-.aisle.sp .aisle-code{color:var(--sp)}
-.aisle-meta{text-align:right}
-.zone{font-size:12px;color:var(--mut);font-weight:600}
-.count{font-size:12px;font-weight:700}
-.item{display:flex;align-items:center;gap:11px;padding:12px 14px;background:transparent;border:none;border-top:1px solid var(--line);text-align:left;width:100%;color:var(--tx)}
-.check{width:26px;height:26px;border:2px solid var(--line);border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--ok);font-weight:900}
-.item.done .check{background:var(--ok);border-color:var(--ok);color:#04241A}
-.item-body{display:flex;flex-direction:column;gap:3px;min-width:0}
-.item-name{font-size:14px;font-weight:600;line-height:1.3}
-.item.done .item-name{text-decoration:line-through;color:var(--mut)}
-.item-sub{display:flex;gap:8px;flex-wrap:wrap}
-.item-sub em{font-style:normal;font-size:11px;color:var(--mut);background:var(--surf2);padding:2px 7px;border-radius:6px;font-weight:700}
-.cl{font-style:normal;font-size:11px;font-weight:800;padding:2px 7px;border-radius:6px}
-.frio{color:#7CC8FF!important}
-.sp-head{color:var(--sp);font-weight:800;font-size:13px;margin:18px 0 10px;border-top:1px dashed var(--sp);padding-top:14px}
-.foot{text-align:center;color:var(--mut);font-size:13px;font-weight:600;margin:18px 0}
-.zone-card{background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
-.zone-h{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--surf2)}
-.zone-icon{font-size:20px;color:var(--acc)}
-.zone-title{font-size:15px;font-weight:800}.zone-hint{font-size:11px;color:var(--mut);font-weight:600}
-.zone-n{margin-left:auto;background:var(--bg);font-weight:800;font-size:13px;min-width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center}
-.zone-empty{padding:14px;color:var(--mut);text-align:center}
-.zone-item{display:flex;align-items:center;gap:9px;padding:10px 14px;border-top:1px solid var(--line)}
-.zone-name{font-size:13px;font-weight:600;flex:1;min-width:0}
-.zone-qty{font-size:11px;color:var(--mut);font-weight:700;background:var(--surf2);padding:2px 7px;border-radius:6px}
-.cfg{position:fixed;bottom:0;left:0;right:0;max-width:560px;margin:0 auto;background:#0C1119;border-top:1px solid var(--line)}
-.cfg-toggle{width:100%;background:transparent;border:none;color:var(--mut);padding:13px;font-size:13px;font-weight:700;text-align:left}
-.cfg-body{padding:0 16px 14px;max-height:55vh;overflow:auto}
-.sp-edit{display:flex;gap:6px;align-items:flex-end;margin-bottom:8px}
-.sp-edit label{font-size:10px;color:var(--mut);font-weight:700;flex:1}
-.sp-edit label:first-child{flex:1.6}
-.img-grid{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
-.img-thumb{position:relative;width:72px;height:72px;border-radius:10px;overflow:hidden;border:1px solid var(--line);flex:none}
-.img-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.img-thumb button{position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:6px;border:none;background:rgba(0,0,0,.65);color:#fff;font-size:11px;line-height:1;cursor:pointer;padding:0}
-.img-add{width:72px;height:72px;border-radius:10px;border:2px dashed var(--mut);display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:22px;cursor:pointer;flex:none}
-.note-card{background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;padding:12px 14px;cursor:pointer}
-.note-addr{font-size:14px;font-weight:800}
-.note-meta{font-size:11px;color:var(--mut);margin-top:3px}
-.note-badge{display:inline-block;font-size:10px;font-weight:700;background:var(--surf2);color:var(--mut);padding:2px 7px;border-radius:6px;margin-top:6px;margin-right:4px}
-.match-banner{background:rgba(255,210,63,.1);border:1px solid var(--acc);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:12px}
-.match-banner button{display:block;width:100%;text-align:left;background:transparent;border:none;color:var(--acc);font-weight:700;font-size:13px;padding:6px 0;cursor:pointer}
-/* OOS */
-.oos-new{display:block;width:100%;background:transparent;border:2px dashed var(--acc);color:var(--acc);border-radius:14px;padding:16px;font-size:14px;font-weight:800;margin-bottom:14px;text-align:center;cursor:pointer}
-.oos-card{background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;cursor:pointer}
-.oos-card.open{border-color:rgba(255,210,63,.5)}
-.oos-card.closed{opacity:.55}
-.oos-card-h{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--surf2)}
-.oos-item-name{font-size:14px;font-weight:800;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.oos-badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;white-space:nowrap;margin-left:8px}
-.oos-badge.open{background:rgba(255,210,63,.2);color:var(--acc)}
-.oos-badge.closed{background:rgba(52,211,153,.15);color:var(--ok)}
-.oos-back{background:transparent;border:none;color:var(--mut);font-size:13px;font-weight:700;padding:0;margin-bottom:14px;cursor:pointer}
-.msg-box{background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:12px;margin:6px 0;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
-.copy-btn{background:transparent;border:1px solid var(--acc);color:var(--acc);border-radius:8px;padding:7px 16px;font-size:12px;font-weight:800;margin-top:6px;cursor:pointer}
-.fallback-box{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);border-radius:10px;padding:10px 12px;margin:6px 0;font-size:13px;color:var(--ok);line-height:1.5}
-.thread-msg{border-radius:10px;padding:10px 12px;margin:7px 0;font-size:13px;line-height:1.5}
-.thread-msg.customer{background:rgba(124,200,255,.07);border:1px solid rgba(124,200,255,.25)}
-.thread-msg.suggestion{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);color:var(--ok)}
-.thread-role{font-size:10px;font-weight:800;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
-.section-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:16px 0 6px}
-.item-wrap{border-top:1px solid var(--line)}
-.item-row{display:flex;align-items:center;gap:11px;padding:12px 14px 8px;background:transparent}
-.item-acts{display:flex;gap:8px;padding:0 14px 12px;padding-left:51px}
-.act-btn{flex:1;border-radius:8px;padding:8px 6px;font-size:12px;font-weight:800;border:1px solid var(--line);background:var(--surf2);color:var(--tx)}
-.act-btn.pick{color:var(--ok);border-color:rgba(52,211,153,.4)}
-.act-btn.rm{color:var(--sp);border-color:rgba(251,113,133,.4)}
-.undo-toast{position:fixed;bottom:108px;left:16px;right:16px;max-width:528px;margin:0 auto;background:#1A2233;border:1px solid var(--acc);border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;z-index:20;box-shadow:0 6px 24px rgba(0,0,0,.4)}
-.undo-toast span{font-size:13px;font-weight:600}
-.undo-toast button{background:var(--acc);color:#1A1300;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:800;white-space:nowrap}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Spark Mileage + Taxes v0.7</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111827;
+      --panel2: #172033;
+      --line: #273449;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --good: #34d399;
+      --warn: #f59e0b;
+      --bad: #fb7185;
+      --input: #0f172a;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.35;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(11, 18, 32, .95);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+      padding: 14px 14px 10px;
+    }
+    h1 {
+      font-size: 20px;
+      margin: 0 0 8px;
+      letter-spacing: -.02em;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .tab {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 999px;
+      white-space: nowrap;
+      font-weight: 650;
+      font-size: 13px;
+    }
+    .tab.active {
+      background: var(--accent);
+      color: #031525;
+      border-color: var(--accent);
+    }
+    main { padding: 14px; max-width: 960px; margin: 0 auto 80px; }
+    section { display: none; }
+    section.active { display: block; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin: 0 0 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.12);
+    }
+    .card h2 {
+      font-size: 18px;
+      margin: 0 0 10px;
+      letter-spacing: -.02em;
+    }
+    .card h3 {
+      font-size: 15px;
+      margin: 14px 0 8px;
+      color: var(--text);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    @media (max-width: 650px) {
+      .grid, .grid3 { grid-template-columns: 1fr; }
+    }
+    label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin: 0 0 5px;
+    }
+    input, select, textarea {
+      width: 100%;
+      background: var(--input);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px 12px;
+      font-size: 15px;
+      outline: none;
+    }
+    textarea { min-height: 130px; resize: vertical; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, .12);
+    }
+    .btnrow {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 14px;
+      color: #031525;
+      background: var(--accent);
+      font-weight: 750;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button.secondary {
+      color: var(--text);
+      background: var(--panel2);
+      border: 1px solid var(--line);
+    }
+    button.danger {
+      color: #1c0610;
+      background: var(--bad);
+    }
+    button.good {
+      color: #042014;
+      background: var(--good);
+    }
+    .metric {
+      background: var(--panel2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .metric .label { color: var(--muted); font-size: 12px; font-weight: 750; }
+    .metric .value { font-size: 22px; font-weight: 850; margin-top: 3px; letter-spacing: -.02em; }
+    .small { font-size: 12px; color: var(--muted); }
+    .ok { color: var(--good); }
+    .warn { color: var(--warn); }
+    .bad { color: var(--bad); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    th, td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      font-size: 13px;
+      vertical-align: top;
+    }
+    th { color: var(--muted); font-size: 12px; }
+    .right { text-align: right; }
+    .nowrap { white-space: nowrap; }
+    .notice {
+      border: 1px solid var(--line);
+      background: #0f172a;
+      border-radius: 14px;
+      padding: 11px;
+      color: var(--muted);
+      font-size: 13px;
+      margin: 10px 0;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      background: var(--input);
+    }
+    .list-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .list-actions button {
+      padding: 7px 9px;
+      border-radius: 9px;
+      font-size: 12px;
+    }
+    .footerbar {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: rgba(11, 18, 32, .97);
+      border-top: 1px solid var(--line);
+      padding: 9px 14px env(safe-area-inset-bottom);
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      z-index: 20;
+    }
+    .footerbar button { padding: 9px 12px; }
+    .hidden { display: none !important; }
+    .ocr-filled { border-color: var(--good) !important; box-shadow: 0 0 0 3px rgba(52,211,153,.12) !important; }
+    .ocr-progress { font-variant-numeric: tabular-nums; }
+    .ocr-raw { white-space: pre-wrap; max-height: 180px; overflow:auto; background:var(--input); border:1px solid var(--line); border-radius:12px; padding:10px; }
+    button:disabled { opacity:.55; cursor:wait; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+  </style>
 </head>
 <body>
-<div id="app"></div>
+<header>
+  <h1>Spark Mileage + Taxes <span style="font-size:12px;color:#9ca3af;font-weight:700;">v0.7</span></h1>
+  <nav class="tabs" aria-label="Secciones">
+    <button type="button" class="tab active" data-tab="dashboard">Dashboard</button>
+    <button type="button" class="tab" data-tab="day">Día</button>
+    <button type="button" class="tab" data-tab="earnings">Ganancias</button>
+    <button type="button" class="tab" data-tab="reports">Reportes</button>
+    <button type="button" class="tab" data-tab="import">Importar</button>
+    <button type="button" class="tab" data-tab="settings">Ajustes</button>
+  </nav>
+</header>
 
+<main>
+  <section id="dashboard" class="active">
+    <div class="card">
+      <h2>Resumen rápido</h2>
+      <div class="grid3" id="dashMetrics"></div>
+      <div class="notice">
+        Regla activa: gaps entre <b>odo fin de un día</b> y <b>odo inicio del siguiente</b> = millas personales. Cash tips = no tracked.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Últimos días</h2>
+      <div id="recentDays"></div>
+    </div>
+  </section>
+
+  <section id="day">
+    <div class="card">
+      <h2>Registro diario</h2>
+      <div class="grid">
+        <div>
+          <label>Fecha de trabajo</label>
+          <input type="date" id="workDate">
+        </div>
+        <div>
+          <label>Estado</label>
+          <select id="dayStatus">
+            <option value="open">Abierto</option>
+            <option value="closed">Cerrado</option>
+            <option value="historical">Histórico</option>
+          </select>
+        </div>
+        <div>
+          <label>Odo inicio</label>
+          <input type="number" id="odoStart" inputmode="numeric" placeholder="36855">
+        </div>
+        <div>
+          <label>Odo fin</label>
+          <input type="number" id="odoEnd" inputmode="numeric" placeholder="36888">
+        </div>
+        <div>
+          <label>MPG promedio del día</label>
+          <input type="number" id="mpg" step="0.01" inputmode="decimal" placeholder="13.5">
+        </div>
+        <div>
+          <label>Precio gas $/gal</label>
+          <input type="number" id="gasPrice" step="0.001" inputmode="decimal" placeholder="4.64">
+        </div>
+        <div>
+          <label>Total gasolina comprada, opcional</label>
+          <input type="number" id="fuelTotal" step="0.01" inputmode="decimal" placeholder="23.58">
+        </div>
+        <div>
+          <label>Galones comprados, opcional</label>
+          <input type="number" id="fuelGallons" step="0.001" inputmode="decimal" placeholder="5.082">
+        </div>
+      </div>
+
+      <h3>Fotos / evidencia local</h3>
+      <div class="grid3">
+        <div>
+          <label>Foto tablero inicio</label>
+          <input type="file" id="imgStart" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+        </div>
+        <div>
+          <label>Foto bomba</label>
+          <input type="file" id="imgFuel" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+        </div>
+        <div>
+          <label>Foto tablero fin</label>
+          <input type="file" id="imgEnd" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+        </div>
+      </div>
+
+      <div class="notice">
+        v0.7: al editar un día incompleto con fotos guardadas, la app intenta recuperar automáticamente odómetro, MPG y gasolina. Revisa y confirma antes de actualizar.
+      </div>
+      <div class="btnrow">
+        <button type="button" class="secondary" id="ocrAllBtn">Extraer datos de fotos</button>
+        <button type="button" class="secondary hidden" id="ocrSavedBtn">Reprocesar fotos guardadas</button>
+      </div>
+      <div id="ocrStatus" class="notice ocr-progress">Selecciona una foto. La extracción comenzará automáticamente.</div>
+      <div id="recoveryHint" class="notice hidden"></div>
+      <details>
+        <summary class="small">Ver texto OCR detectado</summary>
+        <pre id="ocrRaw" class="ocr-raw mono">Sin lecturas.</pre>
+      </details>
+
+      <div class="btnrow">
+        <button type="button" class="good" id="calcDayBtn">Calcular</button>
+        <button type="button" id="saveDayBtn">Guardar día</button>
+        <button type="button" class="secondary" id="clearDayBtn">Limpiar</button>
+      </div>
+      <div id="calcStatus" class="notice">Completa Odo inicio, Odo fin, MPG y Precio gas.</div>
+    </div>
+
+    <div class="card">
+      <h2>Resultado del día</h2>
+      <div class="grid3" id="dayCalc"></div>
+    </div>
+
+    <div class="card">
+      <h2>Días guardados</h2>
+      <div id="daysTable"></div>
+    </div>
+  </section>
+
+  <section id="earnings">
+    <div class="card">
+      <h2>Ganancias semanales Spark</h2>
+      <div class="grid">
+        <div>
+          <label>Semana inicio</label>
+          <input type="date" id="weekStart">
+        </div>
+        <div>
+          <label>Semana fin</label>
+          <input type="date" id="weekEnd">
+        </div>
+        <div>
+          <label>Confirmed Weekly Earnings</label>
+          <input type="number" id="confirmedWeekly" step="0.01" inputmode="decimal">
+        </div>
+        <div>
+          <label>Trip Earnings</label>
+          <input type="number" id="tripEarnings" step="0.01" inputmode="decimal">
+        </div>
+        <div>
+          <label>Confirmed Tips app</label>
+          <input type="number" id="confirmedTips" step="0.01" inputmode="decimal">
+        </div>
+        <div>
+          <label>Foto/captura Spark earnings</label>
+          <input type="file" id="imgEarnings" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+        </div>
+      </div>
+      <div class="notice">
+        Cash tips no se registran. Tips aquí = Confirmed Tips dentro de Spark.
+      </div>
+      <div class="btnrow">
+        <button type="button" class="secondary" id="ocrEarningsBtn">Extraer ganancias de captura</button>
+      </div>
+      <div id="ocrEarningsStatus" class="notice ocr-progress">Selecciona la captura semanal de Spark.</div>
+      <div class="btnrow">
+        <button type="button" id="saveEarningsBtn">Guardar ganancias</button>
+        <button type="button" class="secondary" id="clearEarningsBtn">Limpiar</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Ganancias guardadas</h2>
+      <div id="earningsTable"></div>
+    </div>
+  </section>
+
+  <section id="reports">
+    <div class="card">
+      <h2>Reportes</h2>
+      <div class="grid3">
+        <div>
+          <label>Año</label>
+          <input type="number" id="reportYear" inputmode="numeric">
+        </div>
+        <div>
+          <label>Mes</label>
+          <select id="reportMonth">
+            <option value="">Todo el año</option>
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+          </select>
+        </div>
+        <div>
+          <label>&nbsp;</label>
+          <button type="button" id="runReportBtn">Generar reporte</button>
+        </div>
+      </div>
+      <div id="reportOutput"></div>
+      <div class="btnrow">
+        <button type="button" class="secondary" id="exportJsonBtn">Exportar backup JSON</button>
+        <button type="button" class="secondary" id="exportDaysCsvBtn">Exportar días CSV</button>
+        <button type="button" class="secondary" id="exportEarningsCsvBtn">Exportar earnings CSV</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="import">
+    <div class="card">
+      <h2>Importar historial desde ChatGPT</h2>
+      <p class="small">Pega aquí JSON semanal. La app acepta el formato que estamos usando: days + weekly_totals + odometer_week.</p>
+      <textarea id="importText" class="mono" placeholder='{"week_start":"2026-06-08","week_end":"2026-06-14","days":[...]}'></textarea>
+      <div class="btnrow">
+        <button type="button" id="importJsonBtn">Importar JSON</button>
+        <button type="button" class="secondary" id="previewJsonBtn">Previsualizar</button>
+      </div>
+      <div id="importPreview"></div>
+    </div>
+
+    <div class="card">
+      <h2>Restaurar backup completo</h2>
+      <input type="file" id="restoreFile" accept="application/json">
+      <div class="btnrow">
+        <button type="button" class="danger" id="restoreBtn">Restaurar backup</button>
+      </div>
+      <div class="notice">
+        Restaurar reemplaza/mezcla registros por ID. Haz backup antes.
+      </div>
+    </div>
+  </section>
+
+  <section id="settings">
+    <div class="card">
+      <h2>Ajustes</h2>
+      <div class="grid">
+        <div>
+          <label>Costo interno por milla</label>
+          <input type="number" id="setInternalRate" step="0.001">
+        </div>
+        <div>
+          <label>IRS standard mileage rate</label>
+          <input type="number" id="setIrsRate" step="0.001">
+        </div>
+        <div>
+          <label>Año fiscal</label>
+          <input type="number" id="setTaxYear">
+        </div>
+        <div>
+          <label>Método vehículo</label>
+          <input value="standard_mileage_only" disabled>
+        </div>
+      </div>
+      <div class="btnrow">
+        <button type="button" id="saveSettingsBtn">Guardar ajustes</button>
+        <button type="button" class="danger" id="wipeBtn">Borrar toda la BD</button>
+      </div>
+      <div class="notice">
+        El IRS rate queda editable por año. Default v0.6: 0.725 para 2026.
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="footerbar">
+  <button type="button" class="secondary" id="quickTodayBtn">Hoy</button>
+  <button type="button" class="secondary" id="quickReportBtn">Reporte</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script>
-/* ============ Mapa 2483 ============
-GEOMETRÍA FÍSICA DE LA TIENDA:
-
-ENTRADA: Puerta derecha (vista desde afuera)
-└─ Al cruzar, justo a la derecha comienza ÁREA AP (Frutas/Verduras)
-
-ZONA AP (Fresh Produce):
-├─ AP1, AP2, AP3... AP9
-├─ AP1 = más cerca de la entrada derecha
-└─ AP9 = más lejos de la entrada derecha
-
-ZONA A (Pasillos Grocery):
-├─ A1 = frente al área AP (referencia visual principal)
-├─ Frente a A1 = AP (no hay otro pasillo A)
-├─ Patrón desde A2 en adelante (emparejados):
-│  ├─ A2 ↔ A3 (enfrentados, A3 = Congelados/Frozen)
-│  ├─ A6 ↔ A7 (enfrentados)
-│  └─ A30 ↔ A31 (enfrentados, cerca AC5, AC4)
-└─ Números A aumentan = internan más en la tienda
-
-ESTANTES GR (perpendicular a pasillos A):
-├─ GR1, GR2, GR3... (hasta cerca de A31)
-├─ Ubicados a la IZQUIERDA de los pasillos A (vista entrada)
-├─ GR1 = inicio/lado izquierdo de la zona A
-└─ Números GR aumentan hacia el fondo (dirección A31)
-
-ORIENTACIÓN INTERNA - Pasillos A:
-├─ Sección 1 de cada pasillo = LADO IZQUIERDO
-├─ Secciones 20+ = LADO DERECHO (pared derecha tienda)
-└─ Conforme sube la sección, se va hacia la derecha
-
-PARED DERECHA (desde entrada hacia fondo):
-├─ A36 — pegado a pared derecha, frente a AP (Frutas/Verduras)
-│  ├─ Secciones DESCENDENTES desde entrada: 5→4→3→2→1
-│  └─ A36-5 (cerca entrada) → A36-1 (fondo/pared derecha)
-├─ [puerta de almacén/backroom Walmart]
-└─ A35 parcial (secciones 14→8 pegadas a la pared)
-   ├─ A35-14 (más cerca entrada) → A35-8 (más al fondo)
-   └─ NOTA: A35 también tiene sección de Deli (separada)
-
-============================================== */
-
-var APP_VERSION="v3.0.1";
-var ZONE_BASE={Y:10,I:20,GM:25,L:30,K:40,H:50,F:60,E:70,BK:75,D:80,C:90,B:100,J:110,G:120,GR:115,FT:127};
-var ZONE_LABEL={Y:"Garden / Exterior",I:"Toys / Sports",GM:"Pasillo interno (I↔H)",L:"Auto / Hardware / Paint",K:"Electronics",H:"Home",F:"Office / Arts / Party / Seasonal",E:"Baby / Girls",BK:"Pasillo interno (E↔J)",D:"Mens / Boys",C:"Intimates / Jewelry",B:"Womens",J:"Shoes / Pets",G:"Health / Beauty / Personal Care",A:"Grocery",AP:"Fresh Produce",AB:"Bakery",AD:"Deli",AC:"Meat & Seafood",GR:"Pasillo interno (A↔E)",FT:"Pasillo interno (Z/G↔frente)",Z:"Checkout"};
-var CLIENT_COLORS={A:"#FFD23F",B:"#7CC8FF",C:"#C4B5FD"};
-
-/* ---- REFERENCIA VISUAL - Geometría Walmart #2483 ----
-   PUERTA DERECHA (entrada/salida)
-   └─────────────────────────────
-      [A36-5] pared ──→ A36-4 → A36-3 → A36-2 → A36-1
-              [backroom door]
-      [A35-14]pared ──→ A35-13 → ... → A35-8
-      
-      FRENTE PARED: AP1←...→AP9 (Frutas/Verduras)
-                    ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
-      GR1 ── A1  A2  A3  A6  A7  ...  A30  A31 ── AC5, AC4
-      GR2 ┘ (Pasillos enfrentados)
-              
-      En cada pasillo A:
-        Sección 1 = lado izquierdo (cerca GR)
-        Sección 20+ = lado derecho (pared derecha tienda)
----------------------------------------------------- */
-function parseAisle(code){var m=String(code||"").trim().toUpperCase().match(/^([A-Z]+)\s*(\d+)?$/);if(!m)return{prefix:String(code||"").toUpperCase(),num:null};return{prefix:m[1],num:m[2]!=null?parseInt(m[2],10):null};}
-function baseSeq(p,n){
-  if(p==="A"&&n!=null){
-    // A36 y A35 son pared derecha — van ANTES de los pasillos (cerca entrada)
-    if(n===36)return 196; // pared derecha, primera desde entrada
-    if(n===35)return 197; // pared derecha, segunda (después de backroom)
-    return 200+n;
-  }
-  if(p==="AC")return 233+(n||0)/1000;if(p==="AB")return 234+(n||0)/1000;if(p==="AD")return 235+(n||0)/1000;if(p==="AP")return 235.5+(n||0)/1000;if(ZONE_BASE[p]!=null)return ZONE_BASE[p]+(n!=null?n/100:0);if(p==="Z")return 900+(n||0)/100;return 500;
-}
-function sectionDir(p,n){
-  if(p==="A"&&n!=null){
-    // A36 y A35 pared derecha: secciones DESCENDENTES (mayor número cerca entrada)
-    if(n===36||n===35)return -1;
-    if(n<=29&&n%2===1){var v=(n-1)/2;return v%2===0?1:-1;}
-  }
-  return 1;
-}
-function zoneOf(p){if(["A","AP","AB","AD","AC"].indexOf(p)>=0)return p==="A"?"A":p;return p;}
-/* GR, BK, GM, FT: pasillos internos de picking, numeración lineal (no pares), ya cubiertos por ZONE_BASE+n/100 en baseSeq() */
-
-/* ---- Agrupación física de pasillos enfrentados (v3.0) ----
-   A, J: pares consecutivos (A2-A3, A4-A5 / J2-J3, J4-J5) — diferencia de 1, par+impar
-   I,H,L,K,F,D,C,B,Y,G: pares salteados (I1-I3, I5-I7) — ambos impares, diferencia de 2
-   Independientes (nunca agrupan): A1,A32,A33,A34,A35,A36, J1,J24, K25, G37, L27, todas E, AP, AB, AD, Z
-   Perpendiculares (GR,BK,GM,FT): numeración lineal, nunca agrupan en pares.
-   CASOS ESPECIALES:
-   - AC4/AC5 físicamente en el mismo tramo que A30-A31 (AC5 más cerca, AC4 más lejos).
-   - AC1/AC2/AC3 físicamente en el mismo tramo que A33 (Meat & Seafood).
-     A33 se camina 1→25 (ascendente, viniendo de A32). AC1 está cerca de A33-25 (al final del tramo),
-     AC3 está cerca de A33-1 (al inicio), AC2 en medio. Por eso el orden de salida es AC1→AC2→AC3. */
-var CONSEC_PAIR_PREFIXES={A:1,J:1};
-var SKIP_PAIR_PREFIXES={I:1,H:1,L:1,K:1,F:1,D:1,C:1,B:1,Y:1,G:1};
-var NEVER_PAIR_PREFIXES={E:1,AP:1,AB:1,AD:1,Z:1,GR:1,BK:1,GM:1,FT:1};
-var INDEPENDENT_AISLES={A1:1,A32:1,A33:1,A34:1,A35:1,A36:1,J1:1,J24:1,K25:1,G37:1,L27:1};
-function pairKey(prefix,num){
-  if(prefix==="AC"&&(num===4||num===5))return "A30-A31"; // mismo tramo físico que A30-A31
-  if(prefix==="AC"&&(num===1||num===2||num===3))return "A33"; // mismo tramo físico que A33
-  if(prefix==="AC")return "AC"+num;
-  if(num==null)return prefix+"-"+(num==null?"x":num);
-  var code=prefix+num;
-  if(NEVER_PAIR_PREFIXES[prefix])return prefix+num;
-  if(INDEPENDENT_AISLES[code])return code;
-  if(CONSEC_PAIR_PREFIXES[prefix]){
-    // par consecutivo: (2,3),(4,5)... el menor de cada par es par, el mayor impar
-    var lo=num%2===0?num:num-1;
-    var hi=lo+1;
-    if(INDEPENDENT_AISLES[prefix+hi]||INDEPENDENT_AISLES[prefix+lo])return code; // partner independiente: no agrupar
-    return prefix+lo+"-"+prefix+hi;
-  }
-  if(SKIP_PAIR_PREFIXES[prefix]){
-    // par salteado: ambos impares, diferencia 2. K empieza en 3 (no 1), resto empieza en 1.
-    var start=(prefix==="K")?3:1;
-    var base=Math.floor((num-start)/4)*4+start;
-    var top=base+2;
-    if(INDEPENDENT_AISLES[prefix+top]||INDEPENDENT_AISLES[prefix+base])return code; // partner independiente: no agrupar
-    return prefix+base+"-"+prefix+top;
-  }
-  return code;
-}
-
-/* ---- Pares físicos (v3.0) ----
-   Aisles frente a frente en el mismo corredor → 1 encabezado visual.
-   Confirmado: A y J usan paso-2 (A2-A3,A4-A5...). Resto (I,H,L,K,F,D,C,B,Y,G) usan paso-4 impar-impar (I1-I3,I5-I7...).
-   Independientes confirmados (no agrupan, quedan solos): A1,A32,A33,A34,A35,A36,J1,J24,Y5.
-   L27,K25,G37,D29,C37: quedan como fin de su par hasta verificación in situ — NO marcados independientes todavía. */
-var INDEPENDENT={A:[1,32,33,34,35,36],J:[1,24],Y:[5]};
-var PAIR_STEP2=["A","J"];
-var PAIR_STEP4=["I","H","L","K","F","D","C","B","Y","G"];
-function isIndependent(p,n){return INDEPENDENT[p]&&INDEPENDENT[p].indexOf(n)>=0;}
-function pairOf(p,n){
-  if(n==null)return p;
-  if(isIndependent(p,n))return p+n;
-  if(PAIR_STEP2.indexOf(p)>=0){
-    if(n<2)return p+n; // n=1 ya cubierto por independiente arriba en A/J; resguardo
-    var lo=n%2===0?n-1:n;return p+lo+"-"+p+(lo+1);
-  }
-  if(PAIR_STEP4.indexOf(p)>=0){
-    // K empieza en 3 (no 1); resto empiezan en 1. Detectamos el primer impar de la pareja módulo 4 sobre el offset correcto.
-    var off=(p==="K")?3:1;
-    var idx=Math.floor((n-off)/4);if(idx<0)idx=0;
-    var lo4=off+idx*4;
-    return p+lo4+"-"+p+(lo4+2);
-  }
-  return p+n;
-}
-function isSpecial(it,specials){var a=String(it.aisle||"").toUpperCase();for(var i=0;i<specials.length;i++){var s=specials[i];if(s.aisle.toUpperCase()!==a)continue;if(it.section==null)return true;if(it.section>=s.from&&it.section<=s.to)return true;}return false;}
-function buildRoute(items,specials){
-  var en=items.map(function(it,i){
-    if(it.status==="picked"||it.status==="manual_delete")return null;
-    var pa=parseAisle(it.aisle);var sp=isSpecial(it,specials);
-    var pk=pairKey(pa.prefix,pa.num);
-    return Object.assign({},it,{_i:i,prefix:pa.prefix,num:pa.num,pairKey:pk,seq:baseSeq(pa.prefix,pa.num)+(sp?9000:0),special:sp});
-  }).filter(Boolean);
-  var g={};
-  en.forEach(function(it){
-    var k=it.pairKey||String(it.aisle||"?").toUpperCase();
-    if(!g[k])g[k]={aisle:k,prefix:it.prefix,num:it.num,seq:it.seq,special:it.special,items:[]};
-    g[k].items.push(it);
-    if(it.seq<g[k].seq)g[k].seq=it.seq; // grupo usa el seq menor (entrada al par)
-  });
-  var arr=Object.keys(g).map(function(k){return g[k];}).sort(function(a,b){return a.seq-b.seq;});
-  arr.forEach(function(gr){
-    if(gr.aisle==="A30-A31"){
-      // orden explícito: A30 (secciones) → A31 (secciones) → AC5 → AC4
-      var rank=function(it){if(it.prefix==="A"&&it.num===30)return 0;if(it.prefix==="A"&&it.num===31)return 1;if(it.prefix==="AC"&&it.num===5)return 2;if(it.prefix==="AC"&&it.num===4)return 3;return 4;};
-      gr.items.sort(function(x,y){
-        var rx=rank(x),ry=rank(y);
-        if(rx!==ry)return rx-ry;
-        if(rx<=1){var d=sectionDir(x.prefix,x.num);return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));}
-        return 0;
-      });
-      return;
-    }
-    if(gr.aisle==="A33"){
-      // orden explícito: A33 (secciones) → AC1 → AC2 → AC3
-      var rankAC=function(it){if(it.prefix==="A"&&it.num===33)return 0;if(it.prefix==="AC"&&it.num===1)return 1;if(it.prefix==="AC"&&it.num===2)return 2;if(it.prefix==="AC"&&it.num===3)return 3;return 4;};
-      gr.items.sort(function(x,y){
-        var rx=rankAC(x),ry=rankAC(y);
-        if(rx!==ry)return rx-ry;
-        if(rx===0){var d=sectionDir(x.prefix,x.num);return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));}
-        return 0;
-      });
-      return;
-    }
-    gr.items.sort(function(x,y){
-      if(x.num!==y.num)return (x.num==null?0:x.num)-(y.num==null?0:y.num); // primero por número de aisle dentro del par
-      var d=sectionDir(x.prefix,x.num);
-      return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));
-    });
-  });
-  return arr;
-}
-/* ---- bulto ---- */
-function parseSize(name){var n=(name||"").toLowerCase(),bulk=1,heavy=false,large=false,fragile=false,m;
-m=n.match(/(\d+(?:\.\d+)?)\s*(?:lb|lbs|pound)/);if(m){var v=parseFloat(m[1]);bulk=Math.max(bulk,v/10);if(v>=15){heavy=true;large=true;}}
-if(/\bgallon\b|\bgal\b/.test(n)){bulk=Math.max(bulk,5);large=true;}
-m=n.match(/(\d+)\s*(?:count|ct|pack|pk|bottles?)/);if(m){var c=parseInt(m[1],10);if(c>=12){bulk=Math.max(bulk,3);large=true;}if(c>=24)heavy=true;}
-m=n.match(/(\d+(?:\.\d+)?)\s*fl\s*oz/);if(m){var f=parseFloat(m[1]);bulk=Math.max(bulk,f/40);if(f>=60)large=true;if(f<3)fragile=true;}
-else{m=n.match(/(\d+(?:\.\d+)?)\s*oz/);if(m){var o=parseFloat(m[1]);bulk=Math.max(bulk,o/32);if(o<3)fragile=true;}}
-return{bulk:bulk,heavy:heavy,large:large,fragile:fragile};}
-function itemBulk(it){return parseSize(it.name).bulk*(Number(it.qty)||1);}
-function itemClass(it){var s=parseSize(it.name),tb=s.bulk*(Number(it.qty)||1);if(s.heavy||tb>=6)return"heavy";if(s.fragile&&!s.large)return"fragile";if(tb<=1.5)return"small";return"medium";}
-function suggestCart(items){var zones={grande:[],canasta:[],rejilla:[]};if(!items.length)return{mode:"single",zones:zones};var groups={};items.forEach(function(it){var c=(it.client||"").toUpperCase()||"—";(groups[c]=groups[c]||[]).push(it);});var labels=Object.keys(groups).filter(function(c){return c!=="—";});
-if(labels.length<=1){items.forEach(function(it){var cls=itemClass(it);if(cls==="heavy")zones.rejilla.push(it);else if(cls==="fragile"||cls==="small")zones.canasta.push(it);else zones.grande.push(it);});return{mode:"single",zones:zones};}
-var totals=Object.keys(groups).map(function(c){return{c:c,its:groups[c],bulk:groups[c].reduce(function(s,i){return s+itemBulk(i);},0)};}).sort(function(a,b){return b.bulk-a.bulk;});var big=totals[0];big.its.forEach(function(it){zones.grande.push(it);});totals.slice(1).forEach(function(t){t.its.forEach(function(it){var cls=itemClass(it);if(cls==="heavy")zones.rejilla.push(it);else zones.canasta.push(it);});});return{mode:"multi",zones:zones,bigClient:big.c};}
-
-/* ============ Ejemplo ============ */
-var EXAMPLE=[
-{name:"Fresh Yellow Onions, 3 Lb Bag",aisle:"AP9",section:4,qty:1,perishable:true,client:null},
-{name:"Eggo Thick & Fluffy Waffles, 12 ct",aisle:"A4",section:21,qty:1,perishable:true,client:null},
-{name:"Oreo Chocolate Sandwich Cookies, Party Size",aisle:"A24",section:1,qty:1,perishable:false,client:null},
-{name:"Gatorade Cool Blue 12 ct",aisle:"A22",section:2,qty:1,perishable:false,client:null},
-{name:"Gatorade Zero Fruit Punch 12 ct",aisle:"A22",section:1,qty:1,perishable:false,client:null},
-{name:"Simply Lemonade Bottle, 76 Fl Oz",aisle:"AC4",section:200,qty:2,perishable:true,client:null},
-{name:"SunnyD Tangy Orange 1 Gallon",aisle:"A31",section:26,qty:2,perishable:true,client:null},
-{name:"Great Value Whole Milk, Gallon",aisle:"A31",section:7,qty:1,perishable:true,client:null},
-{name:"Fairlife Chocolate Milk, 52 Oz",aisle:"A31",section:4,qty:2,perishable:true,client:null},
-{name:"Allswell Relax Oil 0.8 Oz",aisle:"H11",section:3,qty:1,perishable:false,client:null},
-{name:"Allswell Glow Oil 0.8 Oz",aisle:"H11",section:3,qty:1,perishable:false,client:null},
-{name:"Allswell Dual Plug Dispenser",aisle:"H11",section:3,qty:1,perishable:false,client:null},
-{name:"Allswell Calm Oil 0.8 Oz",aisle:"H11",section:3,qty:1,perishable:false,client:null},
-{name:"Athletic Works Soccer Shin Guards",aisle:"I19",section:8,qty:1,perishable:false,client:null},
-{name:"Morton Water Softener Salt, 40 Lb",aisle:"Y7",section:17,qty:4,perishable:false,client:null},
-{name:"Wonder Nation Boys Tee",aisle:"D29",section:5,qty:2,perishable:false,client:null}];
-
-/* ============ Estado ============ */
-var S={view:"load",items:[],specials:[{aisle:"E1",from:1,to:5,label:"Caja"},{aisle:"A29",from:1,to:6,label:"Caja"}],status:"",error:"",bulk:"",showCfg:false,loading:false,
-  apiKey:"",model:"claude-sonnet-4-6",
-  oosChats:[],oosActive:null,oosStatus:"",oosError:"",oosPanel:null,
-  gateCodesCustom:[],imgQueue:[],
-  addressNotes:[],notesActive:null,
-  notesOcrStatus:"",notesOcrError:"",notesOcrPending:null,
-  undoToast:null};
-function save(){try{localStorage.setItem("spark2483",JSON.stringify({items:S.items,specials:S.specials,apiKey:S.apiKey,model:S.model,oosChats:S.oosChats,gateCodesCustom:S.gateCodesCustom,addressNotes:S.addressNotes}));}catch(e){}}
-function load(){try{
-  var d=JSON.parse(localStorage.getItem("spark2483")||"{}");
-  if(Array.isArray(d.items))S.items=d.items;
-  if(Array.isArray(d.specials)&&d.specials.length)S.specials=d.specials;
-  if(d.apiKey)S.apiKey=d.apiKey;
-  if(d.model)S.model=d.model;
-  if(Array.isArray(d.oosChats))S.oosChats=d.oosChats;
-  if(Array.isArray(d.gateCodesCustom))S.gateCodesCustom=d.gateCodesCustom;
-  if(Array.isArray(d.addressNotes))S.addressNotes=d.addressNotes;
-  // Migración: items viejos sin status → pending (o picked si done=true)
-  S.items.forEach(function(it){if(!it.status)it.status=it.done?"picked":"pending";});
-  // Siempre resetear estado transitorio
-  S.oosPanel=null;S.loading=false;S.imgQueue=[];S.status="";S.error="";S.undoToast=null;
-  S.notesOcrStatus="";S.notesOcrError="";S.notesOcrPending=null;
-}catch(e){console.warn("load error",e);}}
-load(); if(S.items.length)S.view="review";
-
-/* ============ Lectura IA ============ */
-function fileToB64(file){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(){res(String(r.result).split(",")[1]);};r.onerror=function(){rej(new Error("no se pudo leer la imagen"));};r.readAsDataURL(file);});}
-/* ---- Validación de item individual ---- */
-function itemKey(it){
-  return (it.name||"").toLowerCase().replace(/\s+/g," ").trim()
-    +"|"+(it.aisle||"").toUpperCase()
-    +"|"+(it.section!=null?it.section:"?");
-}
-function isValidItem(x){
-  var name=String(x.name||"").trim();
-  if(!name||name.length<4)return false;
-  // "Item $1.97" · "Item at $1.97" · "Item @ $1.97" · cualquier variante
-  if(/^item\b.{0,20}\$?[\d.]+$/i.test(name))return false;
-  // Solo precio suelto
-  if(/^\$[\d.]+$/.test(name))return false;
-  // Solo número + unidad
-  if(/^[\d.]+\s*(oz|fl|lb|g|kg|ml|l|ct|pk)?$/i.test(name))return false;
-  // Nombre empieza con precio y es muy corto
-  if(/^\$\d/.test(name)&&name.split(" ").length<3)return false;
-  // Fragmento genérico: "<N> oz bag", "<N> oz bag, sec N" sin marca
-  if(/^\d+\s*oz\s*bag$/i.test(name))return false;
-  return true;
-}
-/* ---- Deduplicación global cross-imagen ---- */
-function deduplicateItems(existing,incoming){
-  var keys=new Set(existing.map(function(it){return itemKey(it);}));
-  var added=[];
-  incoming.forEach(function(it){
-    var k=itemKey(it);
-    if(!keys.has(k)){keys.add(k);added.push(it);}
-  });
-  return added;
-}
-
-function extractOneImage(file){
-  var prompt='Eres un extractor de pedidos de Walmart Spark. Analiza esta captura con MUCHO cuidado.\n\nREGLAS ESTRICTAS:\n1. Solo extrae items COMPLETOS. Un item completo tiene: nombre del producto legible + al menos Aisle o Sección visibles.\n2. RECHAZA fragmentos parciales. No es válido: "Item $1.97", solo un precio, solo una cantidad, texto cortado, producto sin nombre.\n3. RECHAZA items cortados por el borde superior o inferior de la imagen (filas incompletas).\n4. Si el mismo producto aparece varias veces en la imagen con el mismo Aisle y Sección, inclúyelo UNA sola vez.\n5. "?" como aisle es válido si el número de aisle no es legible.\n\nDevuelve SOLO un arreglo JSON, sin texto ni markdown:\n[{"name":string,"aisle":string,"section":number|null,"modular":number|null,"qty":number,"perishable":boolean,"client":"A"|"B"|"C"|null}]\n\nSi no hay items válidos, devuelve [].';
-  return fileToB64(file).then(function(d){
-    var img={type:"image",source:{type:"base64",media_type:(file.type&&file.type.indexOf("image/")===0)?file.type:"image/jpeg",data:d}};
-    var body={model:S.model,max_tokens:1200,messages:[{role:"user",content:[img,{type:"text",text:prompt}]}]};
-    return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)})
-    .then(function(resp){
-      if(!resp.ok)return resp.json().catch(function(){return null;}).then(function(ej){var d="HTTP "+resp.status;if(ej&&ej.error&&ej.error.message)d+=" · "+ej.error.message;throw new Error(d);});
-      return resp.json();
-    }).then(function(data){
-      if(data&&data.error)throw new Error(data.error.message||"error de la IA");
-      var text=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("\n");
-      var clean=text.replace(/```json/gi,"").replace(/```/g,"").trim();
-      var a=clean.indexOf("["),b=clean.lastIndexOf("]");
-      var js=(a>=0&&b>=0)?clean.slice(a,b+1):clean;
-      var arr;try{arr=JSON.parse(js);}catch(e){throw new Error("respuesta no entendible");}
-      if(!Array.isArray(arr))arr=[];
-      // Normalizar y validar cada item
-      return arr
-        .map(function(x){return{
-          name:String(x.name||"").trim(),
-          aisle:(x.aisle||"").toString().toUpperCase().replace(/\s+/g,""),
-          section:x.section==null?null:Number(x.section),
-          modular:x.modular==null?null:x.modular,
-          qty:x.qty?Number(x.qty):1,
-          perishable:!!x.perishable,
-          client:x.client?String(x.client).toUpperCase().replace(/[^ABC]/g,"")||null:null,
-          done:false,
-          status:"pending"
-        };})
-        .filter(isValidItem);
-    });
-  });
-}
-
-/* estado de imágenes: S.imgQueue = [{name,status,items,count,skipped,error}] */
-function processImageQueue(queue){
-  var pending=queue.filter(function(e){return e.status==="pending"||e.status==="error";});
-  if(!pending.length)return;
-  render();
-  var chain=Promise.resolve();
-  pending.forEach(function(entry){
-    chain=chain.then(function(){
-      entry.status="processing";render();
-      return extractOneImage(entry.file).then(function(items){
-        // Deduplicar contra lo ya guardado en S.items
-        var unique=deduplicateItems(S.items,items);
-        var skipped=items.length-unique.length;
-        entry.status="done";
-        entry.items=unique;
-        entry.count=unique.length;
-        entry.skipped=skipped;
-        S.items=S.items.concat(unique);
-        save();render();
-      }).catch(function(err){
-        var msg=(err&&err.message)||"error";
-        if(/timeout/i.test(msg))entry.status="timeout";
-        else if(/HTTP 4/i.test(msg))entry.status="error_api";
-        else entry.status="error";
-        entry.error=msg;
-        render();
-      });
-    });
-  });
-  chain.then(function(){
-    var allDone=queue.every(function(e){return e.status==="done"||e.status==="error"||e.status==="timeout"||e.status==="error_api";});
-    if(allDone&&S.items.length){S.view="review";}
-    S.loading=false;render();
-  });
-}
-function startImageQueue(files){
-  if(!files||!files.length)return;
-  if(!S.apiKey){S.error="Falta clave de API (abre Ajustes ⚙)";render();return;}
-  var arr=Array.prototype.slice.call(files);
-  if(!S.imgQueue)S.imgQueue=[];
-  arr.forEach(function(f){S.imgQueue.push({name:f.name||"imagen",file:f,status:"pending",items:[],count:0,skipped:0,error:""});});
-  S.loading=true;S.error="";
-  processImageQueue(S.imgQueue);
-}
-
-/* ============ Helpers de render ============ */
-function h(html){var d=document.createElement("div");d.innerHTML=html.trim();return d.firstChild;}
-function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
-function set(k,v){S[k]=v;render();}
-
-/* ============ OOS — Sustituciones ============ */
-function apiJson(body){
-  return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)})
-  .then(function(r){if(!r.ok)return r.json().catch(function(){return null;}).then(function(e){throw new Error("HTTP "+r.status+(e&&e.error?" · "+e.error.message:""));});return r.json();})
-  .then(function(d){if(d&&d.error)throw new Error(d.error.message||"error IA");var t=(d.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("");var clean=t.replace(/```json/gi,"").replace(/```/g,"").trim();var a=clean.indexOf("{"),b=clean.lastIndexOf("}");return JSON.parse((a>=0&&b>=0)?clean.slice(a,b+1):clean);});}
-function startOOS(files){
-  if(!files||!files.length)return;
-  if(!S.apiKey){S.oosError="Falta clave de API (abre Ajustes ⚙)";render();return;}
-  S.oosStatus="Analizando imágenes…";S.oosError="";render();
-  Promise.all(Array.prototype.slice.call(files,0,2).map(function(f){return fileToB64(f).then(function(d){return{type:"image",source:{type:"base64",media_type:(f.type&&f.type.indexOf("image/")===0)?f.type:"image/jpeg",data:d}};});}))
-  .then(function(imgs){
-    var prompt='You help a Walmart Spark driver handle out-of-stock items. Image 1: Spark app screenshot showing the out-of-stock item. Image 2: store shelf photo with possible substitutes. Return ONLY a JSON object, no markdown:\n{"itemName":string,"alternatives":[string,...],"customerMessage":string,"fallback":string}\ncustomerMessage: friendly English message to the customer — (1) apologize the item is out of stock, (2) list each alternative from the shelf with a very brief description, (3) ask which they prefer or if they want to skip it. Keep it conversational and concise.\nfallback: what to do if no reply in ~5 min — either "No substitution — skip the item" or "Substitute with [exact product name]: [one sentence why it is a good match]".';
-    return apiJson({model:S.model,max_tokens:1000,messages:[{role:"user",content:imgs.concat([{type:"text",text:prompt}])}]});
-  })
-  .then(function(p){
-    var chat={id:Date.now(),itemName:p.itemName||"Item",alternatives:p.alternatives||[],customerMsg:p.customerMessage||"",fallback:p.fallback||"",thread:[],closed:false,closedWith:null,finalMessage:null,finalDecision:null,finalReason:null,finalSubName:null};
-    S.oosChats.unshift(chat);S.oosActive=0;S.oosStatus="";save();render();
-  })
-  .catch(function(err){S.oosStatus="";S.oosError="Error: "+(err.message||"error");render();});
-}
-function replyOOS(chatIdx,file){
-  var chat=S.oosChats[chatIdx];if(!chat)return;
-  S.oosStatus="Leyendo respuesta del cliente…";S.oosError="";render();
-  fileToB64(file).then(function(d){
-    var img={type:"image",source:{type:"base64",media_type:(file.type&&file.type.indexOf("image/")===0)?file.type:"image/jpeg",data:d}};
-    var ctx="Out-of-stock item: "+chat.itemName+"\nAlternatives offered: "+chat.alternatives.join(", ")+"\nMessage sent to customer: "+chat.customerMsg;
-    if(chat.thread.length){ctx+="\nConversation so far:\n";chat.thread.forEach(function(t){ctx+=(t.role==="customer"?"Customer: ":"Suggestion: ")+t.text+"\n";});}
-    var prompt=ctx+'\n\nThis screenshot is the customer\'s reply. Read it carefully. Return ONLY JSON (no markdown):\n{"customerSaid":string,"nextAction":string,"actionType":"substitute"|"no_substitute"|"ask_again"|"done"}\ncustomerSaid: what the customer wrote (paraphrased if needed). nextAction: exact next step for the driver (e.g. a specific message to send back, or "Mark as substituted with [X]" or "Mark item as refunded"). actionType: substitute=pick a specific item and mark it; no_substitute=skip/refund; ask_again=customer is unclear, send a follow-up; done=decision confirmed, conversation can close.';
-    return apiJson({model:S.model,max_tokens:600,messages:[{role:"user",content:[img,{type:"text",text:prompt}]}]});
-  })
-  .then(function(p){
-    var chat=S.oosChats[chatIdx];
-    chat.thread.push({role:"customer",text:p.customerSaid||""});
-    chat.thread.push({role:"suggestion",text:p.nextAction||"",actionType:p.actionType||""});
-    S.oosStatus="";save();render();
-  })
-  .catch(function(err){S.oosStatus="";S.oosError="Error: "+(err.message||"error");render();});
-}
-function closeOOS(chatIdx,decision,stay){
-  var chat=S.oosChats[chatIdx];if(!chat)return;
-  chat.closed=true;chat.closedWith=decision||"Decisión cerrada";
-  if(!stay)S.oosActive=null;save();render();
-}
-/* ---- Mensaje automático cuando el cliente no responde a tiempo ---- */
-var REASONS=[
-  {key:"closest_match",label:"Más parecido disponible"},
-  {key:"same_brand_diff_size",label:"Misma marca, tamaño diferente"},
-  {key:"diff_brand_same_type",label:"Mismo tipo, marca diferente"},
-  {key:"better_price",label:"Mejor precio disponible"},
-  {key:"similar_qty",label:"Cantidad similar"},
-  {key:"store_recommended",label:"Recomendado por la tienda"},
-  {key:"closest_available",label:"Más cercano al original"},
-  {key:"no_good_match",label:"No había sustitución adecuada"}
-];
-/* Mensaje al cliente SIEMPRE en inglés; REASONS arriba (labels en español) son solo para la UI interna. */
-var REASON_PHRASES_EN={
-  closest_match:"it was the closest available option in type, size, and intended use",
-  same_brand_diff_size:"it is the same brand in a different size, the closest match to the original item",
-  diff_brand_same_type:"it is the same type of product from a different brand, the closest available alternative",
-  better_price:"it was a more cost-effective option without losing similarity to the original item",
-  similar_qty:"it keeps a similar quantity to what was originally requested",
-  store_recommended:"it was the option recommended by the store as a replacement",
-  closest_available:"it was the closest available option to the original product at the time"
+const DB_NAME = "sparkMileageTaxesDB";
+const DB_VERSION = 1;
+let db;
+let settings = {
+  internalCostPerMile: 0.25,
+  irsMileageRate: 0.725,
+  taxYear: new Date().getFullYear(),
+  vehicleMethod: "standard_mileage_only"
 };
-function guessFallbackDefaults(chat){
-  var fb=chat.fallback||"";
-  var m=fb.match(/substitute with ([^:]+):?/i);
-  if(m)return{decision:"sub",subName:m[1].trim()};
-  if(/no subst/i.test(fb))return{decision:"no_sub",subName:""};
-  return{decision:"sub",subName:""};
-}
-function buildSubMessage(orig,sub,reasonKey){
-  var origPart=orig?(' ("'+orig+'")'):"";
-  if(reasonKey==="no_good_match"){
-    return "Hi. The original item"+origPart+" was unavailable and I could not find a close enough substitute. Since I did not receive a response within the available time, I decided not to substitute it to avoid sending the wrong product. If you would like, I can process a refund for this item.";
-  }
-  var subPart=sub?("I substituted it with the "+sub):"I substituted it with the closest available option";
-  var phrase=REASON_PHRASES_EN[reasonKey]||"it seemed like the closest and most appropriate option available";
-  return "Hi. Since I did not receive a response within the available time, "+subPart+" because "+phrase+". I selected the option that seemed most similar and appropriate for your order. Let me know if you have any questions.";
-}
-function renderTimeoutPanel(main,chat,idx){
-  var p=S.oosPanel;
-  main.appendChild(h('<div class="section-title">Decisión por falta de respuesta</div>'));
-  var dRow=h('<div class="row-btns"></div>');
-  var bSub=h('<button class="ghost sm">Sustituir</button>');
-  var bNo=h('<button class="ghost sm">No sustituir</button>');
-  function refreshBtns(){
-    bSub.style.background=p.decision==="sub"?"var(--acc)":"";bSub.style.color=p.decision==="sub"?"#1A1300":"";bSub.style.borderColor=p.decision==="sub"?"var(--acc)":"";
-    bNo.style.background=p.decision==="no_sub"?"var(--acc)":"";bNo.style.color=p.decision==="no_sub"?"#1A1300":"";bNo.style.borderColor=p.decision==="no_sub"?"var(--acc)":"";
-  }
-  bSub.onclick=function(){p.decision="sub";if(p.reasonKey==="no_good_match")p.reasonKey="closest_match";refreshBtns();};
-  bNo.onclick=function(){p.decision="no_sub";p.reasonKey="no_good_match";refreshBtns();};
-  refreshBtns();
-  dRow.appendChild(bSub);dRow.appendChild(bNo);main.appendChild(dRow);
+let editingDayDate = null;
+let editingSavedImages = { start: null, fuel: null, end: null };
+let ocrWorkerPromise = null;
+let ocrBusy = false;
+let ocrProgressTarget = "day";
+let ocrProgressLabel = "OCR";
+let ocrState = { start: null, fuel: null, end: null, earnings: null };
 
-  if(p.decision==="sub"){
-    var subIn=h('<input class="in" placeholder="Nombre del producto sustituto" value="'+esc(p.subName)+'" style="margin-top:8px">');
-    subIn.oninput=function(){p.subName=subIn.value;};
-    main.appendChild(subIn);
-    var sel=h('<select class="in" style="margin-top:8px"></select>');
-    REASONS.filter(function(r){return r.key!=="no_good_match";}).forEach(function(r){
-      var o=h('<option value="'+r.key+'">'+esc(r.label)+'</option>');
-      if(r.key===p.reasonKey)o.setAttribute("selected","selected");
-      sel.appendChild(o);
-    });
-    sel.onchange=function(){p.reasonKey=sel.value;};
-    main.appendChild(sel);
-  }
 
-  var genBtn=h('<button class="ghost sm" style="width:100%;margin-top:8px">✨ Generar mensaje</button>');
-  genBtn.onclick=function(){p.message=buildSubMessage(chat.itemName,p.decision==="sub"?p.subName:null,p.reasonKey);p.generated=true;render();};
-  main.appendChild(genBtn);
+const $ = (id) => document.getElementById(id);
+const money = (n) => isFinite(n) ? "$" + Number(n).toFixed(2) : "—";
+const miles = (n) => isFinite(n) ? Number(n).toFixed(2) + " mi" : "—";
+const num = (v) => {
+  if (v === "" || v === null || v === undefined) return null;
+  const n = Number(String(v).replace(/[$,]/g, ""));
+  return isFinite(n) ? n : null;
+};
+const todayISO = () => new Date().toISOString().slice(0, 10);
+const uid = (prefix) => prefix + "_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8);
 
-  if(p.generated){
-    main.appendChild(h('<div class="section-title">Mensaje para el cliente (en inglés — revisa / edita antes de enviar)</div>'));
-    var msgTa=h('<textarea class="ta" rows="5">'+esc(p.message)+'</textarea>');
-    msgTa.oninput=function(){p.message=msgTa.value;};
-    main.appendChild(msgTa);
-    var cpBtn=h('<button class="copy-btn">Copiar mensaje</button>');
-    cpBtn.onclick=function(){copyText(msgTa.value,cpBtn,"Copiar mensaje");};
-    main.appendChild(cpBtn);
-    var confirmBtn=h('<button class="big" style="margin-top:10px">✓ Confirmar y cerrar</button>');
-    confirmBtn.onclick=function(){
-      chat.finalDecision=p.decision;chat.finalReason=p.reasonKey;chat.finalSubName=p.decision==="sub"?p.subName:null;chat.finalMessage=msgTa.value;
-      var summary=p.decision==="sub"?("Sustituido por "+(p.subName||"(sin nombre)")):"No sustituido — sin respuesta a tiempo";
-      S.oosPanel=null;closeOOS(idx,summary,true);
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = (e) => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains("settings")) d.createObjectStore("settings", { keyPath: "key" });
+      if (!d.objectStoreNames.contains("days")) d.createObjectStore("days", { keyPath: "work_date" });
+      if (!d.objectStoreNames.contains("earnings")) d.createObjectStore("earnings", { keyPath: "week_start" });
+      if (!d.objectStoreNames.contains("images")) d.createObjectStore("images", { keyPath: "id" });
+      if (!d.objectStoreNames.contains("imports")) d.createObjectStore("imports", { keyPath: "id" });
     };
-    main.appendChild(confirmBtn);
-  }
-  var cancelBtn=h('<button class="ghost" style="margin-top:8px">Cancelar</button>');
-  cancelBtn.onclick=function(){S.oosPanel=null;render();};
-  main.appendChild(cancelBtn);
-}
-function renderOOSList(main){
-  main.appendChild(h('<p class="lead">Gestiona faltantes. Sube captura Spark del item + foto del estante y la app redacta el mensaje al cliente.</p>'));
-  if(!S.apiKey)main.appendChild(h('<p class="hint">⚠ Falta clave de API. Ábrela en <b>Ajustes</b> abajo.</p>'));
-  var ni=h('<label class="oos-new">📸 Nueva sustitución — subir 2 capturas<input type="file" accept="image/*" multiple style="display:none"></label>');
-  ni.querySelector("input").onchange=function(e){startOOS(e.target.files);try{e.target.value="";}catch(x){}};
-  main.appendChild(ni);
-  main.appendChild(h('<p class="hint" style="margin-top:-6px;text-align:center">1ª captura: app Spark (item faltante) · 2ª: foto del estante</p>'));
-  if(S.oosStatus)main.appendChild(h('<div class="status">'+esc(S.oosStatus)+'</div>'));
-  if(S.oosError){var er=h('<div class="error">'+esc(S.oosError)+'</div>');er.onclick=function(){S.oosError="";render();};main.appendChild(er);}
-  if(!S.oosChats.length){main.appendChild(h('<div class="empty">Sin faltantes registrados aún.</div>'));return;}
-  main.appendChild(h('<div class="section-title">Historial de faltantes</div>'));
-  S.oosChats.forEach(function(chat,i){
-    var card=h('<div class="oos-card '+(chat.closed?"closed":"open")+'"></div>');
-    var hd=h('<div class="oos-card-h"><span class="oos-item-name">'+esc(chat.itemName)+'</span><span class="oos-badge '+(chat.closed?"closed":"open")+'">'+(chat.closed?"✓ Cerrado":"⏳ Abierto")+'</span></div>');
-    hd.onclick=function(){S.oosActive=i;S.oosError="";render();};card.appendChild(hd);
-    if(chat.closed&&chat.closedWith){card.appendChild(h('<div style="padding:8px 14px 10px;font-size:12px;color:var(--mut)">'+esc(chat.closedWith)+'</div>'));}
-    main.appendChild(card);
+    req.onsuccess = () => { db = req.result; resolve(db); };
+    req.onerror = () => reject(req.error);
   });
-  var hasC=S.oosChats.some(function(c){return c.closed;});
-  if(hasC){var clr=h('<button class="ghost" style="margin-top:4px">Limpiar cerrados</button>');clr.onclick=function(){S.oosChats=S.oosChats.filter(function(c){return!c.closed;});save();render();};main.appendChild(clr);}
 }
-function renderOOSChat(main,idx){
-  var chat=S.oosChats[idx];if(!chat){S.oosActive=null;render();return;}
-  var back=h('<button class="oos-back">← Volver a la lista</button>');back.onclick=function(){S.oosActive=null;S.oosPanel=null;render();};main.appendChild(back);
-  main.appendChild(h('<div class="opt-h">🛒 '+esc(chat.itemName)+'</div>'));
-  if(chat.alternatives.length)main.appendChild(h('<p class="hint">Alternativas detectadas: '+esc(chat.alternatives.join(" · "))+'</p>'));
-  main.appendChild(h('<div class="section-title">Mensaje para el cliente</div>'));
-  main.appendChild(h('<div class="msg-box">'+esc(chat.customerMsg)+'</div>'));
-  var cpBtn=h('<button class="copy-btn">Copiar mensaje</button>');
-  cpBtn.onclick=function(){
-    var txt=chat.customerMsg;
-    if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){cpBtn.textContent="✓ Copiado";setTimeout(function(){cpBtn.textContent="Copiar mensaje";},2000);});}
-    else{var ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");cpBtn.textContent="✓ Copiado";setTimeout(function(){cpBtn.textContent="Copiar mensaje";},2000);}catch(e){}document.body.removeChild(ta);}
+function tx(store, mode="readonly") {
+  return db.transaction(store, mode).objectStore(store);
+}
+function getAll(store) {
+  return new Promise((resolve, reject) => {
+    const req = tx(store).getAll();
+    req.onsuccess = () => resolve(req.result || []);
+    req.onerror = () => reject(req.error);
+  });
+}
+function getOne(store, key) {
+  return new Promise((resolve, reject) => {
+    const req = tx(store).get(key);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+function putOne(store, value) {
+  return new Promise((resolve, reject) => {
+    const req = tx(store, "readwrite").put(value);
+    req.onsuccess = () => resolve(value);
+    req.onerror = () => reject(req.error);
+  });
+}
+function deleteOne(store, key) {
+  return new Promise((resolve, reject) => {
+    const req = tx(store, "readwrite").delete(key);
+    req.onsuccess = () => resolve(true);
+    req.onerror = () => reject(req.error);
+  });
+}
+function clearStore(store) {
+  return new Promise((resolve, reject) => {
+    const req = tx(store, "readwrite").clear();
+    req.onsuccess = () => resolve(true);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function loadSettings() {
+  const row = await getOne("settings", "main");
+  if (row) settings = { ...settings, ...row.value };
+  $("setInternalRate").value = settings.internalCostPerMile;
+  $("setIrsRate").value = settings.irsMileageRate;
+  $("setTaxYear").value = settings.taxYear;
+}
+
+async function saveSettings() {
+  settings.internalCostPerMile = num($("setInternalRate").value) ?? 0.25;
+  settings.irsMileageRate = num($("setIrsRate").value) ?? 0.725;
+  settings.taxYear = num($("setTaxYear").value) ?? new Date().getFullYear();
+  await putOne("settings", { key: "main", value: settings });
+  alert("Ajustes guardados");
+  await refreshAll();
+}
+
+async function fileToDataUrl(input) {
+  const f = input.files && input.files[0];
+  if (!f) return null;
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const id = uid("img");
+      await putOne("images", { id, name: f.name, type: f.type, size: f.size, created_at: new Date().toISOString(), data_url: reader.result });
+      resolve(id);
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(f);
+  });
+}
+
+
+function setOcrStatus(message, kind = "", target = "day") {
+  const el = target === "earnings" ? $("ocrEarningsStatus") : $("ocrStatus");
+  if (!el) return;
+  el.className = "notice ocr-progress" + (kind ? " " + kind : "");
+  el.textContent = message;
+}
+
+function updateOcrRaw() {
+  const lines = [];
+  for (const role of ["start", "fuel", "end", "earnings"]) {
+    const item = ocrState[role];
+    if (!item) continue;
+    lines.push("[" + role.toUpperCase() + "]");
+    if (item.summary) lines.push(item.summary);
+    if (item.raw_text) lines.push(item.raw_text.trim());
+    lines.push("");
+  }
+  if ($("ocrRaw")) $("ocrRaw").textContent = lines.join("\n") || "Sin lecturas.";
+}
+
+function translateOcrStage(stage) {
+  const map = {
+    "loading tesseract core": "cargando motor",
+    "initializing tesseract": "inicializando",
+    "loading language traineddata": "cargando idioma",
+    "initializing api": "preparando OCR",
+    "recognizing text": "leyendo imagen"
   };
-  main.appendChild(cpBtn);
-  if(chat.fallback){main.appendChild(h('<div class="section-title">Si no contesta (~5 min)</div>'));main.appendChild(h('<div class="fallback-box">⏱ '+esc(chat.fallback)+'</div>'));}
-  if(chat.thread.length){
-    main.appendChild(h('<div class="section-title">Conversación</div>'));
-    chat.thread.forEach(function(t){
-      var lbl=t.role==="customer"?"👤 Cliente respondió":"💡 Acción sugerida";
-      main.appendChild(h('<div class="thread-msg '+t.role+'"><div class="thread-role">'+lbl+'</div>'+esc(t.text)+'</div>'));
+  return map[stage] || stage || "procesando";
+}
+
+async function getOcrWorker() {
+  if (!window.Tesseract) throw new Error("No se pudo cargar Tesseract.js. Verifica internet y recarga.");
+  if (!ocrWorkerPromise) {
+    ocrWorkerPromise = Tesseract.createWorker("eng", 1, {
+      logger: (m) => {
+        const pct = typeof m.progress === "number" ? " " + Math.round(m.progress * 100) + "%" : "";
+        setOcrStatus(ocrProgressLabel + ": " + translateOcrStage(m.status) + pct, "", ocrProgressTarget);
+      },
+      errorHandler: (err) => console.error("OCR worker error", err)
     });
   }
-  if(!chat.closed){
-    main.appendChild(h('<div class="section-title">Respuesta del cliente</div>'));
-    var rl=h('<label class="ghost" style="display:block;text-align:center">📸 Subir captura de respuesta<input type="file" accept="image/*" style="display:none"></label>');
-    rl.querySelector("input").onchange=function(e){if(e.target.files[0])replyOOS(idx,e.target.files[0]);try{e.target.value="";}catch(x){}};
-    main.appendChild(rl);
-    if(S.oosStatus)main.appendChild(h('<div class="status">'+esc(S.oosStatus)+'</div>'));
-    if(S.oosError){var er=h('<div class="error">'+esc(S.oosError)+'</div>');er.onclick=function(){S.oosError="";render();};main.appendChild(er);}
-    main.appendChild(h('<div class="section-title">Cerrar decisión</div>'));
-    var dr=h('<div class="row-btns"></div>');
-    var lastSug=null;chat.thread.forEach(function(t){if(t.role==="suggestion")lastSug=t;});
-    var bs=h('<button class="ghost sm">✓ Sustituir</button>');bs.onclick=function(){closeOOS(idx,lastSug?lastSug.text:"Sustituido según sugerencia");};
-    var bn=h('<button class="ghost sm">✗ Omitir item</button>');bn.onclick=function(){closeOOS(idx,"No sustituir — item omitido");};
-    var bf=h('<button class="ghost sm">⏱ Sin respuesta (5 min)</button>');bf.onclick=function(){var g=guessFallbackDefaults(chat);S.oosPanel={idx:idx,decision:g.decision,subName:g.subName,reasonKey:g.decision==="no_sub"?"no_good_match":"closest_match",message:"",generated:false};render();};
-    dr.appendChild(bs);dr.appendChild(bn);dr.appendChild(bf);main.appendChild(dr);
-    if(S.oosPanel&&S.oosPanel.idx===idx){renderTimeoutPanel(main,chat,idx);}
+  return ocrWorkerPromise;
+}
+
+function setOcrButtonsDisabled(disabled) {
+  ["ocrAllBtn", "ocrSavedBtn", "ocrEarningsBtn"].forEach(id => { if ($(id)) $(id).disabled = disabled; });
+}
+
+function imageFromSource(source) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    let url = source;
+    let revoke = false;
+    if (source instanceof Blob) {
+      url = URL.createObjectURL(source);
+      revoke = true;
+    }
+    img.onload = () => {
+      if (revoke) URL.revokeObjectURL(url);
+      resolve(img);
+    };
+    img.onerror = () => {
+      if (revoke) URL.revokeObjectURL(url);
+      reject(new Error("No se pudo abrir la imagen."));
+    };
+    img.src = url;
+  });
+}
+
+function otsuThreshold(hist, total) {
+  let sum = 0;
+  for (let i = 0; i < 256; i++) sum += i * hist[i];
+  let sumB = 0, wB = 0, maxVar = 0, threshold = 128;
+  for (let i = 0; i < 256; i++) {
+    wB += hist[i];
+    if (!wB) continue;
+    const wF = total - wB;
+    if (!wF) break;
+    sumB += i * hist[i];
+    const mB = sumB / wB;
+    const mF = (sum - sumB) / wF;
+    const between = wB * wF * (mB - mF) * (mB - mF);
+    if (between > maxVar) { maxVar = between; threshold = i; }
+  }
+  return threshold;
+}
+
+function cropCanvas(img, rect, binary = true) {
+  const iw = img.naturalWidth || img.width;
+  const ih = img.naturalHeight || img.height;
+  const sx = Math.max(0, Math.round(iw * rect.x));
+  const sy = Math.max(0, Math.round(ih * rect.y));
+  const sw = Math.max(1, Math.min(iw - sx, Math.round(iw * rect.w)));
+  const sh = Math.max(1, Math.min(ih - sy, Math.round(ih * rect.h)));
+  const scale = Math.min(3, 1900 / sw, 1000 / sh);
+  const pad = 24;
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(sw * scale) + pad * 2;
+  canvas.height = Math.round(sh * scale) + pad * 2;
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, sx, sy, sw, sh, pad, pad, canvas.width - pad * 2, canvas.height - pad * 2);
+  const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const hist = new Array(256).fill(0);
+  let sum = 0;
+  for (let i = 0; i < data.data.length; i += 4) {
+    const g = Math.round(0.299 * data.data[i] + 0.587 * data.data[i+1] + 0.114 * data.data[i+2]);
+    hist[g]++; sum += g;
+  }
+  const mean = sum / (data.data.length / 4);
+  const threshold = otsuThreshold(hist, data.data.length / 4);
+  for (let i = 0; i < data.data.length; i += 4) {
+    const g = Math.round(0.299 * data.data[i] + 0.587 * data.data[i+1] + 0.114 * data.data[i+2]);
+    let v;
+    if (binary) {
+      v = g > threshold ? 255 : 0;
+      if (mean < 128) v = 255 - v;
+    } else {
+      v = Math.max(0, Math.min(255, (g - 128) * 1.8 + 128));
+      if (mean < 105) v = 255 - v;
+    }
+    data.data[i] = data.data[i+1] = data.data[i+2] = v;
+    data.data[i+3] = 255;
+  }
+  ctx.putImageData(data, 0, 0);
+  return canvas;
+}
+
+async function recognizeCanvas(canvas, whitelist = "0123456789.", psm = "7", target = "day", label = "OCR") {
+  ocrProgressTarget = target;
+  ocrProgressLabel = label;
+  const worker = await getOcrWorker();
+  await worker.setParameters({
+    tessedit_pageseg_mode: psm,
+    tessedit_char_whitelist: whitelist,
+    preserve_interword_spaces: "1",
+    user_defined_dpi: "300"
+  });
+  const result = await worker.recognize(canvas);
+  return { text: result.data.text || "", confidence: result.data.confidence || 0 };
+}
+
+function normalizeDigits(text) {
+  return String(text || "")
+    .replace(/[OoQD]/g, "0")
+    .replace(/[Il|!]/g, "1")
+    .replace(/[Ss]/g, "5")
+    .replace(/[Bb]/g, "8")
+    .replace(/[Zz]/g, "2")
+    .replace(/,/g, ".");
+}
+
+function numericTokens(text) {
+  const fixed = normalizeDigits(text);
+  return (fixed.match(/\d+(?:\.\d+)?/g) || []).map(s => ({ raw: s, value: Number(s) })).filter(x => Number.isFinite(x.value));
+}
+
+function parseOdometer(text) {
+  const fixed = normalizeDigits(text);
+  const groups = fixed.match(/\d{4,7}/g) || [];
+  const values = groups.map(Number).filter(n => n >= 1000 && n <= 9999999);
+  return values.length ? Math.max(...values) : null;
+}
+
+function inferDisplayNumber(text, role) {
+  const tokens = numericTokens(text);
+  const ranges = {
+    total: [1, 300],
+    gallons: [0.1, 60],
+    mpg: [3, 60]
+  };
+  const [min, max] = ranges[role];
+  let candidates = tokens.filter(t => t.value >= min && t.value <= max);
+  const preferredDecimals = role === "total" ? 2 : role === "gallons" ? 3 : 1;
+  const exact = candidates.filter(t => (t.raw.split(".")[1] || "").length === preferredDecimals);
+  if (exact.length) candidates = exact;
+  if (candidates.length) return candidates[0].value;
+
+  const digitGroups = normalizeDigits(text).match(/\d{2,6}/g) || [];
+  for (const digits of digitGroups) {
+    const decimals = preferredDecimals;
+    if (digits.length <= decimals) continue;
+    const value = Number(digits.slice(0, -decimals) + "." + digits.slice(-decimals));
+    if (value >= min && value <= max) return value;
+  }
+  return null;
+}
+
+function setExtractedField(id, value, decimals = null) {
+  if (value == null || !Number.isFinite(Number(value))) return;
+  const input = $(id);
+  input.value = decimals == null ? String(value) : Number(value).toFixed(decimals).replace(/0+$/, "").replace(/\.$/, "");
+  input.classList.add("ocr-filled");
+  input.dispatchEvent(new Event("input", { bubbles: true }));
+  input.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
+async function extractDashboard(source, role) {
+  const img = await imageFromSource(source);
+  const odoRects = [
+    { x: 0.16, y: 0.74, w: 0.72, h: 0.25 },
+    { x: 0.02, y: 0.67, w: 0.96, h: 0.32 }
+  ];
+  let odo = null, odoRead = null;
+  for (let i = 0; i < odoRects.length && odo == null; i++) {
+    odoRead = await recognizeCanvas(cropCanvas(img, odoRects[i], true), "0123456789", "7", "day", role === "start" ? "Tablero inicio" : "Tablero fin");
+    odo = parseOdometer(odoRead.text);
+  }
+  let mpg = null, mpgRead = null;
+  if (role === "end") {
+    const mpgRects = [
+      { x: 0.25, y: 0.18, w: 0.50, h: 0.48 },
+      { x: 0.18, y: 0.10, w: 0.64, h: 0.62 }
+    ];
+    for (let i = 0; i < mpgRects.length && mpg == null; i++) {
+      mpgRead = await recognizeCanvas(cropCanvas(img, mpgRects[i], true), "0123456789.", "7", "day", "MPG final");
+      mpg = inferDisplayNumber(mpgRead.text, "mpg");
+    }
+  }
+  return {
+    odometer: odo,
+    mpg,
+    confidence: Math.round(((odoRead?.confidence || 0) + (mpgRead?.confidence || 0)) / (role === "end" ? 2 : 1)),
+    raw_text: [odoRead?.text, mpgRead?.text].filter(Boolean).join("\n"),
+    summary: "odometer=" + (odo ?? "?") + (role === "end" ? ", mpg=" + (mpg ?? "?") : "")
+  };
+}
+
+async function extractFuel(source) {
+  const img = await imageFromSource(source);
+  const totalRead = await recognizeCanvas(cropCanvas(img, { x: 0.12, y: 0.12, w: 0.78, h: 0.42 }, true), "0123456789.$", "7", "day", "Bomba total");
+  const gallonsRead = await recognizeCanvas(cropCanvas(img, { x: 0.12, y: 0.43, w: 0.78, h: 0.40 }, true), "0123456789.", "7", "day", "Bomba galones");
+  let total = inferDisplayNumber(totalRead.text, "total");
+  let gallons = inferDisplayNumber(gallonsRead.text, "gallons");
+  if (total == null || gallons == null) {
+    const fullRead = await recognizeCanvas(cropCanvas(img, { x: 0.08, y: 0.10, w: 0.86, h: 0.76 }, true), "0123456789.$", "6", "day", "Bomba completa");
+    const tokens = numericTokens(fullRead.text).map(t => t.value);
+    if (total == null) total = tokens.find(v => v >= 1 && v <= 300) ?? null;
+    if (gallons == null) gallons = tokens.find(v => v >= 0.1 && v <= 60 && v !== total) ?? null;
+  }
+  const price = total && gallons ? total / gallons : null;
+  return {
+    total, gallons, price,
+    confidence: Math.round(((totalRead.confidence || 0) + (gallonsRead.confidence || 0)) / 2),
+    raw_text: totalRead.text + "\n" + gallonsRead.text,
+    summary: "total=" + (total ?? "?") + ", gallons=" + (gallons ?? "?") + ", price=" + (price ? price.toFixed(3) : "?")
+  };
+}
+
+async function processDaySource(role, source) {
+  if (!source) return false;
+  if (ocrBusy) { alert("Hay otra extracción en curso."); return false; }
+  ocrBusy = true;
+  setOcrButtonsDisabled(true);
+  try {
+    let result;
+    if (role === "fuel") result = await extractFuel(source);
+    else result = await extractDashboard(source, role);
+    ocrState[role] = result;
+    if (role === "start") setExtractedField("odoStart", result.odometer, 0);
+    if (role === "end") {
+      setExtractedField("odoEnd", result.odometer, 0);
+      setExtractedField("mpg", result.mpg, 2);
+    }
+    if (role === "fuel") {
+      setExtractedField("fuelTotal", result.total, 2);
+      setExtractedField("fuelGallons", result.gallons, 3);
+      setExtractedField("gasPrice", result.price, 3);
+    }
+    renderDayCalc();
+    updateOcrRaw();
+    const missing = role === "fuel" ? (result.total == null || result.gallons == null) : (result.odometer == null || (role === "end" && result.mpg == null));
+    setOcrStatus(missing ? "Lectura parcial. Revisa/completa los campos resaltados." : "Datos detectados. Revísalos y pulsa Guardar día.", missing ? "warn" : "ok", "day");
+    return !missing;
+  } catch (error) {
+    console.error(error);
+    setOcrStatus("Error OCR: " + error.message, "bad", "day");
+    return false;
+  } finally {
+    ocrBusy = false;
+    setOcrButtonsDisabled(false);
+  }
+}
+
+async function processSelectedDayImages() {
+  const jobs = [
+    ["start", $("imgStart").files?.[0]],
+    ["fuel", $("imgFuel").files?.[0]],
+    ["end", $("imgEnd").files?.[0]]
+  ].filter(x => x[1]);
+  if (!jobs.length) { alert("Selecciona al menos una foto."); return; }
+  for (const [role, file] of jobs) await processDaySource(role, file);
+}
+
+async function processSavedDayImages() {
+  const jobs = Object.entries(editingSavedImages).filter(([, id]) => id);
+  if (!jobs.length) {
+    alert("Este registro no tiene fotos guardadas.");
+    return false;
+  }
+
+  let processed = 0;
+
+  for (const [role, id] of jobs) {
+    const image = await getOne("images", id);
+
+    if (image?.data_url) {
+      await processDaySource(role, image.data_url);
+      processed++;
+    }
+  }
+
+  renderDayCalc();
+  return processed > 0;
+}
+
+function parseMoneyAfterLabel(text, labelPattern) {
+  const fixed = String(text || "").replace(/\s+/g, " ");
+  const re = new RegExp(labelPattern + "[^0-9]{0,30}\\$?\\s*([0-9,]+\\.[0-9]{2})", "i");
+  const m = fixed.match(re);
+  return m ? Number(m[1].replace(/,/g, "")) : null;
+}
+
+async function processEarningsSource(source) {
+  if (!source) { alert("Selecciona una captura de ganancias."); return; }
+  if (ocrBusy) { alert("Hay otra extracción en curso."); return; }
+  ocrBusy = true;
+  setOcrButtonsDisabled(true);
+  try {
+    const img = await imageFromSource(source);
+    const canvas = cropCanvas(img, { x: 0, y: 0.04, w: 1, h: 0.48 }, false);
+    const read = await recognizeCanvas(canvas, "", "6", "earnings", "Ganancias semanales");
+    const text = read.text;
+    let total = parseMoneyAfterLabel(text, "confirmed\\s+weekly\\s+earnings");
+    let trips = parseMoneyAfterLabel(text, "trip\\s+earnings");
+    let tips = parseMoneyAfterLabel(text, "confirmed\\s+tips");
+    const amounts = numericTokens(text).map(t => t.value).filter(v => v > 1 && v < 100000);
+    if (total == null && amounts.length) total = Math.max(...amounts);
+    if ((trips == null || tips == null) && total != null) {
+      outer: for (let i = 0; i < amounts.length; i++) {
+        for (let j = i + 1; j < amounts.length; j++) {
+          if (Math.abs(amounts[i] + amounts[j] - total) <= 0.06) {
+            if (trips == null) trips = Math.max(amounts[i], amounts[j]);
+            if (tips == null) tips = Math.min(amounts[i], amounts[j]);
+            break outer;
+          }
+        }
+      }
+    }
+    setExtractedField("confirmedWeekly", total, 2);
+    setExtractedField("tripEarnings", trips, 2);
+    setExtractedField("confirmedTips", tips, 2);
+    ocrState.earnings = { total, trips, tips, confidence: Math.round(read.confidence || 0), raw_text: text, summary: "total=" + (total ?? "?") + ", trips=" + (trips ?? "?") + ", tips=" + (tips ?? "?") };
+    updateOcrRaw();
+    const partial = total == null || trips == null || tips == null;
+    setOcrStatus(partial ? "Lectura parcial. Completa los importes faltantes." : "Ganancias detectadas. Revísalas antes de guardar.", partial ? "warn" : "ok", "earnings");
+  } catch (error) {
+    console.error(error);
+    setOcrStatus("Error OCR: " + error.message, "bad", "earnings");
+  } finally {
+    ocrBusy = false;
+    setOcrButtonsDisabled(false);
+  }
+}
+
+function calcDayObj() {
+  const work_date = $("workDate").value || todayISO();
+  const odo_start = num($("odoStart").value);
+  const odo_end = num($("odoEnd").value);
+  const mpg = num($("mpg").value);
+  const gas_price_per_gallon = num($("gasPrice").value);
+  const fuel_total = num($("fuelTotal").value);
+  const fuel_gallons = num($("fuelGallons").value);
+
+  const business_miles = (odo_start != null && odo_end != null) ? Math.max(0, odo_end - odo_start) : null;
+  const estimated_gallons_used = (business_miles != null && mpg && mpg > 0) ? business_miles / mpg : null;
+  const estimated_fuel_cost = (estimated_gallons_used != null && gas_price_per_gallon != null) ? estimated_gallons_used * gas_price_per_gallon : null;
+  const internal_mileage_cost = business_miles != null ? business_miles * settings.internalCostPerMile : null;
+  const internal_total_cost = (internal_mileage_cost ?? 0) + (estimated_fuel_cost ?? 0);
+  const irs_mileage_deduction = business_miles != null ? business_miles * settings.irsMileageRate : null;
+
+  return {
+    work_date,
+    status: $("dayStatus").value,
+    odo_start,
+    odo_end,
+    business_miles,
+    mpg,
+    gas_price_per_gallon,
+    fuel_total,
+    fuel_gallons,
+    estimated_gallons_used,
+    estimated_fuel_cost,
+    internal_cost_per_mile: settings.internalCostPerMile,
+    internal_mileage_cost,
+    internal_total_cost,
+    irs_mileage_rate: settings.irsMileageRate,
+    irs_mileage_deduction,
+    vehicle_method: settings.vehicleMethod,
+    cash_tips_tracked: false,
+    updated_at: new Date().toISOString()
+  };
+}
+
+function metric(label, value, cls="") {
+  return `<div class="metric"><div class="label">${label}</div><div class="value ${cls}">${value}</div></div>`;
+}
+
+function renderDayCalc(scrollToResult = false) {
+  const d = calcDayObj();
+  const missing = [];
+
+  if (d.odo_start == null) missing.push("Odo inicio");
+  if (d.odo_end == null) missing.push("Odo fin");
+  if (d.mpg == null || d.mpg <= 0) missing.push("MPG");
+  if (d.gas_price_per_gallon == null || d.gas_price_per_gallon <= 0) missing.push("Precio gas");
+
+  const status = $("calcStatus");
+
+  if (d.odo_start != null && d.odo_end != null && d.odo_end < d.odo_start) {
+    if (status) {
+      status.className = "notice bad";
+      status.textContent = "Error: Odo fin no puede ser menor que Odo inicio.";
+    }
+  } else if (missing.length) {
+    if (status) {
+      status.className = "notice warn";
+      status.textContent = "Faltan campos para el cálculo completo: " + missing.join(", ") + ".";
+    }
   } else {
-    main.appendChild(h('<div class="section-title">Decisión final</div>'));
-    main.appendChild(h('<div class="fallback-box">✓ '+esc(chat.closedWith||"Cerrado")+'</div>'));
-    if(chat.finalMessage){
-      main.appendChild(h('<div class="section-title">Mensaje para el cliente</div>'));
-      main.appendChild(h('<div class="msg-box">'+esc(chat.finalMessage)+'</div>'));
-      var fcp=h('<button class="copy-btn">Copiar mensaje</button>');fcp.onclick=function(){copyText(chat.finalMessage,fcp,"Copiar mensaje");};main.appendChild(fcp);
+    if (status) {
+      status.className = "notice ok";
+      status.textContent = "Cálculo actualizado correctamente.";
     }
-    var ro=h('<button class="ghost" style="margin-top:8px">Reabrir este item</button>');ro.onclick=function(){chat.closed=false;chat.closedWith=null;save();render();};main.appendChild(ro);
   }
-}
-function renderOOS(main){
-  if(S.oosActive!==null&&S.oosActive<S.oosChats.length){renderOOSChat(main,S.oosActive);}
-  else{S.oosActive=null;renderOOSList(main);}
-}
 
-/* ============ Gate Codes ============ */
-var GATE_CODES=[
-  {condo:"Arlington Ranch",calle:"Arlington Ranch Blvd, W Richmar Ave",code:"608163"},
-  {condo:"The Logan",calle:"12020 Southern Highlands Pkwy",code:"#7644"},
-  {condo:"Summer Wind",calle:"2725 W Wigwam Ave",code:"024#"},
-  {condo:"San Niccolo",calle:"Piscadera Beach Ave, Steponia Bay Ct",code:"#5342"},
-  {condo:"LampLight Cottages",calle:"Cottage Chase St.",code:"#5851"},
-  {condo:"Cactus Twilight",calle:"Mystic Falls Dr.",code:"200858"},
-  {condo:"Sage Glen",calle:"W Ford Ave",code:"#1742"},
-  {condo:"Saguaro",calle:"Great Pine",code:"#1742"},
-  {condo:"Montagne Marron",calle:"Frejus Dr., Montagne Marron Blvd",code:"#1456"},
-  {condo:"Cascina Ranch",calle:"Harvest Sunset St",code:"#101"},
-  {condo:"Marble Canyon",calle:"Dawn End St",code:"#0730"},
-  {condo:"Il Mirador",calle:"S Dessert Porch Rd",code:"#0070"},
-  {condo:"Spectrum",calle:"Lemon Hls St",code:"#0914"},
-  {condo:"SUR 702",calle:"6612 Blue Diamond Rd",code:"#6073"},
-  {condo:"Monterrey Ranch",calle:"Orleans Bay St, Coorumby St",code:"#8205, #9344"},
-  {condo:"Octave",calle:"2750 W Wigwam Ave",code:"#2727"},
-  {condo:"Glacier",calle:"National Park Dr",code:"16819#"},
-  {condo:"San Gabriel",calle:"S Ramblers Ranch St",code:"#9571"},
-  {condo:"Chelsea Creek",calle:"Beckinsale Ave",code:"#8165"},
-  {condo:"Montelago",calle:"Sadge Wren Ave",code:"#9344"},
-  {condo:"Durham Ranch",calle:"Durham Ranch St",code:"#7229"},
-  {condo:"Cactus Hills South",calle:"Redmoon Ave",code:"#0502"},
-  {condo:"Tuscan Highlands",calle:"12656 Southern Highlands",code:"#2040"},
-  {condo:"Purple Moon",calle:"Purple Moon Ave",code:"#9349"},
-  {condo:"Tramonto Vitaggio",calle:"Italian Ice St",code:"#7400"},
-  {condo:"The Gallery Apartment",calle:"7688 Blue Diamond Rd",code:"#2085"},
-  {condo:"Casa del Sol Mobile Home Park",calle:"4800 E Vegas Valley Dr",code:"#1945"},
-  {condo:"Trail Ridge",calle:"8311 Agate Ave",code:"44459"},
-  {condo:"Bronco",calle:"Bronco",code:"#0116"},
-  {condo:"Augusta",calle:"Sacramento Hills Ave",code:"#3245"},
-  {condo:"San Gabriel",calle:"Ramblers Ranch St",code:"#4526"}
-];
-function renderGate(main){
-  main.appendChild(h('<p class="lead">Busca por dirección o nombre del condo.</p>'));
-  
-  /* Búsqueda unificada */
-  var si=h('<input class="in" type="search" placeholder="Ej: Senna Ave, Arlington, Southern Highlands…" style="font-size:15px;padding:12px;margin-bottom:4px" autocomplete="off">');
-  main.appendChild(si);
-  
-  var hint=h('<p class="hint">'+(GATE_CODES.length+S.gateCodesCustom.length)+' códigos ('+(GATE_CODES.length)+' base + '+S.gateCodesCustom.length+' personalizados)</p>');
-  main.appendChild(hint);
-  
-  var results=h('<div></div>');
-  main.appendChild(results);
-  
-  function fuzzyMatch(q,text){return text.toLowerCase().indexOf(q.toLowerCase())>=0;}
-  
-  function doSearch(){
-    var q=(si.value||"").trim();
-    results.innerHTML="";
-    if(!q){return;}
-    
-    /* Merge custom + base */
-    var allCodes=S.gateCodesCustom.concat(GATE_CODES);
-    var hits=allCodes.filter(function(g){
-      return fuzzyMatch(q,g.condo)||fuzzyMatch(q,g.calle)||(g.address?fuzzyMatch(q,g.address):"")||(g.customer?fuzzyMatch(q,g.customer):"")||(g.complex?fuzzyMatch(q,g.complex):"");
-    });
-    
-    if(!hits.length){results.appendChild(h('<div class="empty" style="padding:24px 0">Sin resultados para "'+esc(si.value)+'"</div>'));return;}
-    
-    hits.forEach(function(g){
-      var isCustom=S.gateCodesCustom.indexOf(g)>=0;
-      var card=h('<div style="background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden"></div>');
-      var head=h('<div style="background:var(--surf2);padding:11px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px"></div>');
-      head.appendChild(h('<span style="font-size:14px;font-weight:800;flex:1;min-width:0">'+esc(g.condo)+(isCustom?' <span style="font-size:10px;color:var(--acc)">●</span>':'')+' </span>'));
-      head.appendChild(h('<span style="font-size:24px;font-weight:900;color:var(--acc);letter-spacing:.04em;white-space:nowrap">'+esc(g.code)+'</span>'));
-      card.appendChild(head);
-      card.appendChild(h('<div style="padding:7px 14px 10px;font-size:12px;color:var(--mut)">📍 '+esc(g.calle)+' '+(g.address?'<br>'+esc(g.address):'')+'</div>'));
-      results.appendChild(card);
-    });
-  }
-  
-  si.oninput=doSearch;
-  
-  /* Botón para agregar códigos */
-  main.appendChild(h('<hr style="border:none;border-top:1px dashed var(--line);margin:20px 0;opacity:.5">'));
-  main.appendChild(h('<div class="section-title">Agregar códigos personalizados</div>'));
-  main.appendChild(h('<p class="hint">Sube captura de Spark con dirección y código de acceso.</p>'));
-  
-  var fileInput=h('<input class="file" type="file" accept="image/*">');
-  fileInput.onchange=function(e){onAddGateCode(e.target);};
-  main.appendChild(fileInput);
-  
-  var addStatus=h('<div></div>');
-  main.appendChild(addStatus);
-  
-  /* Listar custom codes */
-  if(S.gateCodesCustom.length){
-    main.appendChild(h('<div class="section-title" style="margin-top:24px">Tus códigos ('+S.gateCodesCustom.length+')</div>'));
-    S.gateCodesCustom.forEach(function(g,idx){
-      var card=h('<div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;gap:10px;align-items:center"></div>');
-      var info=h('<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700">'+esc(g.condo)+'</div><div style="font-size:11px;color:var(--mut)">'+esc(g.calle)+'</div><div style="font-size:12px;color:var(--acc);font-weight:800;margin-top:4px">'+esc(g.code)+'</div></div>');
-      card.appendChild(info);
-      var del=h('<button style="background:transparent;border:none;color:var(--sp);font-size:16px;cursor:pointer;padding:6px">✕</button>');
-      del.onclick=function(){S.gateCodesCustom.splice(idx,1);save();render();};
-      card.appendChild(del);
-      main.appendChild(card);
-    });
-    
-    var exp=h('<button class="ghost sm" style="width:100%;margin-top:12px">📥 Exportar CSV</button>');
-    exp.onclick=function(){exportGateCodesCSV();};
-    main.appendChild(exp);
-  }
-  
-  setTimeout(function(){si.focus();},50);
-  
-  /* Handler para agregar código */
-  function onAddGateCode(input){
-    var files=Array.prototype.slice.call(input.files||[]);
-    if(!files.length){addStatus.innerHTML='<div class="error" style="margin-top:8px">Selecciona una imagen</div>';return;}
-    addStatus.innerHTML='<div class="status" style="margin-top:8px">Analizando…</div>';
-    
-    fileToB64(files[0]).then(function(b64){
-      var prompt='Extract from this Spark delivery screenshot: 1) "code" = the Access Code (e.g. 578459, #8329) — the digits shown under "Access Code". 2) "address" = the full street address including unit number (e.g. "8649 Horizon Wind Ave, Unit 103"). 3) "customer" = the customer name shown (e.g. "Galinda W."). 4) "condo" = apartment complex/building name ONLY if clearly shown, otherwise null. Return ONLY valid JSON: {"code":"578459","address":"8649 Horizon Wind Ave, Unit 103","customer":"Galinda W.","condo":null}. Code, address and customer are the most important.';
-      var body={model:S.model,max_tokens:200,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:files[0].type||"image/jpeg",data:b64}},{type:"text",text:prompt}]}]};
-      return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();});
-    }).then(function(data){
-      var txt=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("").trim();
-      var clean=txt.replace(/```json/gi,"").replace(/```/g,"").trim();
-      var parsed=JSON.parse(clean);
-      
-      /* Requiere código + dirección. */
-      if(!parsed.code||!parsed.address){addStatus.innerHTML='<div class="error" style="margin-top:8px">No encontré Access Code o dirección en la captura. Asegúrate de que ambos sean visibles.</div>';return;}
-      
-      /* Etiqueta: nombre del cliente (siempre está) + condo si existe */
-      var label=parsed.customer||parsed.address.split(",")[0];
-      
-      /* Dedup por código + dirección */
-      var exists=S.gateCodesCustom.some(function(g){return g.code===parsed.code&&g.address===parsed.address;});
-      if(exists){addStatus.innerHTML='<div class="hint" style="margin-top:8px">✓ Este código ya existe.</div>';input.value="";return;}
-      
-      S.gateCodesCustom.push({condo:label,customer:parsed.customer||"",complex:parsed.condo||"",calle:parsed.address,address:parsed.address,code:parsed.code});
-      save();
-      addStatus.innerHTML='<div class="status" style="margin-top:8px">✓ Agregado: '+esc(label)+' → '+esc(parsed.code)+'</div>';
-      input.value="";
-      hint.textContent=(GATE_CODES.length+S.gateCodesCustom.length)+' códigos ('+(GATE_CODES.length)+' base + '+S.gateCodesCustom.length+' personalizados)';
-      setTimeout(function(){render();},1200);
-    }).catch(function(err){addStatus.innerHTML='<div class="error" style="margin-top:8px">Error: '+(err&&err.message?err.message:"error")+'</div>';});
+  $("dayCalc").innerHTML = [
+    metric("Millas Spark", miles(d.business_miles)),
+    metric("Galones usados estimados", d.estimated_gallons_used != null ? d.estimated_gallons_used.toFixed(3) + " gal" : "—"),
+    metric("Gasolina estimada", money(d.estimated_fuel_cost)),
+    metric("Costo interno millas", money(d.internal_mileage_cost)),
+    metric("Costo operativo interno", money(d.internal_total_cost)),
+    metric("Deducción IRS millas", money(d.irs_mileage_deduction))
+  ].join("");
+
+  if (scrollToResult) {
+    $("dayCalc").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 }
 
-function exportGateCodesCSV(){
-  var csv="Condo,Calle,Dirección,Código,Tipo\n";
-  S.gateCodesCustom.forEach(function(g){
-    csv+='"'+g.condo.replace(/"/g,'""')+'","'+g.calle.replace(/"/g,'""')+'","'+(g.address||"").replace(/"/g,'""')+'","'+g.code.replace(/"/g,'""')+'","Personal"\n';
-  });
-  var blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
-  var link=document.createElement("a");
-  link.href=URL.createObjectURL(blob);
-  link.download="gate-codes-"+new Date().toISOString().split("T")[0]+".csv";
-  link.click();
-}
+async function saveDay() {
+  const d = calcDayObj();
+  const missing = [];
 
-/* ============ Notas por Dirección ============ */
-function normalizeAddress(s){return String(s||"").toLowerCase().replace(/[.,#]/g,"").replace(/\b(apt|unit|suite|ste|building|bldg)\b/g,"").replace(/\s+/g,"").trim();}
-function resizeImage(file,maxW,quality){
-  return new Promise(function(res,rej){
-    var reader=new FileReader();
-    reader.onload=function(e){
-      var img=new Image();
-      img.onload=function(){
-        var w=img.width,hh=img.height;
-        if(w>maxW){hh=Math.round(hh*maxW/w);w=maxW;}
-        var c=document.createElement("canvas");c.width=w;c.height=hh;
-        c.getContext("2d").drawImage(img,0,0,w,hh);
-        res(c.toDataURL("image/jpeg",quality||0.72));
-      };
-      img.onerror=function(){rej(new Error("no se pudo procesar la imagen"));};
-      img.src=e.target.result;
-    };
-    reader.onerror=function(){rej(new Error("no se pudo leer la imagen"));};
-    reader.readAsDataURL(file);
-  });
-}
-function findAddressMatches(query,excludeIdx){
-  var nq=normalizeAddress(query);
-  if(!nq)return[];
-  return S.addressNotes.map(function(n,i){return{n:n,i:i};}).filter(function(o){if(o.i===excludeIdx)return false;var na=o.n.normalized_address||"";return na&&(na.indexOf(nq)>=0||nq.indexOf(na)>=0);});
-}
-function newAddressNote(){var now=new Date().toISOString();return{id:Date.now(),full_address:"",normalized_address:"",apartment_number:"",building_number:"",complex_name:"",latitude:null,longitude:null,parking_notes:"",entry_instructions:"",walking_route_notes:"",building_location_notes:"",visual_references:"",images:[],map_images:[],created_at:now,updated_at:now,last_used_at:now};}
-/* ---- OCR de dirección desde captura(s) — Spark y/o mapa de condominio ---- */
-function ocrAddressFromImages(files){
-  if(!S.apiKey)return Promise.reject(new Error("Falta tu clave de API (Ajustes ⚙)"));
-  var imgFiles=Array.prototype.slice.call(files,0,2);
-  return Promise.all(imgFiles.map(function(f){return fileToB64(f).then(function(d){return{type:"image",source:{type:"base64",media_type:(f.type&&f.type.indexOf("image/")===0)?f.type:"image/jpeg",data:d}};});}))
-  .then(function(imgs){
-    var prompt='Analiza estas imágenes relacionadas con una entrega. Puede haber 1 o 2 imágenes: una captura de la app Spark (con dirección, unidad, edificio, notas del cliente) y/o una foto de un mapa de condominio (con nombre del complejo, edificios, entradas, estacionamiento). Extrae TODO lo que puedas reconocer. Devuelve SOLO JSON, sin texto ni markdown:\n{"full_address":string|null,"complex_name":string|null,"apartment_number":string|null,"building_number":string|null,"gate_code":string|null,"customer_note":string|null,"is_map_image":boolean,"map_notes":string|null}\nfull_address: dirección completa con ciudad/estado/zip si está visible. complex_name: nombre del condominio/complejo si aparece en cualquiera de las imágenes. is_map_image: true si alguna de las imágenes es un mapa/plano del condominio (no una captura de app). map_notes: si hay un mapa, describe en 1-2 frases breves la ubicación relativa (ej: "Entrada principal sobre Durango Dr; edificio 46 al lado izquierdo, cerca de la entrada"). Si algo no es visible, usa null.';
-    var body={model:S.model,max_tokens:500,messages:[{role:"user",content:imgs.concat([{type:"text",text:prompt}])}]};
-    return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)})
-    .then(function(r){if(!r.ok)return r.json().catch(function(){return null;}).then(function(ej){throw new Error("HTTP "+r.status+(ej&&ej.error?" · "+ej.error.message:""));});return r.json();})
-    .then(function(data){
-      if(data&&data.error)throw new Error(data.error.message||"error IA");
-      var txt=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("");
-      var clean=txt.replace(/```json/gi,"").replace(/```/g,"").trim();
-      var a=clean.indexOf("{"),b=clean.lastIndexOf("}");
-      var parsed=JSON.parse((a>=0&&b>=0)?clean.slice(a,b+1):clean);
-      return{parsed:parsed,imgFiles:imgFiles};
-    });
-  });
-}
-function imgGrid(container,note,field,label,maxW){
-  container.appendChild(h('<div class="section-title">'+label+'</div>'));
-  var grid=h('<div class="img-grid"></div>');
-  (note[field]||[]).forEach(function(src,i){
-    var t=h('<div class="img-thumb"><img src="'+src+'"></div>');
-    var del=h('<button>✕</button>');del.onclick=function(ev){ev.stopPropagation();note[field].splice(i,1);note.updated_at=new Date().toISOString();save();render();};
-    t.appendChild(del);grid.appendChild(t);
-  });
-  var add=h('<label class="img-add">+<input type="file" accept="image/*" multiple style="display:none"></label>');
-  add.querySelector("input").onchange=function(e){
-    var files=Array.prototype.slice.call(e.target.files||[]);
-    Promise.all(files.map(function(f){return resizeImage(f,maxW||900,0.72);})).then(function(arr){
-      note[field]=(note[field]||[]).concat(arr);note.updated_at=new Date().toISOString();save();render();
-    }).catch(function(){});
-  };
-  grid.appendChild(add);
-  container.appendChild(grid);
-}
-function renderNotes(main){
-  if(S.notesOcrPending){renderOcrValidation(main);return;}
-  if(S.notesActive!=null&&S.notesActive<S.addressNotes.length){renderNoteForm(main,S.addressNotes[S.notesActive],S.notesActive);}
-  else{S.notesActive=null;renderNotesList(main);}
-}
-function renderNotesList(main){
-  main.appendChild(h('<p class="lead">Memoria de direcciones: mapas, parqueo, accesos y notas internas de cada complejo.</p>'));
+  if (d.odo_start == null) missing.push("Odo inicio");
+  if (d.odo_end == null) missing.push("Odo fin");
+  if (d.mpg == null || d.mpg <= 0) missing.push("MPG");
+  if (d.gas_price_per_gallon == null || d.gas_price_per_gallon <= 0) missing.push("Precio gas");
 
-  // ── Captura automática (opción primaria) ──
-  var capLabel=h('<label class="oos-new">📸 Capturar dirección — sube captura Spark y/o mapa<input type="file" accept="image/*" multiple style="display:none"></label>');
-  capLabel.querySelector("input").onchange=function(e){startAddressOCR(e.target.files);try{e.target.value="";}catch(x){}};
-  main.appendChild(capLabel);
-  main.appendChild(h('<p class="hint" style="margin-top:-6px;text-align:center">1-2 imágenes: app Spark y/o foto del mapa del condominio</p>'));
-  if(S.notesOcrStatus)main.appendChild(h('<div class="status">'+esc(S.notesOcrStatus)+'</div>'));
-  if(S.notesOcrError){var er=h('<div class="error">'+esc(S.notesOcrError)+'</div>');er.onclick=function(){S.notesOcrError="";render();};main.appendChild(er);}
-  if(!S.apiKey)main.appendChild(h('<p class="hint">⚠ Falta tu clave de API. Ábrela en <b>Ajustes</b> abajo.</p>'));
-
-  var nb=h('<button class="ghost" style="margin-top:4px">✏️ Escribir dirección manualmente</button>');
-  nb.onclick=function(){var n=newAddressNote();S.addressNotes.unshift(n);S.notesActive=0;save();render();};
-  main.appendChild(nb);
-
-  var si=h('<input class="in" type="search" placeholder="Buscar dirección, complejo, apto…" style="font-size:15px;padding:12px;margin:14px 0 10px" autocomplete="off">');
-  main.appendChild(si);
-  var results=h('<div style="margin-top:10px"></div>');
-  main.appendChild(results);
-  function draw(){
-    var q=(si.value||"").trim();
-    var list=S.addressNotes.map(function(n,i){return{n:n,i:i};});
-    if(q){var nq=normalizeAddress(q),ql=q.toLowerCase();list=list.filter(function(o){var n=o.n;return normalizeAddress(n.full_address).indexOf(nq)>=0||(n.complex_name||"").toLowerCase().indexOf(ql)>=0||(n.apartment_number||"").toLowerCase().indexOf(ql)>=0;});}
-    list.sort(function(a,b){return new Date(b.n.last_used_at||b.n.created_at)-new Date(a.n.last_used_at||a.n.created_at);});
-    results.innerHTML="";
-    if(!S.addressNotes.length){results.appendChild(h('<div class="empty">Sin direcciones guardadas aún.</div>'));return;}
-    if(!list.length){results.appendChild(h('<div class="empty">Sin resultados para "'+esc(q)+'"</div>'));return;}
-    list.forEach(function(o){
-      var n=o.n;
-      var card=h('<div class="note-card"></div>');
-      card.appendChild(h('<div class="note-addr">'+esc(n.full_address||"(sin dirección)")+'</div>'));
-      var metaBits=[];
-      if(n.complex_name)metaBits.push(n.complex_name);
-      if(n.apartment_number)metaBits.push("Apto "+n.apartment_number);
-      if(metaBits.length)card.appendChild(h('<div class="note-meta">'+esc(metaBits.join(" · "))+'</div>'));
-      var badges="";
-      var imgCount=(n.images||[]).length+(n.map_images||[]).length;
-      if(imgCount)badges+='<span class="note-badge">📷 '+imgCount+'</span>';
-      if(n.parking_notes)badges+='<span class="note-badge">🚗 parqueo</span>';
-      if(n.entry_instructions)badges+='<span class="note-badge">🔑 acceso</span>';
-      if(badges)card.appendChild(h('<div>'+badges+'</div>'));
-      card.onclick=function(){n.last_used_at=new Date().toISOString();S.notesActive=o.i;save();render();};
-      results.appendChild(card);
-    });
-  }
-  si.oninput=draw;
-  draw();
-}
-function startAddressOCR(files){
-  if(!files||!files.length)return;
-  if(!S.apiKey){S.notesOcrError="Falta clave de API (abre Ajustes ⚙)";render();return;}
-  S.notesOcrStatus="Analizando imagen(es)…";S.notesOcrError="";render();
-  ocrAddressFromImages(files).then(function(res){
-    var p=res.parsed;
-    if(!p.full_address&&!p.complex_name){
-      S.notesOcrStatus="";S.notesOcrError="No se detectó dirección ni condominio en la imagen. Intenta con otra captura o escribe manualmente.";render();return;
+  if (missing.length) {
+    const status = $("calcStatus");
+    if (status) {
+      status.className = "notice bad";
+      status.textContent = "No se guardó. Faltan: " + missing.join(", ") + ".";
     }
-    var imgPromises=res.imgFiles.map(function(f,i){
-      var isMap=p.is_map_image&&i===res.imgFiles.length-1; // heurística simple: última imagen suele ser el mapa si is_map_image=true
-      return resizeImage(f,isMap?1280:900,0.72).then(function(dataUrl){return{dataUrl:dataUrl,isMap:isMap};});
-    });
-    Promise.all(imgPromises).then(function(imgResults){
-      S.notesOcrStatus="";
-      S.notesOcrPending={parsed:p,images:imgResults};
-      render();
-    });
-  }).catch(function(err){
-    S.notesOcrStatus="";S.notesOcrError="Error: "+(err&&err.message?err.message:"error");render();
-  });
-}
-function renderOcrValidation(main){
-  var pend=S.notesOcrPending;var p=pend.parsed;
-  main.appendChild(h('<div class="opt-h">📍 Dirección detectada</div>'));
-  main.appendChild(h('<div class="msg-box">'+esc([p.complex_name,p.full_address,p.building_number?("Edificio "+p.building_number):"",p.apartment_number?("Apto "+p.apartment_number):""].filter(Boolean).join(" · ")||"(sin datos claros)")+'</div>'));
-  if(p.map_notes)main.appendChild(h('<p class="hint">🗺 '+esc(p.map_notes)+'</p>'));
-  if(p.customer_note)main.appendChild(h('<p class="hint">📝 Nota del cliente: '+esc(p.customer_note)+'</p>'));
-
-  var rb=h('<div class="row-btns" style="margin-top:10px"></div>');
-  var bConfirm=h('<button class="big" style="margin:0">✓ Confirmar dirección</button>');
-  bConfirm.onclick=function(){
-    // ¿Ya existe nota similar? buscar match
-    var matches=p.full_address?findAddressMatches(p.full_address,-1):[];
-    var note;
-    if(matches.length){
-      note=matches[0].n;S.notesActive=matches[0].i;
-    } else {
-      note=newAddressNote();S.addressNotes.unshift(note);S.notesActive=0;
-    }
-    if(p.full_address)note.full_address=p.full_address;
-    if(p.complex_name)note.complex_name=p.complex_name;
-    if(p.apartment_number)note.apartment_number=p.apartment_number;
-    if(p.building_number)note.building_number=p.building_number;
-    if(p.gate_code)note._gateCode=p.gate_code;
-    note.normalized_address=normalizeAddress(note.full_address);
-    pend.images.forEach(function(img){
-      if(img.isMap)note.map_images=(note.map_images||[]).concat([img.dataUrl]);
-      else note.images=(note.images||[]).concat([img.dataUrl]);
-    });
-    note.updated_at=new Date().toISOString();note.last_used_at=note.updated_at;
-    S.notesOcrPending=null;save();render();
-  };
-  rb.appendChild(bConfirm);main.appendChild(rb);
-
-  var bCorrect=h('<button class="ghost" style="margin-top:8px">✏️ Corregir antes de continuar</button>');
-  bCorrect.onclick=function(){
-    var note=newAddressNote();
-    if(p.full_address)note.full_address=p.full_address;
-    if(p.complex_name)note.complex_name=p.complex_name;
-    if(p.apartment_number)note.apartment_number=p.apartment_number;
-    if(p.building_number)note.building_number=p.building_number;
-    if(p.gate_code)note._gateCode=p.gate_code;
-    note.normalized_address=normalizeAddress(note.full_address);
-    pend.images.forEach(function(img){
-      if(img.isMap)note.map_images=(note.map_images||[]).concat([img.dataUrl]);
-      else note.images=(note.images||[]).concat([img.dataUrl]);
-    });
-    S.addressNotes.unshift(note);S.notesActive=0;
-    S.notesOcrPending=null;save();render();
-  };
-  main.appendChild(bCorrect);
-
-  var bRetry=h('<button class="ghost" style="margin-top:8px">↻ Cargar otra imagen</button>');
-  bRetry.onclick=function(){S.notesOcrPending=null;render();};
-  main.appendChild(bRetry);
-}
-function renderNoteForm(main,note,idx){
-  var back=h('<button class="oos-back">← Volver a la lista</button>');back.onclick=function(){S.notesActive=null;render();};main.appendChild(back);
-
-  // ── Tarjeta de contexto: info extraída / resumen actual ──
-  var ctxParts=[];
-  if(note.complex_name)ctxParts.push(note.complex_name);
-  if(note.full_address)ctxParts.push(note.full_address);
-  if(note.building_number)ctxParts.push("Edificio "+note.building_number);
-  if(note.apartment_number)ctxParts.push("Apto "+note.apartment_number);
-  if(note._gateCode)ctxParts.push("Código: "+note._gateCode);
-  if(ctxParts.length){
-    main.appendChild(h('<div style="background:rgba(255,210,63,.1);border:1px solid var(--acc);border-radius:12px;padding:11px 14px;margin-bottom:14px"><div style="font-size:10px;color:var(--acc);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">📍 Estás editando</div><div style="font-size:14px;font-weight:700;line-height:1.5">'+esc(ctxParts.join(' · '))+'</div></div>'));
+    alert("No se guardó el día. Faltan: " + missing.join(", "));
+    return;
   }
 
-  var addrIn=h('<input class="in name" placeholder="Dirección completa" value="'+esc(note.full_address)+'">');
-  addrIn.oninput=function(){note.full_address=addrIn.value;note.normalized_address=normalizeAddress(addrIn.value);drawMatch();};
-  main.appendChild(addrIn);
-  var matchBox=h('<div></div>');main.appendChild(matchBox);
-  function drawMatch(){
-    matchBox.innerHTML="";
-    var m=findAddressMatches(note.full_address,idx);
-    if(m.length){
-      var b=h('<div class="match-banner">📍 Ya existe una nota similar:</div>');
-      m.slice(0,3).forEach(function(o){
-        var btn=h('<button>'+esc(o.n.full_address||"(sin dirección)")+' →</button>');
-        btn.onclick=function(){var wasBlank=!note.full_address&&!note.parking_notes&&!note.entry_instructions&&!note.walking_route_notes&&!note.building_location_notes&&!(note.images||[]).length&&!(note.map_images||[]).length;var targetI=o.i;if(wasBlank){S.addressNotes.splice(idx,1);if(targetI>idx)targetI--;}S.notesActive=targetI;save();render();};
-        b.appendChild(btn);
+  if (d.odo_end < d.odo_start) {
+    alert("Odo fin no puede ser menor que Odo inicio.");
+    return;
+  }
+
+  const oldKey = editingDayDate || d.work_date;
+  const existing = await getOne("days", oldKey);
+  d.ocr = Object.values(ocrState).some(Boolean) ? JSON.parse(JSON.stringify(ocrState)) : (existing?.ocr || null);
+
+  const newStartImage = await fileToDataUrl($("imgStart"));
+  const newFuelImage = await fileToDataUrl($("imgFuel"));
+  const newEndImage = await fileToDataUrl($("imgEnd"));
+
+  d.image_start_id = newStartImage || existing?.image_start_id || null;
+  d.image_fuel_id = newFuelImage || existing?.image_fuel_id || null;
+  d.image_end_id = newEndImage || existing?.image_end_id || null;
+  d.created_at = existing?.created_at || new Date().toISOString();
+
+  if (editingDayDate && editingDayDate !== d.work_date) {
+    await deleteOne("days", editingDayDate);
+  }
+
+  await putOne("days", d);
+
+  alert(editingDayDate ? "Día actualizado" : "Día guardado");
+  editingDayDate = null;
+  $("saveDayBtn").textContent = "Guardar día";
+  clearDay(false);
+  await refreshAll();
+}
+
+function clearDay(resetDate=true) {
+  if (resetDate) $("workDate").value = todayISO();
+  ["odoStart","odoEnd","mpg","gasPrice","fuelTotal","fuelGallons","imgStart","imgFuel","imgEnd"].forEach(id => $(id).value = "");
+  $("dayStatus").value = "closed";
+  editingDayDate = null;
+  editingSavedImages = { start: null, fuel: null, end: null };
+  ocrState = { start: null, fuel: null, end: null, earnings: null };
+  $("saveDayBtn").textContent = "Guardar día";
+  if ($("ocrSavedBtn")) $("ocrSavedBtn").classList.add("hidden");
+  if ($("ocrRaw")) $("ocrRaw").textContent = "Sin lecturas.";
+  if ($("recoveryHint")) $("recoveryHint").classList.add("hidden");
+  setOcrStatus("Selecciona una foto. La extracción comenzará automáticamente.", "", "day");
+  ["odoStart","odoEnd","mpg","gasPrice","fuelTotal","fuelGallons"].forEach(id => $(id).classList.remove("ocr-filled"));
+  renderDayCalc();
+}
+
+
+function isDayIncomplete(day) {
+  return (
+    day?.odo_start == null ||
+    day?.odo_end == null ||
+    day?.mpg == null ||
+    day?.gas_price_per_gallon == null
+  );
+}
+
+function hasSavedDayImages(day) {
+  return Boolean(day?.image_start_id || day?.image_fuel_id || day?.image_end_id);
+}
+
+async function autoRecoverEditedDay(day) {
+  const hint = $("recoveryHint");
+
+  if (!isDayIncomplete(day) || !hasSavedDayImages(day)) {
+    if (hint) hint.classList.add("hidden");
+    return;
+  }
+
+  if (hint) {
+    hint.className = "notice warn";
+    hint.textContent = "Este día tiene fotos guardadas pero faltan datos numéricos. Iniciando recuperación automática…";
+  }
+
+  setOcrStatus("Recuperando datos de las fotos guardadas…", "", "day");
+
+  try {
+    await processSavedDayImages();
+    renderDayCalc();
+
+    if (hint) {
+      hint.className = "notice ok";
+      hint.textContent = "Recuperación terminada. Revisa los campos y pulsa Actualizar día para guardar los números.";
+    }
+
+    $("saveDayBtn").textContent = "Confirmar y actualizar";
+    $("odoStart").scrollIntoView({ behavior: "smooth", block: "center" });
+  } catch (error) {
+    console.error("Auto recovery failed", error);
+
+    if (hint) {
+      hint.className = "notice bad";
+      hint.textContent = "No se pudo recuperar automáticamente. Usa Reprocesar fotos guardadas o completa los campos manualmente.";
+    }
+  }
+}
+
+async function loadDay(date) {
+  try {
+    const d = await getOne("days", date);
+
+    if (!d) {
+      alert("No se encontró el registro " + date);
+      return;
+    }
+
+    editingDayDate = date;
+    $("workDate").value = d.work_date || date;
+    $("dayStatus").value = d.status || "closed";
+    $("odoStart").value = d.odo_start ?? "";
+    $("odoEnd").value = d.odo_end ?? "";
+    $("mpg").value = d.mpg ?? "";
+    $("gasPrice").value = d.gas_price_per_gallon ?? "";
+    $("fuelTotal").value = d.fuel_total ?? "";
+    $("fuelGallons").value = d.fuel_gallons ?? "";
+    $("saveDayBtn").textContent = "Actualizar día";
+    editingSavedImages = { start: d.image_start_id || null, fuel: d.image_fuel_id || null, end: d.image_end_id || null };
+    ocrState = d.ocr || { start: null, fuel: null, end: null, earnings: null };
+    updateOcrRaw();
+    if (Object.values(editingSavedImages).some(Boolean)) $("ocrSavedBtn").classList.remove("hidden");
+    else $("ocrSavedBtn").classList.add("hidden");
+
+    showTab("day");
+    renderDayCalc();
+
+    const status = $("calcStatus");
+    if (status) {
+      status.className = "notice";
+      status.textContent = "Editando " + date + ". Completa o corrige los campos y pulsa Actualizar día.";
+    }
+
+    setTimeout(async () => {
+      $("workDate").scrollIntoView({ behavior: "smooth", block: "start" });
+      $("odoStart").focus();
+
+      if (isDayIncomplete(d) && hasSavedDayImages(d)) {
+        await autoRecoverEditedDay(d);
+      }
+    }, 150);
+  } catch (error) {
+    console.error("Error loading day", error);
+    alert("No se pudo abrir el registro para editar.");
+  }
+}
+
+async function renderDaysTable() {
+  const days = (await getAll("days")).sort((a,b) => b.work_date.localeCompare(a.work_date));
+  if (!days.length) {
+    $("daysTable").innerHTML = `<p class="small">No hay días guardados.</p>`;
+    $("recentDays").innerHTML = `<p class="small">No hay días guardados.</p>`;
+    return;
+  }
+  const rows = days.map(d => `
+    <tr>
+      <td class="nowrap">${d.work_date}</td>
+      <td class="right">${d.odo_start ?? "—"}</td>
+      <td class="right">${d.odo_end ?? "—"}</td>
+      <td class="right">${d.business_miles ?? "—"}</td>
+      <td class="right">${d.mpg ?? "—"}</td>
+      <td class="right">${money(d.estimated_fuel_cost)}</td>
+      <td class="right">${money(d.irs_mileage_deduction)}</td>
+      <td>
+        ${isDayIncomplete(d) && hasSavedDayImages(d) ? '<span class="pill warn">Fotos pendientes</span>' : ''}
+        <div class="list-actions">
+          <button type="button" class="secondary day-action" data-action="edit" data-date="${d.work_date}">Editar</button>
+          <button type="button" class="danger day-action" data-action="delete" data-date="${d.work_date}">Borrar</button>
+        </div>
+      </td>
+    </tr>
+  `).join("");
+  const table = `<div style="overflow-x:auto"><table>
+    <thead><tr>
+      <th>Fecha</th><th class="right">Inicio</th><th class="right">Fin</th><th class="right">Mi</th><th class="right">MPG</th><th class="right">Gas est.</th><th class="right">IRS</th><th></th>
+    </tr></thead><tbody>${rows}</tbody></table></div>`;
+  $("daysTable").innerHTML = table;
+  $("recentDays").innerHTML = `<div style="overflow-x:auto"><table><tbody>${rows.slice(0,5)}</tbody></table></div>`;
+}
+
+async function deleteDay(date) {
+  if (!confirm("¿Borrar este día?")) return;
+  await deleteOne("days", date);
+  await refreshAll();
+}
+
+function weekEndFromStart(start) {
+  if (!start) return "";
+  const d = new Date(start + "T00:00:00");
+  d.setDate(d.getDate() + 6);
+  return d.toISOString().slice(0,10);
+}
+
+async function saveEarnings() {
+  const week_start = $("weekStart").value;
+  if (!week_start) { alert("Falta semana inicio"); return; }
+  const confirmed_weekly_earnings = num($("confirmedWeekly").value);
+  const trip_earnings = num($("tripEarnings").value);
+  const confirmed_tips = num($("confirmedTips").value);
+  const week_end = $("weekEnd").value || weekEndFromStart(week_start);
+  const image_id = await fileToDataUrl($("imgEarnings"));
+  await putOne("earnings", {
+    week_start, week_end,
+    confirmed_weekly_earnings,
+    trip_earnings,
+    confirmed_tips,
+    cash_tips_tracked: false,
+    source: "spark_app_screenshot_or_manual",
+    image_id,
+    ocr: ocrState.earnings || null,
+    updated_at: new Date().toISOString()
+  });
+  alert("Ganancias guardadas");
+  clearEarnings();
+  await refreshAll();
+}
+function clearEarnings() {
+  ["weekStart","weekEnd","confirmedWeekly","tripEarnings","confirmedTips","imgEarnings"].forEach(id => $(id).value = "");
+  ocrState.earnings = null;
+  setOcrStatus("Selecciona la captura semanal de Spark.", "", "earnings");
+  ["confirmedWeekly","tripEarnings","confirmedTips"].forEach(id => $(id).classList.remove("ocr-filled"));
+}
+async function loadEarning(week) {
+  const e = await getOne("earnings", week);
+  if (!e) return;
+  $("weekStart").value = e.week_start;
+  $("weekEnd").value = e.week_end ?? "";
+  $("confirmedWeekly").value = e.confirmed_weekly_earnings ?? "";
+  $("tripEarnings").value = e.trip_earnings ?? "";
+  $("confirmedTips").value = e.confirmed_tips ?? "";
+  showTab("earnings");
+}
+async function renderEarningsTable() {
+  const rowsData = (await getAll("earnings")).sort((a,b) => b.week_start.localeCompare(a.week_start));
+  if (!rowsData.length) {
+    $("earningsTable").innerHTML = `<p class="small">No hay ganancias guardadas.</p>`;
+    return;
+  }
+  const rows = rowsData.map(e => `
+    <tr>
+      <td>${e.week_start} → ${e.week_end}</td>
+      <td class="right">${money(e.confirmed_weekly_earnings)}</td>
+      <td class="right">${money(e.trip_earnings)}</td>
+      <td class="right">${money(e.confirmed_tips)}</td>
+      <td class="right">${e.confirmed_weekly_earnings ? ((e.confirmed_tips || 0) / e.confirmed_weekly_earnings * 100).toFixed(1) + "%" : "—"}</td>
+      <td>
+        <div class="list-actions">
+          <button type="button" class="secondary" onclick="loadEarning('${e.week_start}')">Editar</button>
+          <button type="button" class="danger" onclick="deleteEarning('${e.week_start}')">Borrar</button>
+        </div>
+      </td>
+    </tr>
+  `).join("");
+  $("earningsTable").innerHTML = `<div style="overflow-x:auto"><table>
+    <thead><tr><th>Semana</th><th class="right">Total</th><th class="right">Trips</th><th class="right">Tips app</th><th class="right">% tips</th><th></th></tr></thead>
+    <tbody>${rows}</tbody></table></div>`;
+}
+async function deleteEarning(week) {
+  if (!confirm("¿Borrar earnings de esta semana?")) return;
+  await deleteOne("earnings", week);
+  await refreshAll();
+}
+
+function inPeriodDate(date, year, month) {
+  if (!date || !date.startsWith(String(year))) return false;
+  if (!month) return true;
+  return date.slice(5,7) === month;
+}
+function inPeriodWeek(e, year, month) {
+  if (!e.week_start || !e.week_start.startsWith(String(year))) return false;
+  if (!month) return true;
+  return e.week_start.slice(5,7) === month;
+}
+function calcPersonalGaps(days) {
+  const sorted = [...days].sort((a,b) => a.work_date.localeCompare(b.work_date));
+  let total = 0;
+  const gaps = [];
+  for (let i=0; i<sorted.length-1; i++) {
+    const a = sorted[i], b = sorted[i+1];
+    if (a.odo_end != null && b.odo_start != null) {
+      const gap = b.odo_start - a.odo_end;
+      if (gap > 0) {
+        total += gap;
+        gaps.push({ from: a.work_date, to: b.work_date, miles: gap });
+      }
+    }
+  }
+  return { total, gaps };
+}
+async function buildReport(year, month) {
+  const allDays = await getAll("days");
+  const days = allDays.filter(d => inPeriodDate(d.work_date, year, month));
+  const earnings = (await getAll("earnings")).filter(e => inPeriodWeek(e, year, month));
+  const personal = calcPersonalGaps(days);
+  const sum = (arr, fn) => arr.reduce((a,x) => a + (Number(fn(x)) || 0), 0);
+
+  const businessMiles = sum(days, d => d.business_miles);
+  const estimatedFuel = sum(days, d => d.estimated_fuel_cost);
+  const internalMileage = sum(days, d => d.internal_mileage_cost);
+  const internalTotal = sum(days, d => d.internal_total_cost);
+  const irsDeduction = sum(days, d => d.irs_mileage_deduction);
+  const income = sum(earnings, e => e.confirmed_weekly_earnings);
+  const tripEarnings = sum(earnings, e => e.trip_earnings);
+  const appTips = sum(earnings, e => e.confirmed_tips);
+  const operatingProfit = income - internalTotal;
+  const scheduleCProfit = income - irsDeduction;
+  const seTax = Math.max(0, scheduleCProfit) * 0.9235 * 0.153;
+
+  return { year, month, days, earnings, personal, businessMiles, estimatedFuel, internalMileage, internalTotal, irsDeduction, income, tripEarnings, appTips, operatingProfit, scheduleCProfit, seTax };
+}
+
+async function renderReport() {
+  const year = num($("reportYear").value) || new Date().getFullYear();
+  const month = $("reportMonth").value;
+  const r = await buildReport(year, month);
+  const title = month ? `${year}-${month}` : `${year} completo`;
+  const gapRows = r.personal.gaps.map(g => `<tr><td>${g.from} → ${g.to}</td><td class="right">${g.miles.toFixed(2)}</td></tr>`).join("");
+  $("reportOutput").innerHTML = `
+    <h3>${title}</h3>
+    <div class="grid3">
+      ${metric("Ingresos Spark", money(r.income))}
+      ${metric("Trip Earnings", money(r.tripEarnings))}
+      ${metric("Tips app", money(r.appTips))}
+      ${metric("Millas Spark", miles(r.businessMiles))}
+      ${metric("Millas personales gaps", miles(r.personal.total))}
+      ${metric("Deducción IRS", money(r.irsDeduction))}
+      ${metric("Gasolina estimada", money(r.estimatedFuel))}
+      ${metric("Costo interno total", money(r.internalTotal))}
+      ${metric("Profit operativo", money(r.operatingProfit), r.operatingProfit >= 0 ? "ok" : "bad")}
+      ${metric("Profit Schedule C estimado", money(r.scheduleCProfit))}
+      ${metric("SE tax aprox.", money(r.seTax), "warn")}
+      ${metric("Días registrados", String(r.days.length))}
+    </div>
+    <div class="notice">
+      Estimado fiscal simplificado: ingresos Spark confirmados - deducción por millas. No incluye otros ingresos, otros gastos no-vehículo, créditos, withholding, filing status ni income tax federal completo.
+    </div>
+    <h3>Gaps personales detectados</h3>
+    ${gapRows ? `<div style="overflow-x:auto"><table><thead><tr><th>Tramo</th><th class="right">Millas personales</th></tr></thead><tbody>${gapRows}</tbody></table></div>` : `<p class="small">Sin gaps personales en el período filtrado.</p>`}
+  `;
+}
+
+async function renderDashboard() {
+  const year = new Date().getFullYear();
+  const month = String(new Date().getMonth()+1).padStart(2,"0");
+  const r = await buildReport(year, month);
+  const incompleteDays = r.days.filter(d => isDayIncomplete(d)).length;
+
+  $("dashMetrics").innerHTML = [
+    metric("Mes ingresos", money(r.income)),
+    metric("Mes millas Spark", miles(r.businessMiles)),
+    metric("Profit operativo", money(r.operatingProfit), r.operatingProfit >= 0 ? "ok" : "bad"),
+    metric("IRS deducción mes", money(r.irsDeduction)),
+    metric("SE tax aprox. mes", money(r.seTax), "warn"),
+    metric("Días incompletos", String(incompleteDays), incompleteDays ? "warn" : "ok")
+  ].join("");
+}
+
+function download(filename, text, type="text/plain") {
+  const blob = new Blob([text], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+function toCsv(rows) {
+  if (!rows.length) return "";
+  const keys = Object.keys(rows[0]);
+  const esc = (v) => `"${String(v ?? "").replace(/"/g,'""')}"`;
+  return [keys.join(","), ...rows.map(r => keys.map(k => esc(r[k])).join(","))].join("\n");
+}
+async function exportJson() {
+  const backup = {
+    exported_at: new Date().toISOString(),
+    settings,
+    days: await getAll("days"),
+    earnings: await getAll("earnings")
+  };
+  download(`spark_backup_${todayISO()}.json`, JSON.stringify(backup, null, 2), "application/json");
+}
+async function exportDaysCsv() {
+  const days = await getAll("days");
+  download(`spark_days_${todayISO()}.csv`, toCsv(days), "text/csv");
+}
+async function exportEarningsCsv() {
+  const earnings = await getAll("earnings");
+  download(`spark_earnings_${todayISO()}.csv`, toCsv(earnings), "text/csv");
+}
+
+function normalizeImportedDay(d) {
+  const work_date = d.date || d.work_date;
+  const odo_start = num(d.odo_start);
+  const odo_end = num(d.odo_end);
+  const business_miles = num(d.business_miles) ?? (odo_start != null && odo_end != null ? Math.max(0, odo_end - odo_start) : null);
+  const mpg = num(d.mpg);
+  const gas_price_per_gallon = num(d.fuel_price_per_gallon ?? d.gas_price_per_gallon);
+  const estimated_gallons_used = (business_miles != null && mpg && mpg > 0) ? business_miles / mpg : null;
+  const estimated_fuel_cost = (estimated_gallons_used != null && gas_price_per_gallon != null) ? estimated_gallons_used * gas_price_per_gallon : null;
+  return {
+    work_date,
+    status: "historical",
+    odo_start,
+    odo_end,
+    business_miles,
+    mpg,
+    gas_price_per_gallon,
+    fuel_total: num(d.fuel_total),
+    fuel_gallons: num(d.fuel_gallons),
+    estimated_gallons_used,
+    estimated_fuel_cost,
+    internal_cost_per_mile: settings.internalCostPerMile,
+    internal_mileage_cost: business_miles != null ? business_miles * settings.internalCostPerMile : null,
+    internal_total_cost: (business_miles != null ? business_miles * settings.internalCostPerMile : 0) + (estimated_fuel_cost ?? 0),
+    irs_mileage_rate: settings.irsMileageRate,
+    irs_mileage_deduction: business_miles != null ? business_miles * settings.irsMileageRate : null,
+    vehicle_method: settings.vehicleMethod,
+    source: "chatgpt_historical_import",
+    source_notes: d.notes || "",
+    cash_tips_tracked: false,
+    updated_at: new Date().toISOString()
+  };
+}
+function previewImportObj(obj) {
+  const days = obj.days || [];
+  const totals = obj.weekly_totals || {};
+  return `
+    <div class="notice">
+      <b>Previsualización</b><br>
+      Semana: ${obj.week_start || "—"} → ${obj.week_end || "—"}<br>
+      Días detectados: ${days.length}<br>
+      Millas semanales: ${totals.business_miles ?? obj.odometer_week?.registered_spark_miles ?? "—"}<br>
+      Ingresos Spark: ${totals.spark_income ?? obj.tax_estimate?.gross_earnings ?? "—"}<br>
+      Cash tips: no tracked
+    </div>
+  `;
+}
+function getImportObj() {
+  const txt = $("importText").value.trim();
+  if (!txt) throw new Error("Pega JSON primero");
+  return JSON.parse(txt);
+}
+async function previewImport() {
+  try {
+    const obj = getImportObj();
+    $("importPreview").innerHTML = previewImportObj(obj);
+  } catch (e) {
+    $("importPreview").innerHTML = `<div class="notice bad">Error: ${e.message}</div>`;
+  }
+}
+async function importJson() {
+  try {
+    const obj = getImportObj();
+    const importId = uid("import");
+    const days = obj.days || [];
+    for (const d of days) {
+      const nd = normalizeImportedDay(d);
+      if (nd.work_date) await putOne("days", nd);
+    }
+    const totals = obj.weekly_totals || {};
+    if (obj.week_start && (totals.spark_income != null || obj.confirmed_weekly_earnings != null)) {
+      await putOne("earnings", {
+        week_start: obj.week_start,
+        week_end: obj.week_end || weekEndFromStart(obj.week_start),
+        confirmed_weekly_earnings: num(totals.spark_income ?? obj.confirmed_weekly_earnings),
+        trip_earnings: num(totals.trip_earnings ?? obj.trip_earnings),
+        confirmed_tips: num(totals.confirmed_tips ?? obj.confirmed_tips),
+        cash_tips_tracked: false,
+        source: "chatgpt_historical_import",
+        updated_at: new Date().toISOString()
       });
-      matchBox.appendChild(b);
+    }
+    await putOne("imports", { id: importId, imported_at: new Date().toISOString(), week_start: obj.week_start, week_end: obj.week_end, raw: obj });
+    $("importPreview").innerHTML = previewImportObj(obj) + `<div class="notice ok">Importado correctamente.</div>`;
+    await refreshAll();
+  } catch (e) {
+    $("importPreview").innerHTML = `<div class="notice bad">Error: ${e.message}</div>`;
+  }
+}
+async function restoreBackup() {
+  const file = $("restoreFile").files?.[0];
+  if (!file) { alert("Selecciona un backup JSON"); return; }
+  if (!confirm("¿Restaurar backup? Se mezclará/reemplazará por ID.")) return;
+  const text = await file.text();
+  const obj = JSON.parse(text);
+  if (obj.settings) {
+    settings = { ...settings, ...obj.settings };
+    await putOne("settings", { key: "main", value: settings });
+  }
+  for (const d of (obj.days || [])) await putOne("days", d);
+  for (const e of (obj.earnings || [])) await putOne("earnings", e);
+  await loadSettings();
+  await refreshAll();
+  alert("Backup restaurado");
+}
+
+function showTab(id) {
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === id));
+  document.querySelectorAll("main section").forEach(s => s.classList.toggle("active", s.id === id));
+  if (id === "reports") renderReport();
+}
+async function refreshAll() {
+  renderDayCalc();
+  await renderDaysTable();
+  await renderEarningsTable();
+  await renderDashboard();
+}
+
+async function wipeDB() {
+  if (!confirm("¿Borrar toda la base de datos local?")) return;
+  if (!confirm("Última confirmación: esto borra días, earnings e imágenes.")) return;
+  await clearStore("days");
+  await clearStore("earnings");
+  await clearStore("images");
+  await clearStore("imports");
+  await refreshAll();
+}
+
+function handleDayTableAction(event) {
+  const button = event.target.closest("button[data-action][data-date]");
+  if (!button) return;
+
+  const action = button.dataset.action;
+  const date = button.dataset.date;
+
+  if (action === "edit") {
+    loadDay(date);
+  } else if (action === "delete") {
+    deleteDay(date);
+  }
+}
+
+function bindEvents() {
+  document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab)));
+  $("daysTable").addEventListener("click", handleDayTableAction);
+  $("recentDays").addEventListener("click", handleDayTableAction);
+  $("ocrAllBtn").addEventListener("click", processSelectedDayImages);
+  $("ocrSavedBtn").addEventListener("click", processSavedDayImages);
+  $("ocrEarningsBtn").addEventListener("click", () => processEarningsSource($("imgEarnings").files?.[0]));
+  $("imgStart").addEventListener("change", () => processDaySource("start", $("imgStart").files?.[0]));
+  $("imgFuel").addEventListener("change", () => processDaySource("fuel", $("imgFuel").files?.[0]));
+  $("imgEnd").addEventListener("change", () => processDaySource("end", $("imgEnd").files?.[0]));
+  $("imgEarnings").addEventListener("change", () => processEarningsSource($("imgEarnings").files?.[0]));
+  $("calcDayBtn").addEventListener("click", () => renderDayCalc(true));
+  ["odoStart","odoEnd","mpg","gasPrice","fuelTotal","fuelGallons"].forEach(id => $(id).addEventListener("input", renderDayCalc));
+  $("saveDayBtn").addEventListener("click", saveDay);
+  $("clearDayBtn").addEventListener("click", () => clearDay());
+  $("saveEarningsBtn").addEventListener("click", saveEarnings);
+  $("clearEarningsBtn").addEventListener("click", clearEarnings);
+  $("weekStart").addEventListener("change", () => { if (!$("weekEnd").value) $("weekEnd").value = weekEndFromStart($("weekStart").value); });
+  $("saveSettingsBtn").addEventListener("click", saveSettings);
+  $("wipeBtn").addEventListener("click", wipeDB);
+  $("runReportBtn").addEventListener("click", renderReport);
+  $("exportJsonBtn").addEventListener("click", exportJson);
+  $("exportDaysCsvBtn").addEventListener("click", exportDaysCsv);
+  $("exportEarningsCsvBtn").addEventListener("click", exportEarningsCsv);
+  $("previewJsonBtn").addEventListener("click", previewImport);
+  $("importJsonBtn").addEventListener("click", importJson);
+  $("restoreBtn").addEventListener("click", restoreBackup);
+  $("quickTodayBtn").addEventListener("click", () => { showTab("day"); $("workDate").value = todayISO(); });
+  $("quickReportBtn").addEventListener("click", () => showTab("reports"));
+}
+
+(async function init(){
+  bindEvents();
+  $("workDate").value = todayISO();
+  $("dayStatus").value = "closed";
+  $("reportYear").value = new Date().getFullYear();
+  $("reportMonth").value = String(new Date().getMonth()+1).padStart(2,"0");
+  $("setTaxYear").value = new Date().getFullYear();
+  renderDayCalc();
+
+  try {
+    await openDB();
+    await loadSettings();
+    await refreshAll();
+  } catch (e) {
+    console.error("Database init error", e);
+    const status = $("calcStatus");
+    if (status) {
+      status.className = "notice warn";
+      status.textContent = "La base de datos local no inició, pero Calcular sigue disponible. Recarga para intentar guardar.";
     }
   }
-  drawMatch();
 
-  var row=h('<div class="edit-row"></div>');
-  var la=h('<label>Apto/Unidad<input class="in" value="'+esc(note.apartment_number)+'"></label>');la.querySelector("input").oninput=function(e){note.apartment_number=e.target.value;};
-  var lb=h('<label>Edificio<input class="in" value="'+esc(note.building_number)+'"></label>');lb.querySelector("input").oninput=function(e){note.building_number=e.target.value;};
-  row.appendChild(la);row.appendChild(lb);main.appendChild(row);
-
-  var lc=h('<label style="display:block;margin-top:8px"><span style="font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase">Complejo / Condominio</span><input class="in" value="'+esc(note.complex_name)+'"></label>');
-  lc.querySelector("input").oninput=function(e){note.complex_name=e.target.value;};
-  main.appendChild(lc);
-
-  var lcg=h('<label style="display:block;margin-top:8px"><span style="font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase">Código de acceso / Gate</span><input class="in" value="'+esc(note._gateCode||"")+'"></label>');
-  lcg.querySelector("input").oninput=function(e){note._gateCode=e.target.value;};
-  main.appendChild(lcg);
-
-  var geoRow=h('<div class="row-btns" style="margin-top:10px"></div>');
-  var geoBtn=h('<button class="ghost sm">📍 Usar mi ubicación</button>');
-  geoBtn.onclick=function(){
-    if(!navigator.geolocation){geoBtn.textContent="Sin GPS";return;}
-    geoBtn.textContent="Ubicando…";
-    navigator.geolocation.getCurrentPosition(function(pos){note.latitude=pos.coords.latitude;note.longitude=pos.coords.longitude;render();},function(){geoBtn.textContent="Error GPS";});
-  };
-  geoRow.appendChild(geoBtn);
-  if(note.latitude!=null){geoRow.appendChild(h('<a class="ghost sm" style="text-align:center;text-decoration:none" target="_blank" href="https://maps.google.com/?q='+note.latitude+','+note.longitude+'">🗺 Abrir en Maps</a>'));}
-  else if(note.full_address){geoRow.appendChild(h('<a class="ghost sm" style="text-align:center;text-decoration:none" target="_blank" href="https://maps.google.com/?q='+encodeURIComponent(note.full_address)+'">🗺 Abrir en Maps</a>'));}
-  main.appendChild(geoRow);
-
-  function ta(field,placeholder,labelTxt){
-    main.appendChild(h('<div class="section-title">'+labelTxt+'</div>'));
-    var t=h('<textarea class="ta" rows="2" placeholder="'+esc(placeholder)+'">'+esc(note[field])+'</textarea>');
-    t.oninput=function(){note[field]=t.value;};
-    main.appendChild(t);
+  if ("serviceWorker" in navigator) {
+    try { await navigator.serviceWorker.register("service-worker.js"); } catch(e) { console.log("SW no registrado", e); }
   }
-  ta("parking_notes","Ej: estacionar frente al buzón, no bloquear garage…","🚗 Dónde parquear");
-  ta("entry_instructions","Ej: código de portón, timbre, llave debajo del tapete…","🔑 Instrucciones de acceso");
-  ta("walking_route_notes","Ej: entrar por el pasillo derecho, subir escaleras B…","🚶 Cómo llegar caminando");
-  ta("building_location_notes","Ej: edificio azul al fondo, puerta 204 es la segunda a la izquierda…","🏢 Ubicación del edificio/depto");
-  main.appendChild(h('<div class="section-title">📌 Referencias visuales</div>'));
-  if((note.map_images||[]).length&&S.apiKey){
-    var genRefBtn=h('<button class="ghost sm" style="width:100%;margin-bottom:8px">✨ Sugerir referencias desde el mapa</button>');
-    var refStatus=h('<div></div>');
-    genRefBtn.onclick=function(){
-      genRefBtn.textContent="Analizando mapa…";genRefBtn.disabled=true;
-      var imgBlock={type:"image",source:{type:"base64",media_type:"image/jpeg",data:note.map_images[note.map_images.length-1].split(",")[1]}};
-      var prompt='Mira este mapa/plano de un condominio. Identifica 3-5 referencias visuales simples y útiles para un repartidor (entradas, escaleras, parques, zonas de estacionamiento, esquinas de edificios). Responde SOLO JSON: {"references":["...","..."]} en español, frases cortas (máx 10 palabras cada una).';
-      fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:S.model,max_tokens:300,messages:[{role:"user",content:[imgBlock,{type:"text",text:prompt}]}]})})
-      .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
-      .then(function(data){
-        var txt=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("");
-        var clean=txt.replace(/```json/gi,"").replace(/```/g,"").trim();
-        var a=clean.indexOf("{"),b=clean.lastIndexOf("}");
-        var parsed=JSON.parse((a>=0&&b>=0)?clean.slice(a,b+1):clean);
-        var refs=parsed.references||[];
-        genRefBtn.textContent="✨ Sugerir referencias desde el mapa";genRefBtn.disabled=false;
-        if(!refs.length){refStatus.innerHTML='<p class="hint">No se detectaron referencias claras.</p>';return;}
-        refStatus.innerHTML="";
-        refs.forEach(function(r){
-          var row=h('<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:13px;flex:1">'+esc(r)+'</span></div>');
-          var addBtn=h('<button class="ghost sm" style="flex:none;padding:6px 10px">+ Agregar</button>');
-          addBtn.onclick=function(){
-            note.visual_references=(note.visual_references?note.visual_references+"\n":"")+r;
-            render();
-          };
-          row.appendChild(addBtn);refStatus.appendChild(row);
-        });
-      })
-      .catch(function(err){genRefBtn.textContent="✨ Sugerir referencias desde el mapa";genRefBtn.disabled=false;refStatus.innerHTML='<div class="error">Error: '+esc(err.message||"error")+'</div>';});
-    };
-    main.appendChild(genRefBtn);main.appendChild(refStatus);
-  }
-  var refTa=h('<textarea class="ta" rows="3" placeholder="Ej: tercera entrada lado posterior, esquina derecha del edificio, escalera del medio, parque frente al edificio…">'+esc(note.visual_references||"")+'</textarea>');
-  refTa.oninput=function(){note.visual_references=refTa.value;};
-  main.appendChild(refTa);
+})();
 
-  main.appendChild(h('<p class="hint" style="margin-top:14px">Las fotos se guardan en este teléfono (comprimidas).</p>'));
-  imgGrid(main,note,"map_images","🗺 Mapa del complejo",1280);
-  imgGrid(main,note,"images","📷 Fotos de referencia",900);
-
-  // ── Botón de guardado explícito ──
-  main.appendChild(h('<hr style="border:none;border-top:1px solid var(--line);margin:20px 0 14px">'));
-  var saveConfirm=h('<div></div>');
-  var saveBtn=h('<button class="big">💾 Guardar información</button>');
-  saveBtn.onclick=function(){
-    note.updated_at=new Date().toISOString();
-    note.normalized_address=normalizeAddress(note.full_address);
-    save();
-    saveBtn.textContent="✓ Guardado";saveBtn.style.background="var(--ok)";
-    saveConfirm.innerHTML='<div class="status" style="margin-top:8px">✓ Información guardada correctamente para esta dirección.</div>';
-    setTimeout(function(){saveBtn.textContent="💾 Guardar información";saveBtn.style.background="";saveConfirm.innerHTML="";},3000);
-  };
-  main.appendChild(saveBtn);
-  main.appendChild(saveConfirm);
-
-  var delBtn=h('<button class="ghost" style="margin-top:10px;color:var(--sp);border-color:var(--sp)">🗑 Eliminar esta dirección</button>');
-  delBtn.onclick=function(){if(confirm("¿Eliminar esta nota de dirección?")){S.addressNotes.splice(idx,1);S.notesActive=null;save();render();}};
-  main.appendChild(delBtn);
-}
-
-/* ============ Chat Examples (Training Data) ============ */
-var CHAT_EXAMPLES=[
-{driver:"Hi Nancy, they don't have the smaller containers for this brand. They only have the larger tubs available in 0% or 2%. Which one would you prefer?",customer:"How about Cabot!?;)",decision:"alternative_offered_with_options"},
-{driver:"I can get you a similar prebiotic soda like Poppi or Olipop in a different flavor if that works for you.",customer:"Just sub with the different flavor but same brand.Thanks",decision:"substitution_accepted"},
-{driver:"Biotic Soda. Would you like a different soda or should I mark it as no substitution?",customer:"Wait... Is not in the front? By the entrance? ... no",decision:"no_sub_needed"},
-{driver:"I only found heavy whipping cream options, and there are no smaller Great Value Half & Half sizes available. The closest option is Horizon Organic Heavy Whipping Cream, but it is not the same as Half & Half and may cost more. Would you like that, or would you prefer a refund?",customer:"refund pls. Thank you!",decision:"refund_offered"},
-{driver:"Hi, the Great Value Half & Half 64 fl oz is out of stock. Would you prefer Horizon Organic Heavy Whipping Cream, or would you like a different substitute?",customer:"If there are smaller great value half and half, please grab that. Cheaper options please! Thank you so much.",decision:"customer_directed_search"},
-{driver:"Did you get the Fun Pops",customer:"yes I did",followUp:"Just get 1 mix vegetable bag",decision:"item_found"},
-{driver:"Hi, unfortunately this item is unavailable because the meat department is currently being sanitized and the products are not accessible. I'm sorry for the inconvenience.",customer:"So are you telling me there's no meats at all? ... Can you ask somebody for the items out the back please",decision:"dept_closed_offer_backstock"},
-{driver:"I asked an associate, but they said the meat area is currently unavailable because it's being cleaned/sanitized, and they can't provide those items right now. I'm sorry about that.",customer:"Can you check the frozen section",decision:"alternative_location_suggested"},
-{driver:"Hi Nancy, the app isn't letting me substitute that yogurt on my side. Could you please try updating it from your end? I'll keep shopping the rest of your order for now, and I'll check again at the end to see if it lets me replace it.",customer:"Sure thing",decision:"app_workaround"},
-{driver:"Hi, are the clears iridescent party favor bags with the white/clear background you ordered are not available. These are the options currently available in the store. Please let me know if you would like one of these as a substitute, or if you prefer a refund.",customer:"Thank you for letting me know. I see you have the two.",decision:"option_selection"},
-{driver:"If I don't hear back from you shortly, I'll go with two white frosting packs since they are in better condition.",customer:"2 white is fine. thank you again!",decision:"fallback_accepted"},
-{driver:"No substitute please thank you",customer:"(decline)",decision:"no_substitution"},
-{driver:"Hi, only 1 of the Weber Chicago Steak Seasoning is available. Would you like a substitute for the missing one? Please let me know in the chat. Thank you.",customer:"No just the one will do for now thank you",decision:"partial_qty_ok"}
-];
-
-/* ============ ETA Messages ============ */
-function copyText(txt,btn,label){
-  var restore=label||btn.textContent;
-  if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){btn.textContent="✓ Copiado";setTimeout(function(){btn.textContent=restore;},2000);});}
-  else{var ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");btn.textContent="✓ Copiado";setTimeout(function(){btn.textContent=restore;},2000);}catch(e){}document.body.removeChild(ta);}
-}
-function getGreeting(){var hr=new Date().getHours();if(hr>=5&&hr<12)return"morning";if(hr>=12&&hr<18)return"afternoon";return"evening";}
-function buildETA(g,m){return"Good "+g+"! Your Spark driver here. I should arrive in about "+m+" minute"+(m===1?"":"s")+". Thank you!";}
-function renderMsg(main){
-  var g=getGreeting(),m=5;
-  main.appendChild(h('<p class="lead">Mensajes listos para pegar en el chat de Spark.</p>'));
-  main.appendChild(h('<div class="section-title">ETA al cliente</div>'));
-
-  /* greeting selector */
-  var gRow=h('<div class="row-btns"></div>');
-  var gBtns={};
-  [{k:"morning",l:"🌅 Morning"},{k:"afternoon",l:"☀️ Afternoon"},{k:"evening",l:"🌙 Evening"}].forEach(function(x){
-    var btn=h('<button class="ghost sm" style="flex:1;font-size:11px">'+x.l+'</button>');
-    gBtns[x.k]=btn;
-    btn.onclick=function(){g=x.k;refresh();updateMsg();};
-    gRow.appendChild(btn);
-  });
-  main.appendChild(gRow);
-  function refresh(){
-    Object.keys(gBtns).forEach(function(k){
-      var b=gBtns[k];
-      if(k===g){b.style.background="var(--acc)";b.style.color="#1A1300";b.style.borderColor="var(--acc)";}
-      else{b.style.background="";b.style.color="";b.style.borderColor="";}
-    });
-  }
-  refresh();
-
-  /* minutes */
-  var mRow=h('<div style="display:flex;align-items:center;gap:10px;margin:12px 0 10px"></div>');
-  mRow.appendChild(h('<span style="font-size:13px;color:var(--mut);font-weight:700">Minutos:</span>'));
-  var btnM=h('<button class="ghost sm" style="width:38px;flex:none;padding:8px 0;font-size:18px;line-height:1">−</button>');
-  var mVal=h('<span style="font-size:22px;font-weight:900;min-width:36px;text-align:center;color:var(--acc)">5</span>');
-  var btnP=h('<button class="ghost sm" style="width:38px;flex:none;padding:8px 0;font-size:18px;line-height:1">+</button>');
-  btnM.onclick=function(){if(m>1){m--;mVal.textContent=m;updateMsg();}};
-  btnP.onclick=function(){if(m<30){m++;mVal.textContent=m;updateMsg();}};
-  mRow.appendChild(btnM);mRow.appendChild(mVal);mRow.appendChild(btnP);
-  main.appendChild(mRow);
-
-  /* message */
-  var msgBox=h('<div class="msg-box"></div>');
-  function updateMsg(){msgBox.textContent=buildETA(g,m);}
-  updateMsg();
-  main.appendChild(msgBox);
-  var cpBtn=h('<button class="copy-btn">Copiar mensaje</button>');
-  cpBtn.onclick=function(){copyText(msgBox.textContent,cpBtn,"Copiar mensaje");};
-  main.appendChild(cpBtn);
-
-  /* AI personalized — only if there's context */
-  var openOOS=S.oosChats.filter(function(c){return!c.closed;});
-  var clients=Array.from(new Set(S.items.map(function(it){return(it.client||"").toUpperCase();}).filter(Boolean))).sort();
-  if(openOOS.length||clients.length){
-    main.appendChild(h('<div class="section-title" style="margin-top:20px">ETA personalizado ✨</div>'));
-    main.appendChild(h('<p class="hint">Genera un mensaje que considera las sustituciones y el batch.</p>'));
-    if(!S.apiKey){
-      main.appendChild(h('<p class="hint">⚠ Necesita clave de API en Ajustes.</p>'));
-    } else {
-      var aiCard=h('<div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px"></div>');
-      var genBtn=h('<button class="ghost sm" style="width:100%">✨ Generar mensaje con IA</button>');
-      var aiBox=h('<div></div>');
-      genBtn.onclick=function(){
-        genBtn.textContent="Generando…";genBtn.disabled=true;
-        var ctx="You help a Walmart Spark driver send professional messages via customer chat. Your tone is: honest, empathetic, clear about limitations, collaborative (not prescriptive). Time of day: "+g+". ETA: ~"+m+" minute"+(m===1?"":"s")+".";
-        if(openOOS.length){ctx+=" Substitution situations during shopping: "+openOOS.map(function(c){var last=null;c.thread.forEach(function(t){if(t.role==="suggestion")last=t;});return'"'+c.itemName+'"'+(last?" → "+last.text:"");}).join("; ")+".";}
-        if(clients.length>1){ctx+=" This is a batched order with "+clients.length+" customers ("+clients.join(", ")+").";}
-        ctx+=" Reference these real examples of excellent communication: ";
-        ctx+="\n— When offering alternatives, explain why: 'The closest option is Horizon Organic Heavy Whipping Cream, but it is not the same as Half & Half and may cost more.'";
-        ctx+="\n— Offer refund when substitute is very different: 'Would you like that, or would you prefer a refund?'";
-        ctx+="\n— Be honest about app/system limits: \"the app isn't letting me substitute that yogurt on my side. Could you try updating it?\"";
-        ctx+="\n— Declare fallbacks early: 'If I don't hear back shortly, I'll go with the white frosting packs.'";
- 
+window.loadDay = loadDay;
+window.deleteDay = deleteDay;
+</script>
+</body>
+</html>
