@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0F1420" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Spark Ruta" />
+<title>Spark Ruta · 2483</title>
+<link rel="manifest" href='data:application/manifest+json,{"name":"Spark Ruta 2483","short_name":"Spark Ruta","start_url":"./","display":"standalone","background_color":"%230F1420","theme_color":"%230F1420","icons":[{"src":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAFSklEQVR4nO3dPXbjRhCFUUobkAPl1lq8cK9FzhV4VqAJfDimMCIJEP1Thbo39wjB+9BNSuf46RTMy+vb5+xnoJ8fH+9Ps5/h0tSHMXZOp7lRDP/BRs8to2MY9sMMny1GhdD9hxg+e/QOods/bvi01CuE5v+o4dNT6xCeW/5jxk9vrTfWpCbDZ4YWp8HuE8D4maXF9nYFYPzMtneDDwdg/G38+/efsx8hvT1bfCgA4yeaRze5OQDjb+f89ncKtPHINjcFYPxEt3WjqwMwfrLYstVVARg/2azd7N0AjL+P5b3f54D21my36Z9CQDY3A/D2J7t7G74agPFzFLe27Ao0wbX7vs8B430bgLc/R3Nt004ASvstAG9/juq7bTsBBrt3z/c5YKwvAXj7c3TLjTsBKO1XAN7+/bnexHC5dSdAQEIZRwCU9nw6uf5Qz3nzToBBXGtiEkBQghlDAJQmAEp79gG4P9eZmF5e3z6dAIEJpz8BUJoAOvMWj00AlCaA4JwgfQmA0gTQkbd3fAKgNAEk4CTpRwCUJoBOvLVzEAClCSAJJ0ofAqA0AXTgbZ2HAChNAIk4WdoTQGNGmosAKE0AlCaAZFyx2hJAQ8aZjwAoTQCUJoCEXLXaEUAjRpmTAChNAJQmgAZmXH9cudoQAKUJgNIEQGkC2GnmXdzngP0EQGkCoDQBUJoAdohwB4/wDJkJgNIEQGkCoDQBPCjS3TvSs2QjAEp7enl9+5z9EBlke8v+8dc/sx8hBQHckG3014jhOgFcOMrg7xHE/0oHUGXw91QOolQABr9OpSAOH4DR73P0GA4XgMH3dbQg0gdg8HNlDyJlAEYfU8YYUgRg8DllCCJkAAZ/TBGDCBGAwdcUIYhpARg9l2bFMCwAg2eLUUF0C8DgaalXEM0CMHhGahXErgCMngj2xLApAIMngy1BOAFIb9gJcI8gGKHlB+KuX4MKghZ6fiU69BdhgmCNkb8Um/qnEILgdJr7JxEh/hboTBA1RPgboLNQASwJ4hgiDX4pdABLgsgh8uCXUgVwSQyxZBr9pbQBLAlirKyDXzpMAEuCaOsog186bABLgtjmqINfKhPAkiC+qjL4pbIBLFULourglwRwxdGCMPjvCWClbEEY/DoCeFC0IAz+Mf4fYZQmgAdFeuNGepZsBEBpAqA0AVCaAHaIcPeO8AyZCYDSBEBpAqA0Aew08w7u/r+fAChNAJQmAEoTQAMz7uLu/20IgNIEQGkCaMSVJCcBJCS2dgRAaQKgNAE05GqSjwCSEVlbAqA0AVCaABpzRclFAImIqz0BUJoAOvCmzkMAlCaAJJwqfQiA0gTQiTd2DgKgNAEk4DTpRwCUJoCOvLnjEwClCSA4p0hfAqA0AXTmDR6bAChNAIE5Pfp7/vHx/jT7IY7OkGP68fH+5ASgNAFQmgCCcm0aQwCDGHRMz6fTfx8GZj8IjHTevBOA0gQQkOvSOL8CcA3qz7BjuNy6E4DSvgTgFODolht3Agx27xrkmjTWbwE4BTiq77btBKC0bwNwCnA01zbtBJjg2j3f/X+8qwE4BTiKW1u+eQKIgOzubdgViNLuBuAU6GN533f/b2/NdledACIgm7WbXX0FEgFZbNnqps8AIiC6rRvd/CFYBO2c7/3u/208ss2HvgUSAdE8usldQ355ffvc899DC3teyLt+D+AkYLa9G9z9izARMEuL7TUdrysRI7R86Tb9UwinAb213li3wToNaKnXy7X7G1sI7NH7VjHsyiIEthh1nR5+ZxcCt4z+HDn1Q6sYOJ3mfnkS7lsbURxbtG8KfwJkgcu0Z20wbQAAAABJRU5ErkJggg==","sizes":"192x192","type":"image/png"},{"src":"data:image/png;base64,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","sizes":"512x512","type":"image/png"}]}' />
+<style>
+:root{--bg:#0F1420;--surf:#1A2233;--surf2:#232E44;--line:#2C3852;--tx:#EAF0FF;--mut:#8C9BB8;--acc:#FFD23F;--ok:#34D399;--sp:#FB7185;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased}
+#app{max-width:560px;margin:0 auto;min-height:100vh;padding-bottom:96px}
+.head{padding:16px 16px 12px;background:linear-gradient(180deg,#141B2B,#0F1420);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--acc);font-weight:800}
+.store{font-size:20px;font-weight:800;margin-top:2px}
+.entrada{font-size:11px;color:var(--mut);text-align:right;line-height:1.3;max-width:110px;border:1px solid var(--line);border-radius:8px;padding:5px 7px}
+.prog{display:flex;align-items:center;gap:10px;margin-top:12px}
+.prog-bar{flex:1;height:8px;background:var(--surf2);border-radius:99px;overflow:hidden}
+.prog-bar>span{display:block;height:100%;background:var(--ok);transition:width .3s}
+.prog-txt{font-size:12px;color:var(--mut);font-weight:600;white-space:nowrap}
+.steps{display:flex;gap:6px;padding:12px 16px}
+.step{flex:1;background:var(--surf);border:1px solid var(--line);color:var(--mut);padding:9px 4px;border-radius:10px;font-size:12px;font-weight:700}
+.step.on{background:var(--acc);color:#1A1300;border-color:var(--acc)}
+.pad{padding:4px 16px 24px}
+.lead{color:var(--mut);font-size:14px;line-height:1.5;margin:8px 0 18px}
+.big{width:100%;background:var(--acc);color:#1A1300;border:none;border-radius:14px;padding:16px;font-size:16px;font-weight:800;margin:4px 0}
+.ghost{width:100%;background:var(--surf);color:var(--tx);border:1px solid var(--line);border-radius:12px;padding:13px;font-size:14px;font-weight:700;margin:4px 0}
+.ghost.sm{width:auto;flex:1;padding:10px;font-size:13px}
+.opt{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 12px}
+.opt-h{font-size:13px;font-weight:800;margin-bottom:10px}
+.file{width:100%;background:var(--surf2);border:1px dashed var(--mut);color:var(--tx);border-radius:10px;padding:14px 12px;font-size:14px}
+.file::file-selector-button{background:var(--acc);color:#1A1300;border:none;border-radius:8px;padding:9px 14px;font-weight:800;font-size:13px;margin-right:12px}
+.status{margin-top:10px;background:rgba(255,210,63,.12);border:1px solid var(--acc);color:#FFE9A6;padding:10px 12px;border-radius:10px;font-size:13px;font-weight:600}
+.error{margin-top:10px;background:rgba(251,113,133,.12);border:1px solid var(--sp);color:#FFD7DE;padding:10px 12px;border-radius:10px;font-size:13px}
+.hint{color:var(--mut);font-size:12px;margin:10px 0 6px}
+.hint code{background:var(--surf2);padding:2px 6px;border-radius:5px;color:var(--acc);font-size:11px}
+.ta{width:100%;background:var(--surf);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px;font-size:13px;font-family:ui-monospace,monospace;resize:vertical}
+.row-btns{display:flex;gap:8px;margin:10px 0}
+.empty{color:var(--mut);text-align:center;padding:40px 20px;font-size:14px}
+.in{background:var(--surf2);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:8px;font-size:13px;width:100%}
+.edit{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px}
+.edit.sp{border-color:var(--sp)}
+.in.name{margin-bottom:8px;font-weight:600}
+.edit-row{display:flex;gap:6px;align-items:flex-end}
+.edit-row label{font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase;flex:1}
+.edit-row label:first-child{flex:1.4}
+.del{background:transparent;border:1px solid var(--line);color:var(--sp);border-radius:8px;width:38px;height:36px;font-size:14px;flex:none}
+.tag-sp{color:var(--sp);font-size:12px;font-weight:700;margin-top:8px}
+.client-row{display:flex;align-items:center;gap:6px;margin-top:8px}
+.client-lbl{font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase;margin-right:2px}
+.client-btn{width:34px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--surf2);color:var(--mut);font-weight:800;font-size:13px}
+.client-btn.clr{color:var(--sp)}
+.summary{display:flex;gap:8px;margin:6px 0 16px}
+.summary>div{flex:1;background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center}
+.summary b{display:block;font-size:22px;font-weight:800;color:var(--acc)}
+.summary span{font-size:11px;color:var(--mut);text-transform:uppercase}
+.aisle{background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.aisle.done{opacity:.5}.aisle.sp{border-color:var(--sp)}
+.aisle-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--surf2)}
+.aisle-id{display:flex;align-items:center;gap:10px}
+.step-no{background:var(--bg);color:var(--mut);width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+.aisle-code{font-size:22px;font-weight:800;color:var(--acc)}
+.aisle.sp .aisle-code{color:var(--sp)}
+.aisle-meta{text-align:right}
+.zone{font-size:12px;color:var(--mut);font-weight:600}
+.count{font-size:12px;font-weight:700}
+.item{display:flex;align-items:center;gap:11px;padding:12px 14px;background:transparent;border:none;border-top:1px solid var(--line);text-align:left;width:100%;color:var(--tx)}
+.check{width:26px;height:26px;border:2px solid var(--line);border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--ok);font-weight:900}
+.item.done .check{background:var(--ok);border-color:var(--ok);color:#04241A}
+.item-body{display:flex;flex-direction:column;gap:3px;min-width:0}
+.item-name{font-size:14px;font-weight:600;line-height:1.3}
+.item.done .item-name{text-decoration:line-through;color:var(--mut)}
+.item-sub{display:flex;gap:8px;flex-wrap:wrap}
+.item-sub em{font-style:normal;font-size:11px;color:var(--mut);background:var(--surf2);padding:2px 7px;border-radius:6px;font-weight:700}
+.cl{font-style:normal;font-size:11px;font-weight:800;padding:2px 7px;border-radius:6px}
+.frio{color:#7CC8FF!important}
+.sp-head{color:var(--sp);font-weight:800;font-size:13px;margin:18px 0 10px;border-top:1px dashed var(--sp);padding-top:14px}
+.foot{text-align:center;color:var(--mut);font-size:13px;font-weight:600;margin:18px 0}
+.zone-card{background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.zone-h{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--surf2)}
+.zone-icon{font-size:20px;color:var(--acc)}
+.zone-title{font-size:15px;font-weight:800}.zone-hint{font-size:11px;color:var(--mut);font-weight:600}
+.zone-n{margin-left:auto;background:var(--bg);font-weight:800;font-size:13px;min-width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.zone-empty{padding:14px;color:var(--mut);text-align:center}
+.zone-item{display:flex;align-items:center;gap:9px;padding:10px 14px;border-top:1px solid var(--line)}
+.zone-name{font-size:13px;font-weight:600;flex:1;min-width:0}
+.zone-qty{font-size:11px;color:var(--mut);font-weight:700;background:var(--surf2);padding:2px 7px;border-radius:6px}
+.cfg{position:fixed;bottom:0;left:0;right:0;max-width:560px;margin:0 auto;background:#0C1119;border-top:1px solid var(--line)}
+.cfg-toggle{width:100%;background:transparent;border:none;color:var(--mut);padding:13px;font-size:13px;font-weight:700;text-align:left}
+.cfg-body{padding:0 16px 14px;max-height:55vh;overflow:auto}
+.sp-edit{display:flex;gap:6px;align-items:flex-end;margin-bottom:8px}
+.sp-edit label{font-size:10px;color:var(--mut);font-weight:700;flex:1}
+.sp-edit label:first-child{flex:1.6}
+.img-grid{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.img-thumb{position:relative;width:72px;height:72px;border-radius:10px;overflow:hidden;border:1px solid var(--line);flex:none}
+.img-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.img-thumb button{position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:6px;border:none;background:rgba(0,0,0,.65);color:#fff;font-size:11px;line-height:1;cursor:pointer;padding:0}
+.img-add{width:72px;height:72px;border-radius:10px;border:2px dashed var(--mut);display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:22px;cursor:pointer;flex:none}
+.note-card{background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;padding:12px 14px;cursor:pointer}
+.note-addr{font-size:14px;font-weight:800}
+.note-meta{font-size:11px;color:var(--mut);margin-top:3px}
+.note-badge{display:inline-block;font-size:10px;font-weight:700;background:var(--surf2);color:var(--mut);padding:2px 7px;border-radius:6px;margin-top:6px;margin-right:4px}
+.match-banner{background:rgba(255,210,63,.1);border:1px solid var(--acc);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:12px}
+.match-banner button{display:block;width:100%;text-align:left;background:transparent;border:none;color:var(--acc);font-weight:700;font-size:13px;padding:6px 0;cursor:pointer}
+/* OOS */
+.oos-new{display:block;width:100%;background:transparent;border:2px dashed var(--acc);color:var(--acc);border-radius:14px;padding:16px;font-size:14px;font-weight:800;margin-bottom:14px;text-align:center;cursor:pointer}
+.oos-card{background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;cursor:pointer}
+.oos-card.open{border-color:rgba(255,210,63,.5)}
+.oos-card.closed{opacity:.55}
+.oos-card-h{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--surf2)}
+.oos-item-name{font-size:14px;font-weight:800;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.oos-badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;white-space:nowrap;margin-left:8px}
+.oos-badge.open{background:rgba(255,210,63,.2);color:var(--acc)}
+.oos-badge.closed{background:rgba(52,211,153,.15);color:var(--ok)}
+.oos-back{background:transparent;border:none;color:var(--mut);font-size:13px;font-weight:700;padding:0;margin-bottom:14px;cursor:pointer}
+.msg-box{background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:12px;margin:6px 0;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.copy-btn{background:transparent;border:1px solid var(--acc);color:var(--acc);border-radius:8px;padding:7px 16px;font-size:12px;font-weight:800;margin-top:6px;cursor:pointer}
+.fallback-box{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);border-radius:10px;padding:10px 12px;margin:6px 0;font-size:13px;color:var(--ok);line-height:1.5}
+.thread-msg{border-radius:10px;padding:10px 12px;margin:7px 0;font-size:13px;line-height:1.5}
+.thread-msg.customer{background:rgba(124,200,255,.07);border:1px solid rgba(124,200,255,.25)}
+.thread-msg.suggestion{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);color:var(--ok)}
+.thread-role{font-size:10px;font-weight:800;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
+.section-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:16px 0 6px}
+.item-wrap{border-top:1px solid var(--line)}
+.item-row{display:flex;align-items:center;gap:11px;padding:12px 14px 8px;background:transparent}
+.item-acts{display:flex;gap:8px;padding:0 14px 12px;padding-left:51px}
+.act-btn{flex:1;border-radius:8px;padding:8px 6px;font-size:12px;font-weight:800;border:1px solid var(--line);background:var(--surf2);color:var(--tx)}
+.act-btn.pick{color:var(--ok);border-color:rgba(52,211,153,.4)}
+.act-btn.rm{color:var(--sp);border-color:rgba(251,113,133,.4)}
+.undo-toast{position:fixed;bottom:108px;left:16px;right:16px;max-width:528px;margin:0 auto;background:#1A2233;border:1px solid var(--acc);border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;z-index:20;box-shadow:0 6px 24px rgba(0,0,0,.4)}
+.undo-toast span{font-size:13px;font-weight:600}
+.undo-toast button{background:var(--acc);color:#1A1300;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:800;white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ============ Mapa 2483 ============
+GEOMETRÍA FÍSICA DE LA TIENDA:
+
+ENTRADA: Puerta derecha (vista desde afuera)
+└─ Al cruzar, justo a la derecha comienza ÁREA AP (Frutas/Verduras)
+
+ZONA AP (Fresh Produce):
+├─ AP1, AP2, AP3... AP9
+├─ AP1 = más cerca de la entrada derecha
+└─ AP9 = más lejos de la entrada derecha
+
+ZONA A (Pasillos Grocery):
+├─ A1 = frente al área AP (referencia visual principal)
+├─ Frente a A1 = AP (no hay otro pasillo A)
+├─ Patrón desde A2 en adelante (emparejados):
+│  ├─ A2 ↔ A3 (enfrentados, A3 = Congelados/Frozen)
+│  ├─ A6 ↔ A7 (enfrentados)
+│  └─ A30 ↔ A31 (enfrentados, cerca AC5, AC4)
+└─ Números A aumentan = internan más en la tienda
+
+ESTANTES GR (perpendicular a pasillos A):
+├─ GR1, GR2, GR3... (hasta cerca de A31)
+├─ Ubicados a la IZQUIERDA de los pasillos A (vista entrada)
+├─ GR1 = inicio/lado izquierdo de la zona A
+└─ Números GR aumentan hacia el fondo (dirección A31)
+
+ORIENTACIÓN INTERNA - Pasillos A:
+├─ Sección 1 de cada pasillo = LADO IZQUIERDO
+├─ Secciones 20+ = LADO DERECHO (pared derecha tienda)
+└─ Conforme sube la sección, se va hacia la derecha
+
+PARED DERECHA (desde entrada hacia fondo):
+├─ A36 — pegado a pared derecha, frente a AP (Frutas/Verduras)
+│  ├─ Secciones DESCENDENTES desde entrada: 5→4→3→2→1
+│  └─ A36-5 (cerca entrada) → A36-1 (fondo/pared derecha)
+├─ [puerta de almacén/backroom Walmart]
+└─ A35 parcial (secciones 14→8 pegadas a la pared)
+   ├─ A35-14 (más cerca entrada) → A35-8 (más al fondo)
+   └─ NOTA: A35 también tiene sección de Deli (separada)
+
+============================================== */
+
+var APP_VERSION="v3.0.1";
+var ZONE_BASE={Y:10,I:20,GM:25,L:30,K:40,H:50,F:60,E:70,BK:75,D:80,C:90,B:100,J:110,G:120,GR:115,FT:127};
+var ZONE_LABEL={Y:"Garden / Exterior",I:"Toys / Sports",GM:"Pasillo interno (I↔H)",L:"Auto / Hardware / Paint",K:"Electronics",H:"Home",F:"Office / Arts / Party / Seasonal",E:"Baby / Girls",BK:"Pasillo interno (E↔J)",D:"Mens / Boys",C:"Intimates / Jewelry",B:"Womens",J:"Shoes / Pets",G:"Health / Beauty / Personal Care",A:"Grocery",AP:"Fresh Produce",AB:"Bakery",AD:"Deli",AC:"Meat & Seafood",GR:"Pasillo interno (A↔E)",FT:"Pasillo interno (Z/G↔frente)",Z:"Checkout"};
+var CLIENT_COLORS={A:"#FFD23F",B:"#7CC8FF",C:"#C4B5FD"};
+
+/* ---- REFERENCIA VISUAL - Geometría Walmart #2483 ----
+   PUERTA DERECHA (entrada/salida)
+   └─────────────────────────────
+      [A36-5] pared ──→ A36-4 → A36-3 → A36-2 → A36-1
+              [backroom door]
+      [A35-14]pared ──→ A35-13 → ... → A35-8
+      
+      FRENTE PARED: AP1←...→AP9 (Frutas/Verduras)
+                    ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
+      GR1 ── A1  A2  A3  A6  A7  ...  A30  A31 ── AC5, AC4
+      GR2 ┘ (Pasillos enfrentados)
+              
+      En cada pasillo A:
+        Sección 1 = lado izquierdo (cerca GR)
+        Sección 20+ = lado derecho (pared derecha tienda)
+---------------------------------------------------- */
+function parseAisle(code){var m=String(code||"").trim().toUpperCase().match(/^([A-Z]+)\s*(\d+)?$/);if(!m)return{prefix:String(code||"").toUpperCase(),num:null};return{prefix:m[1],num:m[2]!=null?parseInt(m[2],10):null};}
+function baseSeq(p,n){
+  if(p==="A"&&n!=null){
+    // A36 y A35 son pared derecha — van ANTES de los pasillos (cerca entrada)
+    if(n===36)return 196; // pared derecha, primera desde entrada
+    if(n===35)return 197; // pared derecha, segunda (después de backroom)
+    return 200+n;
+  }
+  if(p==="AC")return 233+(n||0)/1000;if(p==="AB")return 234+(n||0)/1000;if(p==="AD")return 235+(n||0)/1000;if(p==="AP")return 235.5+(n||0)/1000;if(ZONE_BASE[p]!=null)return ZONE_BASE[p]+(n!=null?n/100:0);if(p==="Z")return 900+(n||0)/100;return 500;
+}
+function sectionDir(p,n){
+  if(p==="A"&&n!=null){
+    // A36 y A35 pared derecha: secciones DESCENDENTES (mayor número cerca entrada)
+    if(n===36||n===35)return -1;
+    if(n<=29&&n%2===1){var v=(n-1)/2;return v%2===0?1:-1;}
+  }
+  return 1;
+}
+function zoneOf(p){if(["A","AP","AB","AD","AC"].indexOf(p)>=0)return p==="A"?"A":p;return p;}
+/* GR, BK, GM, FT: pasillos internos de picking, numeración lineal (no pares), ya cubiertos por ZONE_BASE+n/100 en baseSeq() */
+
+/* ---- Agrupación física de pasillos enfrentados (v3.0) ----
+   A, J: pares consecutivos (A2-A3, A4-A5 / J2-J3, J4-J5) — diferencia de 1, par+impar
+   I,H,L,K,F,D,C,B,Y,G: pares salteados (I1-I3, I5-I7) — ambos impares, diferencia de 2
+   Independientes (nunca agrupan): A1,A32,A33,A34,A35,A36, J1,J24, K25, G37, L27, todas E, AP, AB, AD, Z
+   Perpendiculares (GR,BK,GM,FT): numeración lineal, nunca agrupan en pares.
+   CASOS ESPECIALES:
+   - AC4/AC5 físicamente en el mismo tramo que A30-A31 (AC5 más cerca, AC4 más lejos).
+   - AC1/AC2/AC3 físicamente en el mismo tramo que A33 (Meat & Seafood).
+     A33 se camina 1→25 (ascendente, viniendo de A32). AC1 está cerca de A33-25 (al final del tramo),
+     AC3 está cerca de A33-1 (al inicio), AC2 en medio. Por eso el orden de salida es AC1→AC2→AC3. */
+var CONSEC_PAIR_PREFIXES={A:1,J:1};
+var SKIP_PAIR_PREFIXES={I:1,H:1,L:1,K:1,F:1,D:1,C:1,B:1,Y:1,G:1};
+var NEVER_PAIR_PREFIXES={E:1,AP:1,AB:1,AD:1,Z:1,GR:1,BK:1,GM:1,FT:1};
+var INDEPENDENT_AISLES={A1:1,A32:1,A33:1,A34:1,A35:1,A36:1,J1:1,J24:1,K25:1,G37:1,L27:1};
+function pairKey(prefix,num){
+  if(prefix==="AC"&&(num===4||num===5))return "A30-A31"; // mismo tramo físico que A30-A31
+  if(prefix==="AC"&&(num===1||num===2||num===3))return "A33"; // mismo tramo físico que A33
+  if(prefix==="AC")return "AC"+num;
+  if(num==null)return prefix+"-"+(num==null?"x":num);
+  var code=prefix+num;
+  if(NEVER_PAIR_PREFIXES[prefix])return prefix+num;
+  if(INDEPENDENT_AISLES[code])return code;
+  if(CONSEC_PAIR_PREFIXES[prefix]){
+    // par consecutivo: (2,3),(4,5)... el menor de cada par es par, el mayor impar
+    var lo=num%2===0?num:num-1;
+    var hi=lo+1;
+    if(INDEPENDENT_AISLES[prefix+hi]||INDEPENDENT_AISLES[prefix+lo])return code; // partner independiente: no agrupar
+    return prefix+lo+"-"+prefix+hi;
+  }
+  if(SKIP_PAIR_PREFIXES[prefix]){
+    // par salteado: ambos impares, diferencia 2. K empieza en 3 (no 1), resto empieza en 1.
+    var start=(prefix==="K")?3:1;
+    var base=Math.floor((num-start)/4)*4+start;
+    var top=base+2;
+    if(INDEPENDENT_AISLES[prefix+top]||INDEPENDENT_AISLES[prefix+base])return code; // partner independiente: no agrupar
+    return prefix+base+"-"+prefix+top;
+  }
+  return code;
+}
+
+/* ---- Pares físicos (v3.0) ----
+   Aisles frente a frente en el mismo corredor → 1 encabezado visual.
+   Confirmado: A y J usan paso-2 (A2-A3,A4-A5...). Resto (I,H,L,K,F,D,C,B,Y,G) usan paso-4 impar-impar (I1-I3,I5-I7...).
+   Independientes confirmados (no agrupan, quedan solos): A1,A32,A33,A34,A35,A36,J1,J24,Y5.
+   L27,K25,G37,D29,C37: quedan como fin de su par hasta verificación in situ — NO marcados independientes todavía. */
+var INDEPENDENT={A:[1,32,33,34,35,36],J:[1,24],Y:[5]};
+var PAIR_STEP2=["A","J"];
+var PAIR_STEP4=["I","H","L","K","F","D","C","B","Y","G"];
+function isIndependent(p,n){return INDEPENDENT[p]&&INDEPENDENT[p].indexOf(n)>=0;}
+function pairOf(p,n){
+  if(n==null)return p;
+  if(isIndependent(p,n))return p+n;
+  if(PAIR_STEP2.indexOf(p)>=0){
+    if(n<2)return p+n; // n=1 ya cubierto por independiente arriba en A/J; resguardo
+    var lo=n%2===0?n-1:n;return p+lo+"-"+p+(lo+1);
+  }
+  if(PAIR_STEP4.indexOf(p)>=0){
+    // K empieza en 3 (no 1); resto empiezan en 1. Detectamos el primer impar de la pareja módulo 4 sobre el offset correcto.
+    var off=(p==="K")?3:1;
+    var idx=Math.floor((n-off)/4);if(idx<0)idx=0;
+    var lo4=off+idx*4;
+    return p+lo4+"-"+p+(lo4+2);
+  }
+  return p+n;
+}
+function isSpecial(it,specials){var a=String(it.aisle||"").toUpperCase();for(var i=0;i<specials.length;i++){var s=specials[i];if(s.aisle.toUpperCase()!==a)continue;if(it.section==null)return true;if(it.section>=s.from&&it.section<=s.to)return true;}return false;}
+function buildRoute(items,specials){
+  var en=items.map(function(it,i){
+    if(it.status==="picked"||it.status==="manual_delete")return null;
+    var pa=parseAisle(it.aisle);var sp=isSpecial(it,specials);
+    var pk=pairKey(pa.prefix,pa.num);
+    return Object.assign({},it,{_i:i,prefix:pa.prefix,num:pa.num,pairKey:pk,seq:baseSeq(pa.prefix,pa.num)+(sp?9000:0),special:sp});
+  }).filter(Boolean);
+  var g={};
+  en.forEach(function(it){
+    var k=it.pairKey||String(it.aisle||"?").toUpperCase();
+    if(!g[k])g[k]={aisle:k,prefix:it.prefix,num:it.num,seq:it.seq,special:it.special,items:[]};
+    g[k].items.push(it);
+    if(it.seq<g[k].seq)g[k].seq=it.seq; // grupo usa el seq menor (entrada al par)
+  });
+  var arr=Object.keys(g).map(function(k){return g[k];}).sort(function(a,b){return a.seq-b.seq;});
+  arr.forEach(function(gr){
+    if(gr.aisle==="A30-A31"){
+      // orden explícito: A30 (secciones) → A31 (secciones) → AC5 → AC4
+      var rank=function(it){if(it.prefix==="A"&&it.num===30)return 0;if(it.prefix==="A"&&it.num===31)return 1;if(it.prefix==="AC"&&it.num===5)return 2;if(it.prefix==="AC"&&it.num===4)return 3;return 4;};
+      gr.items.sort(function(x,y){
+        var rx=rank(x),ry=rank(y);
+        if(rx!==ry)return rx-ry;
+        if(rx<=1){var d=sectionDir(x.prefix,x.num);return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));}
+        return 0;
+      });
+      return;
+    }
+    if(gr.aisle==="A33"){
+      // orden explícito: A33 (secciones) → AC1 → AC2 → AC3
+      var rankAC=function(it){if(it.prefix==="A"&&it.num===33)return 0;if(it.prefix==="AC"&&it.num===1)return 1;if(it.prefix==="AC"&&it.num===2)return 2;if(it.prefix==="AC"&&it.num===3)return 3;return 4;};
+      gr.items.sort(function(x,y){
+        var rx=rankAC(x),ry=rankAC(y);
+        if(rx!==ry)return rx-ry;
+        if(rx===0){var d=sectionDir(x.prefix,x.num);return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));}
+        return 0;
+      });
+      return;
+    }
+    gr.items.sort(function(x,y){
+      if(x.num!==y.num)return (x.num==null?0:x.num)-(y.num==null?0:y.num); // primero por número de aisle dentro del par
+      var d=sectionDir(x.prefix,x.num);
+      return d*((x.section==null?0:x.section)-(y.section==null?0:y.section));
+    });
+  });
+  return arr;
+}
+/* ---- bulto ---- */
+function parseSize(name){var n=(name||"").toLowerCase(),bulk=1,heavy=false,large=false,fragile=false,m;
+m=n.match(/(\d+(?:\.\d+)?)\s*(?:lb|lbs|pound)/);if(m){var v=parseFloat(m[1]);bulk=Math.max(bulk,v/10);if(v>=15){heavy=true;large=true;}}
+if(/\bgallon\b|\bgal\b/.test(n)){bulk=Math.max(bulk,5);large=true;}
+m=n.match(/(\d+)\s*(?:count|ct|pack|pk|bottles?)/);if(m){var c=parseInt(m[1],10);if(c>=12){bulk=Math.max(bulk,3);large=true;}if(c>=24)heavy=true;}
+m=n.match(/(\d+(?:\.\d+)?)\s*fl\s*oz/);if(m){var f=parseFloat(m[1]);bulk=Math.max(bulk,f/40);if(f>=60)large=true;if(f<3)fragile=true;}
+else{m=n.match(/(\d+(?:\.\d+)?)\s*oz/);if(m){var o=parseFloat(m[1]);bulk=Math.max(bulk,o/32);if(o<3)fragile=true;}}
+return{bulk:bulk,heavy:heavy,large:large,fragile:fragile};}
+function itemBulk(it){return parseSize(it.name).bulk*(Number(it.qty)||1);}
+function itemClass(it){var s=parseSize(it.name),tb=s.bulk*(Number(it.qty)||1);if(s.heavy||tb>=6)return"heavy";if(s.fragile&&!s.large)return"fragile";if(tb<=1.5)return"small";return"medium";}
+function suggestCart(items){var zones={grande:[],canasta:[],rejilla:[]};if(!items.length)return{mode:"single",zones:zones};var groups={};items.forEach(function(it){var c=(it.client||"").toUpperCase()||"—";(groups[c]=groups[c]||[]).push(it);});var labels=Object.keys(groups).filter(function(c){return c!=="—";});
+if(labels.length<=1){items.forEach(function(it){var cls=itemClass(it);if(cls==="heavy")zones.rejilla.push(it);else if(cls==="fragile"||cls==="small")zones.canasta.push(it);else zones.grande.push(it);});return{mode:"single",zones:zones};}
+var totals=Object.keys(groups).map(function(c){return{c:c,its:groups[c],bulk:groups[c].reduce(function(s,i){return s+itemBulk(i);},0)};}).sort(function(a,b){return b.bulk-a.bulk;});var big=totals[0];big.its.forEach(function(it){zones.grande.push(it);});totals.slice(1).forEach(function(t){t.its.forEach(function(it){var cls=itemClass(it);if(cls==="heavy")zones.rejilla.push(it);else zones.canasta.push(it);});});return{mode:"multi",zones:zones,bigClient:big.c};}
+
+/* ============ Ejemplo ============ */
+var EXAMPLE=[
+{name:"Fresh Yellow Onions, 3 Lb Bag",aisle:"AP9",section:4,qty:1,perishable:true,client:null},
+{name:"Eggo Thick & Fluffy Waffles, 12 ct",aisle:"A4",section:21,qty:1,perishable:true,client:null},
+{name:"Oreo Chocolate Sandwich Cookies, Party Size",aisle:"A24",section:1,qty:1,perishable:false,client:null},
+{name:"Gatorade Cool Blue 12 ct",aisle:"A22",section:2,qty:1,perishable:false,client:null},
+{name:"Gatorade Zero Fruit Punch 12 ct",aisle:"A22",section:1,qty:1,perishable:false,client:null},
+{name:"Simply Lemonade Bottle, 76 Fl Oz",aisle:"AC4",section:200,qty:2,perishable:true,client:null},
+{name:"SunnyD Tangy Orange 1 Gallon",aisle:"A31",section:26,qty:2,perishable:true,client:null},
+{name:"Great Value Whole Milk, Gallon",aisle:"A31",section:7,qty:1,perishable:true,client:null},
+{name:"Fairlife Chocolate Milk, 52 Oz",aisle:"A31",section:4,qty:2,perishable:true,client:null},
+{name:"Allswell Relax Oil 0.8 Oz",aisle:"H11",section:3,qty:1,perishable:false,client:null},
+{name:"Allswell Glow Oil 0.8 Oz",aisle:"H11",section:3,qty:1,perishable:false,client:null},
+{name:"Allswell Dual Plug Dispenser",aisle:"H11",section:3,qty:1,perishable:false,client:null},
+{name:"Allswell Calm Oil 0.8 Oz",aisle:"H11",section:3,qty:1,perishable:false,client:null},
+{name:"Athletic Works Soccer Shin Guards",aisle:"I19",section:8,qty:1,perishable:false,client:null},
+{name:"Morton Water Softener Salt, 40 Lb",aisle:"Y7",section:17,qty:4,perishable:false,client:null},
+{name:"Wonder Nation Boys Tee",aisle:"D29",section:5,qty:2,perishable:false,client:null}];
+
+/* ============ Estado ============ */
+var S={view:"load",items:[],specials:[{aisle:"E1",from:1,to:5,label:"Caja"},{aisle:"A29",from:1,to:6,label:"Caja"}],status:"",error:"",bulk:"",showCfg:false,loading:false,
+  apiKey:"",model:"claude-sonnet-4-6",
+  oosChats:[],oosActive:null,oosStatus:"",oosError:"",oosPanel:null,
+  gateCodesCustom:[],imgQueue:[],
+  addressNotes:[],notesActive:null,
+  notesOcrStatus:"",notesOcrError:"",notesOcrPending:null,
+  undoToast:null};
+function save(){try{localStorage.setItem("spark2483",JSON.stringify({items:S.items,specials:S.specials,apiKey:S.apiKey,model:S.model,oosChats:S.oosChats,gateCodesCustom:S.gateCodesCustom,addressNotes:S.addressNotes}));}catch(e){}}
+function load(){try{
+  var d=JSON.parse(localStorage.getItem("spark2483")||"{}");
+  if(Array.isArray(d.items))S.items=d.items;
+  if(Array.isArray(d.specials)&&d.specials.length)S.specials=d.specials;
+  if(d.apiKey)S.apiKey=d.apiKey;
+  if(d.model)S.model=d.model;
+  if(Array.isArray(d.oosChats))S.oosChats=d.oosChats;
+  if(Array.isArray(d.gateCodesCustom))S.gateCodesCustom=d.gateCodesCustom;
+  if(Array.isArray(d.addressNotes))S.addressNotes=d.addressNotes;
+  // Migración: items viejos sin status → pending (o picked si done=true)
+  S.items.forEach(function(it){if(!it.status)it.status=it.done?"picked":"pending";});
+  // Siempre resetear estado transitorio
+  S.oosPanel=null;S.loading=false;S.imgQueue=[];S.status="";S.error="";S.undoToast=null;
+  S.notesOcrStatus="";S.notesOcrError="";S.notesOcrPending=null;
+}catch(e){console.warn("load error",e);}}
+load(); if(S.items.length)S.view="review";
+
+/* ============ Lectura IA ============ */
+function fileToB64(file){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(){res(String(r.result).split(",")[1]);};r.onerror=function(){rej(new Error("no se pudo leer la imagen"));};r.readAsDataURL(file);});}
+/* ---- Validación de item individual ---- */
+function itemKey(it){
+  return (it.name||"").toLowerCase().replace(/\s+/g," ").trim()
+    +"|"+(it.aisle||"").toUpperCase()
+    +"|"+(it.section!=null?it.section:"?");
+}
+function isValidItem(x){
+  var name=String(x.name||"").trim();
+  if(!name||name.length<4)return false;
+  // "Item $1.97" · "Item at $1.97" · "Item @ $1.97" · cualquier variante
+  if(/^item\b.{0,20}\$?[\d.]+$/i.test(name))return false;
+  // Solo precio suelto
+  if(/^\$[\d.]+$/.test(name))return false;
+  // Solo número + unidad
+  if(/^[\d.]+\s*(oz|fl|lb|g|kg|ml|l|ct|pk)?$/i.test(name))return false;
+  // Nombre empieza con precio y es muy corto
+  if(/^\$\d/.test(name)&&name.split(" ").length<3)return false;
+  // Fragmento genérico: "<N> oz bag", "<N> oz bag, sec N" sin marca
+  if(/^\d+\s*oz\s*bag$/i.test(name))return false;
+  return true;
+}
+/* ---- Deduplicación global cross-imagen ---- */
+function deduplicateItems(existing,incoming){
+  var keys=new Set(existing.map(function(it){return itemKey(it);}));
+  var added=[];
+  incoming.forEach(function(it){
+    var k=itemKey(it);
+    if(!keys.has(k)){keys.add(k);added.push(it);}
+  });
+  return added;
+}
+
+function extractOneImage(file){
+  var prompt='Eres un extractor de pedidos de Walmart Spark. Analiza esta captura con MUCHO cuidado.\n\nREGLAS ESTRICTAS:\n1. Solo extrae items COMPLETOS. Un item completo tiene: nombre del producto legible + al menos Aisle o Sección visibles.\n2. RECHAZA fragmentos parciales. No es válido: "Item $1.97", solo un precio, solo una cantidad, texto cortado, producto sin nombre.\n3. RECHAZA items cortados por el borde superior o inferior de la imagen (filas incompletas).\n4. Si el mismo producto aparece varias veces en la imagen con el mismo Aisle y Sección, inclúyelo UNA sola vez.\n5. "?" como aisle es válido si el número de aisle no es legible.\n\nDevuelve SOLO un arreglo JSON, sin texto ni markdown:\n[{"name":string,"aisle":string,"section":number|null,"modular":number|null,"qty":number,"perishable":boolean,"client":"A"|"B"|"C"|null}]\n\nSi no hay items válidos, devuelve [].';
+  return fileToB64(file).then(function(d){
+    var img={type:"image",source:{type:"base64",media_type:(file.type&&file.type.indexOf("image/")===0)?file.type:"image/jpeg",data:d}};
+    var body={model:S.model,max_tokens:1200,messages:[{role:"user",content:[img,{type:"text",text:prompt}]}]};
+    return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)})
+    .then(function(resp){
+      if(!resp.ok)return resp.json().catch(function(){return null;}).then(function(ej){var d="HTTP "+resp.status;if(ej&&ej.error&&ej.error.message)d+=" · "+ej.error.message;throw new Error(d);});
+      return resp.json();
+    }).then(function(data){
+      if(data&&data.error)throw new Error(data.error.message||"error de la IA");
+      var text=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("\n");
+      var clean=text.replace(/```json/gi,"").replace(/```/g,"").trim();
+      var a=clean.indexOf("["),b=clean.lastIndexOf("]");
+      var js=(a>=0&&b>=0)?clean.slice(a,b+1):clean;
+      var arr;try{arr=JSON.parse(js);}catch(e){throw new Error("respuesta no entendible");}
+      if(!Array.isArray(arr))arr=[];
+      // Normalizar y validar cada item
+      return arr
+        .map(function(x){return{
+          name:String(x.name||"").trim(),
+          aisle:(x.aisle||"").toString().toUpperCase().replace(/\s+/g,""),
+          section:x.section==null?null:Number(x.section),
+          modular:x.modular==null?null:x.modular,
+          qty:x.qty?Number(x.qty):1,
+          perishable:!!x.perishable,
+          client:x.client?String(x.client).toUpperCase().replace(/[^ABC]/g,"")||null:null,
+          done:false,
+          status:"pending"
+        };})
+        .filter(isValidItem);
+    });
+  });
+}
+
+/* estado de imágenes: S.imgQueue = [{name,status,items,count,skipped,error}] */
+function processImageQueue(queue){
+  var pending=queue.filter(function(e){return e.status==="pending"||e.status==="error";});
+  if(!pending.length)return;
+  render();
+  var chain=Promise.resolve();
+  pending.forEach(function(entry){
+    chain=chain.then(function(){
+      entry.status="processing";render();
+      return extractOneImage(entry.file).then(function(items){
+        // Deduplicar contra lo ya guardado en S.items
+        var unique=deduplicateItems(S.items,items);
+        var skipped=items.length-unique.length;
+        entry.status="done";
+        entry.items=unique;
+        entry.count=unique.length;
+        entry.skipped=skipped;
+        S.items=S.items.concat(unique);
+        save();render();
+      }).catch(function(err){
+        var msg=(err&&err.message)||"error";
+        if(/timeout/i.test(msg))entry.status="timeout";
+        else if(/HTTP 4/i.test(msg))entry.status="error_api";
+        else entry.status="error";
+        entry.error=msg;
+        render();
+      });
+    });
+  });
+  chain.then(function(){
+    var allDone=queue.every(function(e){return e.status==="done"||e.status==="error"||e.status==="timeout"||e.status==="error_api";});
+    if(allDone&&S.items.length){S.view="review";}
+    S.loading=false;render();
+  });
+}
+function startImageQueue(files){
+  if(!files||!files.length)return;
+  if(!S.apiKey){S.error="Falta clave de API (abre Ajustes ⚙)";render();return;}
+  var arr=Array.prototype.slice.call(files);
+  if(!S.imgQueue)S.imgQueue=[];
+  arr.forEach(function(f){S.imgQueue.push({name:f.name||"imagen",file:f,status:"pending",items:[],count:0,skipped:0,error:""});});
+  S.loading=true;S.error="";
+  processImageQueue(S.imgQueue);
+}
+
+/* ============ Helpers de render ============ */
+function h(html){var d=document.createElement("div");d.innerHTML=html.trim();return d.firstChild;}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function set(k,v){S[k]=v;render();}
+
+/* ============ OOS — Sustituciones ============ */
+function apiJson(body){
+  return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)})
+  .then(function(r){if(!r.ok)return r.json().catch(function(){return null;}).then(function(e){throw new Error("HTTP "+r.status+(e&&e.error?" · "+e.error.message:""));});return r.json();})
+  .then(function(d){if(d&&d.error)throw new Error(d.error.message||"error IA");var t=(d.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("");var clean=t.replace(/```json/gi,"").replace(/```/g,"").trim();var a=clean.indexOf("{"),b=clean.lastIndexOf("}");return JSON.parse((a>=0&&b>=0)?clean.slice(a,b+1):clean);});}
+function startOOS(files){
+  if(!files||!files.length)return;
+  if(!S.apiKey){S.oosError="Falta clave de API (abre Ajustes ⚙)";render();return;}
+  S.oosStatus="Analizando imágenes…";S.oosError="";render();
+  Promise.all(Array.prototype.slice.call(files,0,2).map(function(f){return fileToB64(f).then(function(d){return{type:"image",source:{type:"base64",media_type:(f.type&&f.type.indexOf("image/")===0)?f.type:"image/jpeg",data:d}};});}))
+  .then(function(imgs){
+    var prompt='You help a Walmart Spark driver handle out-of-stock items. Image 1: Spark app screenshot showing the out-of-stock item. Image 2: store shelf photo with possible substitutes. Return ONLY a JSON object, no markdown:\n{"itemName":string,"alternatives":[string,...],"customerMessage":string,"fallback":string}\ncustomerMessage: friendly English message to the customer — (1) apologize the item is out of stock, (2) list each alternative from the shelf with a very brief description, (3) ask which they prefer or if they want to skip it. Keep it conversational and concise.\nfallback: what to do if no reply in ~5 min — either "No substitution — skip the item" or "Substitute with [exact product name]: [one sentence why it is a good match]".';
+    return apiJson({model:S.model,max_tokens:1000,messages:[{role:"user",content:imgs.concat([{type:"text",text:prompt}])}]});
+  })
+  .then(function(p){
+    var chat={id:Date.now(),itemName:p.itemName||"Item",alternatives:p.alternatives||[],customerMsg:p.customerMessage||"",fallback:p.fallback||"",thread:[],closed:false,closedWith:null,finalMessage:null,finalDecision:null,finalReason:null,finalSubName:null};
+    S.oosChats.unshift(chat);S.oosActive=0;S.oosStatus="";save();render();
+  })
+  .catch(function(err){S.oosStatus="";S.oosError="Error: "+(err.message||"error");render();});
+}
+function replyOOS(chatIdx,file){
+  var chat=S.oosChats[chatIdx];if(!chat)return;
+  S.oosStatus="Leyendo respuesta del cliente…";S.oosError="";render();
+  fileToB64(file).then(function(d){
+    var img={type:"image",source:{type:"base64",media_type:(file.type&&file.type.indexOf("image/")===0)?file.type:"image/jpeg",data:d}};
+    var ctx="Out-of-stock item: "+chat.itemName+"\nAlternatives offered: "+chat.alternatives.join(", ")+"\nMessage sent to customer: "+chat.customerMsg;
+    if(chat.thread.length){ctx+="\nConversation so far:\n";chat.thread.forEach(function(t){ctx+=(t.role==="customer"?"Customer: ":"Suggestion: ")+t.text+"\n";});}
+    var prompt=ctx+'\n\nThis screenshot is the customer\'s reply. Read it carefully. Return ONLY JSON (no markdown):\n{"customerSaid":string,"nextAction":string,"actionType":"substitute"|"no_substitute"|"ask_again"|"done"}\ncustomerSaid: what the customer wrote (paraphrased if needed). nextAction: exact next step for the driver (e.g. a specific message to send back, or "Mark as substituted with [X]" or "Mark item as refunded"). actionType: substitute=pick a specific item and mark it; no_substitute=skip/refund; ask_again=customer is unclear, send a follow-up; done=decision confirmed, conversation can close.';
+    return apiJson({model:S.model,max_tokens:600,messages:[{role:"user",content:[img,{type:"text",text:prompt}]}]});
+  })
+  .then(function(p){
+    var chat=S.oosChats[chatIdx];
+    chat.thread.push({role:"customer",text:p.customerSaid||""});
+    chat.thread.push({role:"suggestion",text:p.nextAction||"",actionType:p.actionType||""});
+    S.oosStatus="";save();render();
+  })
+  .catch(function(err){S.oosStatus="";S.oosError="Error: "+(err.message||"error");render();});
+}
+function closeOOS(chatIdx,decision,stay){
+  var chat=S.oosChats[chatIdx];if(!chat)return;
+  chat.closed=true;chat.closedWith=decision||"Decisión cerrada";
+  if(!stay)S.oosActive=null;save();render();
+}
+/* ---- Mensaje automático cuando el cliente no responde a tiempo ---- */
+var REASONS=[
+  {key:"closest_match",label:"Más parecido disponible"},
+  {key:"same_brand_diff_size",label:"Misma marca, tamaño diferente"},
+  {key:"diff_brand_same_type",label:"Mismo tipo, marca diferente"},
+  {key:"better_price",label:"Mejor precio disponible"},
+  {key:"similar_qty",label:"Cantidad similar"},
+  {key:"store_recommended",label:"Recomendado por la tienda"},
+  {key:"closest_available",label:"Más cercano al original"},
+  {key:"no_good_match",label:"No había sustitución adecuada"}
+];
+/* Mensaje al cliente SIEMPRE en inglés; REASONS arriba (labels en español) son solo para la UI interna. */
+var REASON_PHRASES_EN={
+  closest_match:"it was the closest available option in type, size, and intended use",
+  same_brand_diff_size:"it is the same brand in a different size, the closest match to the original item",
+  diff_brand_same_type:"it is the same type of product from a different brand, the closest available alternative",
+  better_price:"it was a more cost-effective option without losing similarity to the original item",
+  similar_qty:"it keeps a similar quantity to what was originally requested",
+  store_recommended:"it was the option recommended by the store as a replacement",
+  closest_available:"it was the closest available option to the original product at the time"
+};
+function guessFallbackDefaults(chat){
+  var fb=chat.fallback||"";
+  var m=fb.match(/substitute with ([^:]+):?/i);
+  if(m)return{decision:"sub",subName:m[1].trim()};
+  if(/no subst/i.test(fb))return{decision:"no_sub",subName:""};
+  return{decision:"sub",subName:""};
+}
+function buildSubMessage(orig,sub,reasonKey){
+  var origPart=orig?(' ("'+orig+'")'):"";
+  if(reasonKey==="no_good_match"){
+    return "Hi. The original item"+origPart+" was unavailable and I could not find a close enough substitute. Since I did not receive a response within the available time, I decided not to substitute it to avoid sending the wrong product. If you would like, I can process a refund for this item.";
+  }
+  var subPart=sub?("I substituted it with the "+sub):"I substituted it with the closest available option";
+  var phrase=REASON_PHRASES_EN[reasonKey]||"it seemed like the closest and most appropriate option available";
+  return "Hi. Since I did not receive a response within the available time, "+subPart+" because "+phrase+". I selected the option that seemed most similar and appropriate for your order. Let me know if you have any questions.";
+}
+function renderTimeoutPanel(main,chat,idx){
+  var p=S.oosPanel;
+  main.appendChild(h('<div class="section-title">Decisión por falta de respuesta</div>'));
+  var dRow=h('<div class="row-btns"></div>');
+  var bSub=h('<button class="ghost sm">Sustituir</button>');
+  var bNo=h('<button class="ghost sm">No sustituir</button>');
+  function refreshBtns(){
+    bSub.style.background=p.decision==="sub"?"var(--acc)":"";bSub.style.color=p.decision==="sub"?"#1A1300":"";bSub.style.borderColor=p.decision==="sub"?"var(--acc)":"";
+    bNo.style.background=p.decision==="no_sub"?"var(--acc)":"";bNo.style.color=p.decision==="no_sub"?"#1A1300":"";bNo.style.borderColor=p.decision==="no_sub"?"var(--acc)":"";
+  }
+  bSub.onclick=function(){p.decision="sub";if(p.reasonKey==="no_good_match")p.reasonKey="closest_match";refreshBtns();};
+  bNo.onclick=function(){p.decision="no_sub";p.reasonKey="no_good_match";refreshBtns();};
+  refreshBtns();
+  dRow.appendChild(bSub);dRow.appendChild(bNo);main.appendChild(dRow);
+
+  if(p.decision==="sub"){
+    var subIn=h('<input class="in" placeholder="Nombre del producto sustituto" value="'+esc(p.subName)+'" style="margin-top:8px">');
+    subIn.oninput=function(){p.subName=subIn.value;};
+    main.appendChild(subIn);
+    var sel=h('<select class="in" style="margin-top:8px"></select>');
+    REASONS.filter(function(r){return r.key!=="no_good_match";}).forEach(function(r){
+      var o=h('<option value="'+r.key+'">'+esc(r.label)+'</option>');
+      if(r.key===p.reasonKey)o.setAttribute("selected","selected");
+      sel.appendChild(o);
+    });
+    sel.onchange=function(){p.reasonKey=sel.value;};
+    main.appendChild(sel);
+  }
+
+  var genBtn=h('<button class="ghost sm" style="width:100%;margin-top:8px">✨ Generar mensaje</button>');
+  genBtn.onclick=function(){p.message=buildSubMessage(chat.itemName,p.decision==="sub"?p.subName:null,p.reasonKey);p.generated=true;render();};
+  main.appendChild(genBtn);
+
+  if(p.generated){
+    main.appendChild(h('<div class="section-title">Mensaje para el cliente (en inglés — revisa / edita antes de enviar)</div>'));
+    var msgTa=h('<textarea class="ta" rows="5">'+esc(p.message)+'</textarea>');
+    msgTa.oninput=function(){p.message=msgTa.value;};
+    main.appendChild(msgTa);
+    var cpBtn=h('<button class="copy-btn">Copiar mensaje</button>');
+    cpBtn.onclick=function(){copyText(msgTa.value,cpBtn,"Copiar mensaje");};
+    main.appendChild(cpBtn);
+    var confirmBtn=h('<button class="big" style="margin-top:10px">✓ Confirmar y cerrar</button>');
+    confirmBtn.onclick=function(){
+      chat.finalDecision=p.decision;chat.finalReason=p.reasonKey;chat.finalSubName=p.decision==="sub"?p.subName:null;chat.finalMessage=msgTa.value;
+      var summary=p.decision==="sub"?("Sustituido por "+(p.subName||"(sin nombre)")):"No sustituido — sin respuesta a tiempo";
+      S.oosPanel=null;closeOOS(idx,summary,true);
+    };
+    main.appendChild(confirmBtn);
+  }
+  var cancelBtn=h('<button class="ghost" style="margin-top:8px">Cancelar</button>');
+  cancelBtn.onclick=function(){S.oosPanel=null;render();};
+  main.appendChild(cancelBtn);
+}
+function renderOOSList(main){
+  main.appendChild(h('<p class="lead">Gestiona faltantes. Sube captura Spark del item + foto del estante y la app redacta el mensaje al cliente.</p>'));
+  if(!S.apiKey)main.appendChild(h('<p class="hint">⚠ Falta clave de API. Ábrela en <b>Ajustes</b> abajo.</p>'));
+  var ni=h('<label class="oos-new">📸 Nueva sustitución — subir 2 capturas<input type="file" accept="image/*" multiple style="display:none"></label>');
+  ni.querySelector("input").onchange=function(e){startOOS(e.target.files);try{e.target.value="";}catch(x){}};
+  main.appendChild(ni);
+  main.appendChild(h('<p class="hint" style="margin-top:-6px;text-align:center">1ª captura: app Spark (item faltante) · 2ª: foto del estante</p>'));
+  if(S.oosStatus)main.appendChild(h('<div class="status">'+esc(S.oosStatus)+'</div>'));
+  if(S.oosError){var er=h('<div class="error">'+esc(S.oosError)+'</div>');er.onclick=function(){S.oosError="";render();};main.appendChild(er);}
+  if(!S.oosChats.length){main.appendChild(h('<div class="empty">Sin faltantes registrados aún.</div>'));return;}
+  main.appendChild(h('<div class="section-title">Historial de faltantes</div>'));
+  S.oosChats.forEach(function(chat,i){
+    var card=h('<div class="oos-card '+(chat.closed?"closed":"open")+'"></div>');
+    var hd=h('<div class="oos-card-h"><span class="oos-item-name">'+esc(chat.itemName)+'</span><span class="oos-badge '+(chat.closed?"closed":"open")+'">'+(chat.closed?"✓ Cerrado":"⏳ Abierto")+'</span></div>');
+    hd.onclick=function(){S.oosActive=i;S.oosError="";render();};card.appendChild(hd);
+    if(chat.closed&&chat.closedWith){card.appendChild(h('<div style="padding:8px 14px 10px;font-size:12px;color:var(--mut)">'+esc(chat.closedWith)+'</div>'));}
+    main.appendChild(card);
+  });
+  var hasC=S.oosChats.some(function(c){return c.closed;});
+  if(hasC){var clr=h('<button class="ghost" style="margin-top:4px">Limpiar cerrados</button>');clr.onclick=function(){S.oosChats=S.oosChats.filter(function(c){return!c.closed;});save();render();};main.appendChild(clr);}
+}
+function renderOOSChat(main,idx){
+  var chat=S.oosChats[idx];if(!chat){S.oosActive=null;render();return;}
+  var back=h('<button class="oos-back">← Volver a la lista</button>');back.onclick=function(){S.oosActive=null;S.oosPanel=null;render();};main.appendChild(back);
+  main.appendChild(h('<div class="opt-h">🛒 '+esc(chat.itemName)+'</div>'));
+  if(chat.alternatives.length)main.appendChild(h('<p class="hint">Alternativas detectadas: '+esc(chat.alternatives.join(" · "))+'</p>'));
+  main.appendChild(h('<div class="section-title">Mensaje para el cliente</div>'));
+  main.appendChild(h('<div class="msg-box">'+esc(chat.customerMsg)+'</div>'));
+  var cpBtn=h('<button class="copy-btn">Copiar mensaje</button>');
+  cpBtn.onclick=function(){
+    var txt=chat.customerMsg;
+    if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){cpBtn.textContent="✓ Copiado";setTimeout(function(){cpBtn.textContent="Copiar mensaje";},2000);});}
+    else{var ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");cpBtn.textContent="✓ Copiado";setTimeout(function(){cpBtn.textContent="Copiar mensaje";},2000);}catch(e){}document.body.removeChild(ta);}
+  };
+  main.appendChild(cpBtn);
+  if(chat.fallback){main.appendChild(h('<div class="section-title">Si no contesta (~5 min)</div>'));main.appendChild(h('<div class="fallback-box">⏱ '+esc(chat.fallback)+'</div>'));}
+  if(chat.thread.length){
+    main.appendChild(h('<div class="section-title">Conversación</div>'));
+    chat.thread.forEach(function(t){
+      var lbl=t.role==="customer"?"👤 Cliente respondió":"💡 Acción sugerida";
+      main.appendChild(h('<div class="thread-msg '+t.role+'"><div class="thread-role">'+lbl+'</div>'+esc(t.text)+'</div>'));
+    });
+  }
+  if(!chat.closed){
+    main.appendChild(h('<div class="section-title">Respuesta del cliente</div>'));
+    var rl=h('<label class="ghost" style="display:block;text-align:center">📸 Subir captura de respuesta<input type="file" accept="image/*" style="display:none"></label>');
+    rl.querySelector("input").onchange=function(e){if(e.target.files[0])replyOOS(idx,e.target.files[0]);try{e.target.value="";}catch(x){}};
+    main.appendChild(rl);
+    if(S.oosStatus)main.appendChild(h('<div class="status">'+esc(S.oosStatus)+'</div>'));
+    if(S.oosError){var er=h('<div class="error">'+esc(S.oosError)+'</div>');er.onclick=function(){S.oosError="";render();};main.appendChild(er);}
+    main.appendChild(h('<div class="section-title">Cerrar decisión</div>'));
+    var dr=h('<div class="row-btns"></div>');
+    var lastSug=null;chat.thread.forEach(function(t){if(t.role==="suggestion")lastSug=t;});
+    var bs=h('<button class="ghost sm">✓ Sustituir</button>');bs.onclick=function(){closeOOS(idx,lastSug?lastSug.text:"Sustituido según sugerencia");};
+    var bn=h('<button class="ghost sm">✗ Omitir item</button>');bn.onclick=function(){closeOOS(idx,"No sustituir — item omitido");};
+    var bf=h('<button class="ghost sm">⏱ Sin respuesta (5 min)</button>');bf.onclick=function(){var g=guessFallbackDefaults(chat);S.oosPanel={idx:idx,decision:g.decision,subName:g.subName,reasonKey:g.decision==="no_sub"?"no_good_match":"closest_match",message:"",generated:false};render();};
+    dr.appendChild(bs);dr.appendChild(bn);dr.appendChild(bf);main.appendChild(dr);
+    if(S.oosPanel&&S.oosPanel.idx===idx){renderTimeoutPanel(main,chat,idx);}
+  } else {
+    main.appendChild(h('<div class="section-title">Decisión final</div>'));
+    main.appendChild(h('<div class="fallback-box">✓ '+esc(chat.closedWith||"Cerrado")+'</div>'));
+    if(chat.finalMessage){
+      main.appendChild(h('<div class="section-title">Mensaje para el cliente</div>'));
+      main.appendChild(h('<div class="msg-box">'+esc(chat.finalMessage)+'</div>'));
+      var fcp=h('<button class="copy-btn">Copiar mensaje</button>');fcp.onclick=function(){copyText(chat.finalMessage,fcp,"Copiar mensaje");};main.appendChild(fcp);
+    }
+    var ro=h('<button class="ghost" style="margin-top:8px">Reabrir este item</button>');ro.onclick=function(){chat.closed=false;chat.closedWith=null;save();render();};main.appendChild(ro);
+  }
+}
+function renderOOS(main){
+  if(S.oosActive!==null&&S.oosActive<S.oosChats.length){renderOOSChat(main,S.oosActive);}
+  else{S.oosActive=null;renderOOSList(main);}
+}
+
+/* ============ Gate Codes ============ */
+var GATE_CODES=[
+  {condo:"Arlington Ranch",calle:"Arlington Ranch Blvd, W Richmar Ave",code:"608163"},
+  {condo:"The Logan",calle:"12020 Southern Highlands Pkwy",code:"#7644"},
+  {condo:"Summer Wind",calle:"2725 W Wigwam Ave",code:"024#"},
+  {condo:"San Niccolo",calle:"Piscadera Beach Ave, Steponia Bay Ct",code:"#5342"},
+  {condo:"LampLight Cottages",calle:"Cottage Chase St.",code:"#5851"},
+  {condo:"Cactus Twilight",calle:"Mystic Falls Dr.",code:"200858"},
+  {condo:"Sage Glen",calle:"W Ford Ave",code:"#1742"},
+  {condo:"Saguaro",calle:"Great Pine",code:"#1742"},
+  {condo:"Montagne Marron",calle:"Frejus Dr., Montagne Marron Blvd",code:"#1456"},
+  {condo:"Cascina Ranch",calle:"Harvest Sunset St",code:"#101"},
+  {condo:"Marble Canyon",calle:"Dawn End St",code:"#0730"},
+  {condo:"Il Mirador",calle:"S Dessert Porch Rd",code:"#0070"},
+  {condo:"Spectrum",calle:"Lemon Hls St",code:"#0914"},
+  {condo:"SUR 702",calle:"6612 Blue Diamond Rd",code:"#6073"},
+  {condo:"Monterrey Ranch",calle:"Orleans Bay St, Coorumby St",code:"#8205, #9344"},
+  {condo:"Octave",calle:"2750 W Wigwam Ave",code:"#2727"},
+  {condo:"Glacier",calle:"National Park Dr",code:"16819#"},
+  {condo:"San Gabriel",calle:"S Ramblers Ranch St",code:"#9571"},
+  {condo:"Chelsea Creek",calle:"Beckinsale Ave",code:"#8165"},
+  {condo:"Montelago",calle:"Sadge Wren Ave",code:"#9344"},
+  {condo:"Durham Ranch",calle:"Durham Ranch St",code:"#7229"},
+  {condo:"Cactus Hills South",calle:"Redmoon Ave",code:"#0502"},
+  {condo:"Tuscan Highlands",calle:"12656 Southern Highlands",code:"#2040"},
+  {condo:"Purple Moon",calle:"Purple Moon Ave",code:"#9349"},
+  {condo:"Tramonto Vitaggio",calle:"Italian Ice St",code:"#7400"},
+  {condo:"The Gallery Apartment",calle:"7688 Blue Diamond Rd",code:"#2085"},
+  {condo:"Casa del Sol Mobile Home Park",calle:"4800 E Vegas Valley Dr",code:"#1945"},
+  {condo:"Trail Ridge",calle:"8311 Agate Ave",code:"44459"},
+  {condo:"Bronco",calle:"Bronco",code:"#0116"},
+  {condo:"Augusta",calle:"Sacramento Hills Ave",code:"#3245"},
+  {condo:"San Gabriel",calle:"Ramblers Ranch St",code:"#4526"}
+];
+function renderGate(main){
+  main.appendChild(h('<p class="lead">Busca por dirección o nombre del condo.</p>'));
+  
+  /* Búsqueda unificada */
+  var si=h('<input class="in" type="search" placeholder="Ej: Senna Ave, Arlington, Southern Highlands…" style="font-size:15px;padding:12px;margin-bottom:4px" autocomplete="off">');
+  main.appendChild(si);
+  
+  var hint=h('<p class="hint">'+(GATE_CODES.length+S.gateCodesCustom.length)+' códigos ('+(GATE_CODES.length)+' base + '+S.gateCodesCustom.length+' personalizados)</p>');
+  main.appendChild(hint);
+  
+  var results=h('<div></div>');
+  main.appendChild(results);
+  
+  function fuzzyMatch(q,text){return text.toLowerCase().indexOf(q.toLowerCase())>=0;}
+  
+  function doSearch(){
+    var q=(si.value||"").trim();
+    results.innerHTML="";
+    if(!q){return;}
+    
+    /* Merge custom + base */
+    var allCodes=S.gateCodesCustom.concat(GATE_CODES);
+    var hits=allCodes.filter(function(g){
+      return fuzzyMatch(q,g.condo)||fuzzyMatch(q,g.calle)||(g.address?fuzzyMatch(q,g.address):"")||(g.customer?fuzzyMatch(q,g.customer):"")||(g.complex?fuzzyMatch(q,g.complex):"");
+    });
+    
+    if(!hits.length){results.appendChild(h('<div class="empty" style="padding:24px 0">Sin resultados para "'+esc(si.value)+'"</div>'));return;}
+    
+    hits.forEach(function(g){
+      var isCustom=S.gateCodesCustom.indexOf(g)>=0;
+      var card=h('<div style="background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden"></div>');
+      var head=h('<div style="background:var(--surf2);padding:11px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px"></div>');
+      head.appendChild(h('<span style="font-size:14px;font-weight:800;flex:1;min-width:0">'+esc(g.condo)+(isCustom?' <span style="font-size:10px;color:var(--acc)">●</span>':'')+' </span>'));
+      head.appendChild(h('<span style="font-size:24px;font-weight:900;color:var(--acc);letter-spacing:.04em;white-space:nowrap">'+esc(g.code)+'</span>'));
+      card.appendChild(head);
+      card.appendChild(h('<div style="padding:7px 14px 10px;font-size:12px;color:var(--mut)">📍 '+esc(g.calle)+' '+(g.address?'<br>'+esc(g.address):'')+'</div>'));
+      results.appendChild(card);
+    });
+  }
+  
+  si.oninput=doSearch;
+  
+  /* Botón para agregar códigos */
+  main.appendChild(h('<hr style="border:none;border-top:1px dashed var(--line);margin:20px 0;opacity:.5">'));
+  main.appendChild(h('<div class="section-title">Agregar códigos personalizados</div>'));
+  main.appendChild(h('<p class="hint">Sube captura de Spark con dirección y código de acceso.</p>'));
+  
+  var fileInput=h('<input class="file" type="file" accept="image/*">');
+  fileInput.onchange=function(e){onAddGateCode(e.target);};
+  main.appendChild(fileInput);
+  
+  var addStatus=h('<div></div>');
+  main.appendChild(addStatus);
+  
+  /* Listar custom codes */
+  if(S.gateCodesCustom.length){
+    main.appendChild(h('<div class="section-title" style="margin-top:24px">Tus códigos ('+S.gateCodesCustom.length+')</div>'));
+    S.gateCodesCustom.forEach(function(g,idx){
+      var card=h('<div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;gap:10px;align-items:center"></div>');
+      var info=h('<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700">'+esc(g.condo)+'</div><div style="font-size:11px;color:var(--mut)">'+esc(g.calle)+'</div><div style="font-size:12px;color:var(--acc);font-weight:800;margin-top:4px">'+esc(g.code)+'</div></div>');
+      card.appendChild(info);
+      var del=h('<button style="background:transparent;border:none;color:var(--sp);font-size:16px;cursor:pointer;padding:6px">✕</button>');
+      del.onclick=function(){S.gateCodesCustom.splice(idx,1);save();render();};
+      card.appendChild(del);
+      main.appendChild(card);
+    });
+    
+    var exp=h('<button class="ghost sm" style="width:100%;margin-top:12px">📥 Exportar CSV</button>');
+    exp.onclick=function(){exportGateCodesCSV();};
+    main.appendChild(exp);
+  }
+  
+  setTimeout(function(){si.focus();},50);
+  
+  /* Handler para agregar código */
+  function onAddGateCode(input){
+    var files=Array.prototype.slice.call(input.files||[]);
+    if(!files.length){addStatus.innerHTML='<div class="error" style="margin-top:8px">Selecciona una imagen</div>';return;}
+    addStatus.innerHTML='<div class="status" style="margin-top:8px">Analizando…</div>';
+    
+    fileToB64(files[0]).then(function(b64){
+      var prompt='Extract from this Spark delivery screenshot: 1) "code" = the Access Code (e.g. 578459, #8329) — the digits shown under "Access Code". 2) "address" = the full street address including unit number (e.g. "8649 Horizon Wind Ave, Unit 103"). 3) "customer" = the customer name shown (e.g. "Galinda W."). 4) "condo" = apartment complex/building name ONLY if clearly shown, otherwise null. Return ONLY valid JSON: {"code":"578459","address":"8649 Horizon Wind Ave, Unit 103","customer":"Galinda W.","condo":null}. Code, address and customer are the most important.';
+      var body={model:S.model,max_tokens:200,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:files[0].type||"image/jpeg",data:b64}},{type:"text",text:prompt}]}]};
+      return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();});
+    }).then(function(data){
+      var txt=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("").trim();
+      var clean=txt.replace(/```json/gi,"").replace(/```/g,"").trim();
+      var parsed=JSON.parse(clean);
+      
+      /* Requiere código + dirección. */
+      if(!parsed.code||!parsed.address){addStatus.innerHTML='<div class="error" style="margin-top:8px">No encontré Access Code o dirección en la captura. Asegúrate de que ambos sean visibles.</div>';return;}
+      
+      /* Etiqueta: nombre del cliente (siempre está) + condo si existe */
+      var label=parsed.customer||parsed.address.split(",")[0];
+      
+      /* Dedup por código + dirección */
+      var exists=S.gateCodesCustom.some(function(g){return g.code===parsed.code&&g.address===parsed.address;});
+      if(exists){addStatus.innerHTML='<div class="hint" style="margin-top:8px">✓ Este código ya existe.</div>';input.value="";return;}
+      
+      S.gateCodesCustom.push({condo:label,customer:parsed.customer||"",complex:parsed.condo||"",calle:parsed.address,address:parsed.address,code:parsed.code});
+      save();
+      addStatus.innerHTML='<div class="status" style="margin-top:8px">✓ Agregado: '+esc(label)+' → '+esc(parsed.code)+'</div>';
+      input.value="";
+      hint.textContent=(GATE_CODES.length+S.gateCodesCustom.length)+' códigos ('+(GATE_CODES.length)+' base + '+S.gateCodesCustom.length+' personalizados)';
+      setTimeout(function(){render();},1200);
+    }).catch(function(err){addStatus.innerHTML='<div class="error" style="margin-top:8px">Error: '+(err&&err.message?err.message:"error")+'</div>';});
+  }
+}
+
+function exportGateCodesCSV(){
+  var csv="Condo,Calle,Dirección,Código,Tipo\n";
+  S.gateCodesCustom.forEach(function(g){
+    csv+='"'+g.condo.replace(/"/g,'""')+'","'+g.calle.replace(/"/g,'""')+'","'+(g.address||"").replace(/"/g,'""')+'","'+g.code.replace(/"/g,'""')+'","Personal"\n';
+  });
+  var blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+  var link=document.createElement("a");
+  link.href=URL.createObjectURL(blob);
+  link.download="gate-codes-"+new Date().toISOString().split("T")[0]+".csv";
+  link.click();
+}
+
+/* ============ Notas por Dirección ============ */
+function normalizeAddress(s){return String(s||"").toLowerCase().replace(/[.,#]/g,"").replace(/\b(apt|unit|suite|ste|building|bldg)\b/g,"").replace(/\s+/g,"").trim();}
+function resizeImage(file,maxW,quality){
+  return new Promise(function(res,rej){
+    var reader=new FileReader();
+    reader.onload=function(e){
+      var img=new Image();
+      img.onload=function(){
+        var w=img.width,hh=img.height;
+        if(w>maxW){hh=Math.round(hh*maxW/w);w=maxW;}
+        var c=document.createElement("canvas");c.width=w;c.height=hh;
+        c.getContext("2d").drawImage(img,0,0,w,hh);
+        res(c.toDataURL("image/jpeg",quality||0.72));
+      };
+      img.onerror=function(){rej(new Error("no se pudo procesar la imagen"));};
+      img.src=e.target.result;
+    };
+    reader.onerror=function(){rej(new Error("no se pudo leer la imagen"));};
+    reader.readAsDataURL(file);
+  });
+}
+function findAddressMatches(query,excludeIdx){
+  var nq=normalizeAddress(query);
+  if(!nq)return[];
+  return S.addressNotes.map(function(n,i){return{n:n,i:i};}).filter(function(o){if(o.i===excludeIdx)return false;var na=o.n.normalized_address||"";return na&&(na.indexOf(nq)>=0||nq.indexOf(na)>=0);});
+}
+function newAddressNote(){var now=new Date().toISOString();return{id:Date.now(),full_address:"",normalized_address:"",apartment_number:"",building_number:"",complex_name:"",latitude:null,longitude:null,parking_notes:"",entry_instructions:"",walking_route_notes:"",building_location_notes:"",visual_references:"",images:[],map_images:[],created_at:now,updated_at:now,last_used_at:now};}
+/* ---- OCR de dirección desde captura(s) — Spark y/o mapa de condominio ---- */
+function ocrAddressFromImages(files){
+  if(!S.apiKey)return Promise.reject(new Error("Falta tu clave de API (Ajustes ⚙)"));
+  var imgFiles=Array.prototype.slice.call(files,0,2);
+  return Promise.all(imgFiles.map(function(f){return fileToB64(f).then(function(d){return{type:"image",source:{type:"base64",media_type:(f.type&&f.type.indexOf("image/")===0)?f.type:"image/jpeg",data:d}};});}))
+  .then(function(imgs){
+    var prompt='Analiza estas imágenes relacionadas con una entrega. Puede haber 1 o 2 imágenes: una captura de la app Spark (con dirección, unidad, edificio, notas del cliente) y/o una foto de un mapa de condominio (con nombre del complejo, edificios, entradas, estacionamiento). Extrae TODO lo que puedas reconocer. Devuelve SOLO JSON, sin texto ni markdown:\n{"full_address":string|null,"complex_name":string|null,"apartment_number":string|null,"building_number":string|null,"gate_code":string|null,"customer_note":string|null,"is_map_image":boolean,"map_notes":string|null}\nfull_address: dirección completa con ciudad/estado/zip si está visible. complex_name: nombre del condominio/complejo si aparece en cualquiera de las imágenes. is_map_image: true si alguna de las imágenes es un mapa/plano del condominio (no una captura de app). map_notes: si hay un mapa, describe en 1-2 frases breves la ubicación relativa (ej: "Entrada principal sobre Durango Dr; edificio 46 al lado izquierdo, cerca de la entrada"). Si algo no es visible, usa null.';
+    var body={model:S.model,max_tokens:500,messages:[{role:"user",content:imgs.concat([{type:"text",text:prompt}])}]};
+    return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)})
+    .then(function(r){if(!r.ok)return r.json().catch(function(){return null;}).then(function(ej){throw new Error("HTTP "+r.status+(ej&&ej.error?" · "+ej.error.message:""));});return r.json();})
+    .then(function(data){
+      if(data&&data.error)throw new Error(data.error.message||"error IA");
+      var txt=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("");
+      var clean=txt.replace(/```json/gi,"").replace(/```/g,"").trim();
+      var a=clean.indexOf("{"),b=clean.lastIndexOf("}");
+      var parsed=JSON.parse((a>=0&&b>=0)?clean.slice(a,b+1):clean);
+      return{parsed:parsed,imgFiles:imgFiles};
+    });
+  });
+}
+function imgGrid(container,note,field,label,maxW){
+  container.appendChild(h('<div class="section-title">'+label+'</div>'));
+  var grid=h('<div class="img-grid"></div>');
+  (note[field]||[]).forEach(function(src,i){
+    var t=h('<div class="img-thumb"><img src="'+src+'"></div>');
+    var del=h('<button>✕</button>');del.onclick=function(ev){ev.stopPropagation();note[field].splice(i,1);note.updated_at=new Date().toISOString();save();render();};
+    t.appendChild(del);grid.appendChild(t);
+  });
+  var add=h('<label class="img-add">+<input type="file" accept="image/*" multiple style="display:none"></label>');
+  add.querySelector("input").onchange=function(e){
+    var files=Array.prototype.slice.call(e.target.files||[]);
+    Promise.all(files.map(function(f){return resizeImage(f,maxW||900,0.72);})).then(function(arr){
+      note[field]=(note[field]||[]).concat(arr);note.updated_at=new Date().toISOString();save();render();
+    }).catch(function(){});
+  };
+  grid.appendChild(add);
+  container.appendChild(grid);
+}
+function renderNotes(main){
+  if(S.notesOcrPending){renderOcrValidation(main);return;}
+  if(S.notesActive!=null&&S.notesActive<S.addressNotes.length){renderNoteForm(main,S.addressNotes[S.notesActive],S.notesActive);}
+  else{S.notesActive=null;renderNotesList(main);}
+}
+function renderNotesList(main){
+  main.appendChild(h('<p class="lead">Memoria de direcciones: mapas, parqueo, accesos y notas internas de cada complejo.</p>'));
+
+  // ── Captura automática (opción primaria) ──
+  var capLabel=h('<label class="oos-new">📸 Capturar dirección — sube captura Spark y/o mapa<input type="file" accept="image/*" multiple style="display:none"></label>');
+  capLabel.querySelector("input").onchange=function(e){startAddressOCR(e.target.files);try{e.target.value="";}catch(x){}};
+  main.appendChild(capLabel);
+  main.appendChild(h('<p class="hint" style="margin-top:-6px;text-align:center">1-2 imágenes: app Spark y/o foto del mapa del condominio</p>'));
+  if(S.notesOcrStatus)main.appendChild(h('<div class="status">'+esc(S.notesOcrStatus)+'</div>'));
+  if(S.notesOcrError){var er=h('<div class="error">'+esc(S.notesOcrError)+'</div>');er.onclick=function(){S.notesOcrError="";render();};main.appendChild(er);}
+  if(!S.apiKey)main.appendChild(h('<p class="hint">⚠ Falta tu clave de API. Ábrela en <b>Ajustes</b> abajo.</p>'));
+
+  var nb=h('<button class="ghost" style="margin-top:4px">✏️ Escribir dirección manualmente</button>');
+  nb.onclick=function(){var n=newAddressNote();S.addressNotes.unshift(n);S.notesActive=0;save();render();};
+  main.appendChild(nb);
+
+  var si=h('<input class="in" type="search" placeholder="Buscar dirección, complejo, apto…" style="font-size:15px;padding:12px;margin:14px 0 10px" autocomplete="off">');
+  main.appendChild(si);
+  var results=h('<div style="margin-top:10px"></div>');
+  main.appendChild(results);
+  function draw(){
+    var q=(si.value||"").trim();
+    var list=S.addressNotes.map(function(n,i){return{n:n,i:i};});
+    if(q){var nq=normalizeAddress(q),ql=q.toLowerCase();list=list.filter(function(o){var n=o.n;return normalizeAddress(n.full_address).indexOf(nq)>=0||(n.complex_name||"").toLowerCase().indexOf(ql)>=0||(n.apartment_number||"").toLowerCase().indexOf(ql)>=0;});}
+    list.sort(function(a,b){return new Date(b.n.last_used_at||b.n.created_at)-new Date(a.n.last_used_at||a.n.created_at);});
+    results.innerHTML="";
+    if(!S.addressNotes.length){results.appendChild(h('<div class="empty">Sin direcciones guardadas aún.</div>'));return;}
+    if(!list.length){results.appendChild(h('<div class="empty">Sin resultados para "'+esc(q)+'"</div>'));return;}
+    list.forEach(function(o){
+      var n=o.n;
+      var card=h('<div class="note-card"></div>');
+      card.appendChild(h('<div class="note-addr">'+esc(n.full_address||"(sin dirección)")+'</div>'));
+      var metaBits=[];
+      if(n.complex_name)metaBits.push(n.complex_name);
+      if(n.apartment_number)metaBits.push("Apto "+n.apartment_number);
+      if(metaBits.length)card.appendChild(h('<div class="note-meta">'+esc(metaBits.join(" · "))+'</div>'));
+      var badges="";
+      var imgCount=(n.images||[]).length+(n.map_images||[]).length;
+      if(imgCount)badges+='<span class="note-badge">📷 '+imgCount+'</span>';
+      if(n.parking_notes)badges+='<span class="note-badge">🚗 parqueo</span>';
+      if(n.entry_instructions)badges+='<span class="note-badge">🔑 acceso</span>';
+      if(badges)card.appendChild(h('<div>'+badges+'</div>'));
+      card.onclick=function(){n.last_used_at=new Date().toISOString();S.notesActive=o.i;save();render();};
+      results.appendChild(card);
+    });
+  }
+  si.oninput=draw;
+  draw();
+}
+function startAddressOCR(files){
+  if(!files||!files.length)return;
+  if(!S.apiKey){S.notesOcrError="Falta clave de API (abre Ajustes ⚙)";render();return;}
+  S.notesOcrStatus="Analizando imagen(es)…";S.notesOcrError="";render();
+  ocrAddressFromImages(files).then(function(res){
+    var p=res.parsed;
+    if(!p.full_address&&!p.complex_name){
+      S.notesOcrStatus="";S.notesOcrError="No se detectó dirección ni condominio en la imagen. Intenta con otra captura o escribe manualmente.";render();return;
+    }
+    var imgPromises=res.imgFiles.map(function(f,i){
+      var isMap=p.is_map_image&&i===res.imgFiles.length-1; // heurística simple: última imagen suele ser el mapa si is_map_image=true
+      return resizeImage(f,isMap?1280:900,0.72).then(function(dataUrl){return{dataUrl:dataUrl,isMap:isMap};});
+    });
+    Promise.all(imgPromises).then(function(imgResults){
+      S.notesOcrStatus="";
+      S.notesOcrPending={parsed:p,images:imgResults};
+      render();
+    });
+  }).catch(function(err){
+    S.notesOcrStatus="";S.notesOcrError="Error: "+(err&&err.message?err.message:"error");render();
+  });
+}
+function renderOcrValidation(main){
+  var pend=S.notesOcrPending;var p=pend.parsed;
+  main.appendChild(h('<div class="opt-h">📍 Dirección detectada</div>'));
+  main.appendChild(h('<div class="msg-box">'+esc([p.complex_name,p.full_address,p.building_number?("Edificio "+p.building_number):"",p.apartment_number?("Apto "+p.apartment_number):""].filter(Boolean).join(" · ")||"(sin datos claros)")+'</div>'));
+  if(p.map_notes)main.appendChild(h('<p class="hint">🗺 '+esc(p.map_notes)+'</p>'));
+  if(p.customer_note)main.appendChild(h('<p class="hint">📝 Nota del cliente: '+esc(p.customer_note)+'</p>'));
+
+  var rb=h('<div class="row-btns" style="margin-top:10px"></div>');
+  var bConfirm=h('<button class="big" style="margin:0">✓ Confirmar dirección</button>');
+  bConfirm.onclick=function(){
+    // ¿Ya existe nota similar? buscar match
+    var matches=p.full_address?findAddressMatches(p.full_address,-1):[];
+    var note;
+    if(matches.length){
+      note=matches[0].n;S.notesActive=matches[0].i;
+    } else {
+      note=newAddressNote();S.addressNotes.unshift(note);S.notesActive=0;
+    }
+    if(p.full_address)note.full_address=p.full_address;
+    if(p.complex_name)note.complex_name=p.complex_name;
+    if(p.apartment_number)note.apartment_number=p.apartment_number;
+    if(p.building_number)note.building_number=p.building_number;
+    if(p.gate_code)note._gateCode=p.gate_code;
+    note.normalized_address=normalizeAddress(note.full_address);
+    pend.images.forEach(function(img){
+      if(img.isMap)note.map_images=(note.map_images||[]).concat([img.dataUrl]);
+      else note.images=(note.images||[]).concat([img.dataUrl]);
+    });
+    note.updated_at=new Date().toISOString();note.last_used_at=note.updated_at;
+    S.notesOcrPending=null;save();render();
+  };
+  rb.appendChild(bConfirm);main.appendChild(rb);
+
+  var bCorrect=h('<button class="ghost" style="margin-top:8px">✏️ Corregir antes de continuar</button>');
+  bCorrect.onclick=function(){
+    var note=newAddressNote();
+    if(p.full_address)note.full_address=p.full_address;
+    if(p.complex_name)note.complex_name=p.complex_name;
+    if(p.apartment_number)note.apartment_number=p.apartment_number;
+    if(p.building_number)note.building_number=p.building_number;
+    if(p.gate_code)note._gateCode=p.gate_code;
+    note.normalized_address=normalizeAddress(note.full_address);
+    pend.images.forEach(function(img){
+      if(img.isMap)note.map_images=(note.map_images||[]).concat([img.dataUrl]);
+      else note.images=(note.images||[]).concat([img.dataUrl]);
+    });
+    S.addressNotes.unshift(note);S.notesActive=0;
+    S.notesOcrPending=null;save();render();
+  };
+  main.appendChild(bCorrect);
+
+  var bRetry=h('<button class="ghost" style="margin-top:8px">↻ Cargar otra imagen</button>');
+  bRetry.onclick=function(){S.notesOcrPending=null;render();};
+  main.appendChild(bRetry);
+}
+function renderNoteForm(main,note,idx){
+  var back=h('<button class="oos-back">← Volver a la lista</button>');back.onclick=function(){S.notesActive=null;render();};main.appendChild(back);
+
+  // ── Tarjeta de contexto: info extraída / resumen actual ──
+  var ctxParts=[];
+  if(note.complex_name)ctxParts.push(note.complex_name);
+  if(note.full_address)ctxParts.push(note.full_address);
+  if(note.building_number)ctxParts.push("Edificio "+note.building_number);
+  if(note.apartment_number)ctxParts.push("Apto "+note.apartment_number);
+  if(note._gateCode)ctxParts.push("Código: "+note._gateCode);
+  if(ctxParts.length){
+    main.appendChild(h('<div style="background:rgba(255,210,63,.1);border:1px solid var(--acc);border-radius:12px;padding:11px 14px;margin-bottom:14px"><div style="font-size:10px;color:var(--acc);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">📍 Estás editando</div><div style="font-size:14px;font-weight:700;line-height:1.5">'+esc(ctxParts.join(' · '))+'</div></div>'));
+  }
+
+  var addrIn=h('<input class="in name" placeholder="Dirección completa" value="'+esc(note.full_address)+'">');
+  addrIn.oninput=function(){note.full_address=addrIn.value;note.normalized_address=normalizeAddress(addrIn.value);drawMatch();};
+  main.appendChild(addrIn);
+  var matchBox=h('<div></div>');main.appendChild(matchBox);
+  function drawMatch(){
+    matchBox.innerHTML="";
+    var m=findAddressMatches(note.full_address,idx);
+    if(m.length){
+      var b=h('<div class="match-banner">📍 Ya existe una nota similar:</div>');
+      m.slice(0,3).forEach(function(o){
+        var btn=h('<button>'+esc(o.n.full_address||"(sin dirección)")+' →</button>');
+        btn.onclick=function(){var wasBlank=!note.full_address&&!note.parking_notes&&!note.entry_instructions&&!note.walking_route_notes&&!note.building_location_notes&&!(note.images||[]).length&&!(note.map_images||[]).length;var targetI=o.i;if(wasBlank){S.addressNotes.splice(idx,1);if(targetI>idx)targetI--;}S.notesActive=targetI;save();render();};
+        b.appendChild(btn);
+      });
+      matchBox.appendChild(b);
+    }
+  }
+  drawMatch();
+
+  var row=h('<div class="edit-row"></div>');
+  var la=h('<label>Apto/Unidad<input class="in" value="'+esc(note.apartment_number)+'"></label>');la.querySelector("input").oninput=function(e){note.apartment_number=e.target.value;};
+  var lb=h('<label>Edificio<input class="in" value="'+esc(note.building_number)+'"></label>');lb.querySelector("input").oninput=function(e){note.building_number=e.target.value;};
+  row.appendChild(la);row.appendChild(lb);main.appendChild(row);
+
+  var lc=h('<label style="display:block;margin-top:8px"><span style="font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase">Complejo / Condominio</span><input class="in" value="'+esc(note.complex_name)+'"></label>');
+  lc.querySelector("input").oninput=function(e){note.complex_name=e.target.value;};
+  main.appendChild(lc);
+
+  var lcg=h('<label style="display:block;margin-top:8px"><span style="font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase">Código de acceso / Gate</span><input class="in" value="'+esc(note._gateCode||"")+'"></label>');
+  lcg.querySelector("input").oninput=function(e){note._gateCode=e.target.value;};
+  main.appendChild(lcg);
+
+  var geoRow=h('<div class="row-btns" style="margin-top:10px"></div>');
+  var geoBtn=h('<button class="ghost sm">📍 Usar mi ubicación</button>');
+  geoBtn.onclick=function(){
+    if(!navigator.geolocation){geoBtn.textContent="Sin GPS";return;}
+    geoBtn.textContent="Ubicando…";
+    navigator.geolocation.getCurrentPosition(function(pos){note.latitude=pos.coords.latitude;note.longitude=pos.coords.longitude;render();},function(){geoBtn.textContent="Error GPS";});
+  };
+  geoRow.appendChild(geoBtn);
+  if(note.latitude!=null){geoRow.appendChild(h('<a class="ghost sm" style="text-align:center;text-decoration:none" target="_blank" href="https://maps.google.com/?q='+note.latitude+','+note.longitude+'">🗺 Abrir en Maps</a>'));}
+  else if(note.full_address){geoRow.appendChild(h('<a class="ghost sm" style="text-align:center;text-decoration:none" target="_blank" href="https://maps.google.com/?q='+encodeURIComponent(note.full_address)+'">🗺 Abrir en Maps</a>'));}
+  main.appendChild(geoRow);
+
+  function ta(field,placeholder,labelTxt){
+    main.appendChild(h('<div class="section-title">'+labelTxt+'</div>'));
+    var t=h('<textarea class="ta" rows="2" placeholder="'+esc(placeholder)+'">'+esc(note[field])+'</textarea>');
+    t.oninput=function(){note[field]=t.value;};
+    main.appendChild(t);
+  }
+  ta("parking_notes","Ej: estacionar frente al buzón, no bloquear garage…","🚗 Dónde parquear");
+  ta("entry_instructions","Ej: código de portón, timbre, llave debajo del tapete…","🔑 Instrucciones de acceso");
+  ta("walking_route_notes","Ej: entrar por el pasillo derecho, subir escaleras B…","🚶 Cómo llegar caminando");
+  ta("building_location_notes","Ej: edificio azul al fondo, puerta 204 es la segunda a la izquierda…","🏢 Ubicación del edificio/depto");
+  main.appendChild(h('<div class="section-title">📌 Referencias visuales</div>'));
+  if((note.map_images||[]).length&&S.apiKey){
+    var genRefBtn=h('<button class="ghost sm" style="width:100%;margin-bottom:8px">✨ Sugerir referencias desde el mapa</button>');
+    var refStatus=h('<div></div>');
+    genRefBtn.onclick=function(){
+      genRefBtn.textContent="Analizando mapa…";genRefBtn.disabled=true;
+      var imgBlock={type:"image",source:{type:"base64",media_type:"image/jpeg",data:note.map_images[note.map_images.length-1].split(",")[1]}};
+      var prompt='Mira este mapa/plano de un condominio. Identifica 3-5 referencias visuales simples y útiles para un repartidor (entradas, escaleras, parques, zonas de estacionamiento, esquinas de edificios). Responde SOLO JSON: {"references":["...","..."]} en español, frases cortas (máx 10 palabras cada una).';
+      fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:S.model,max_tokens:300,messages:[{role:"user",content:[imgBlock,{type:"text",text:prompt}]}]})})
+      .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+      .then(function(data){
+        var txt=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("");
+        var clean=txt.replace(/```json/gi,"").replace(/```/g,"").trim();
+        var a=clean.indexOf("{"),b=clean.lastIndexOf("}");
+        var parsed=JSON.parse((a>=0&&b>=0)?clean.slice(a,b+1):clean);
+        var refs=parsed.references||[];
+        genRefBtn.textContent="✨ Sugerir referencias desde el mapa";genRefBtn.disabled=false;
+        if(!refs.length){refStatus.innerHTML='<p class="hint">No se detectaron referencias claras.</p>';return;}
+        refStatus.innerHTML="";
+        refs.forEach(function(r){
+          var row=h('<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:13px;flex:1">'+esc(r)+'</span></div>');
+          var addBtn=h('<button class="ghost sm" style="flex:none;padding:6px 10px">+ Agregar</button>');
+          addBtn.onclick=function(){
+            note.visual_references=(note.visual_references?note.visual_references+"\n":"")+r;
+            render();
+          };
+          row.appendChild(addBtn);refStatus.appendChild(row);
+        });
+      })
+      .catch(function(err){genRefBtn.textContent="✨ Sugerir referencias desde el mapa";genRefBtn.disabled=false;refStatus.innerHTML='<div class="error">Error: '+esc(err.message||"error")+'</div>';});
+    };
+    main.appendChild(genRefBtn);main.appendChild(refStatus);
+  }
+  var refTa=h('<textarea class="ta" rows="3" placeholder="Ej: tercera entrada lado posterior, esquina derecha del edificio, escalera del medio, parque frente al edificio…">'+esc(note.visual_references||"")+'</textarea>');
+  refTa.oninput=function(){note.visual_references=refTa.value;};
+  main.appendChild(refTa);
+
+  main.appendChild(h('<p class="hint" style="margin-top:14px">Las fotos se guardan en este teléfono (comprimidas).</p>'));
+  imgGrid(main,note,"map_images","🗺 Mapa del complejo",1280);
+  imgGrid(main,note,"images","📷 Fotos de referencia",900);
+
+  // ── Botón de guardado explícito ──
+  main.appendChild(h('<hr style="border:none;border-top:1px solid var(--line);margin:20px 0 14px">'));
+  var saveConfirm=h('<div></div>');
+  var saveBtn=h('<button class="big">💾 Guardar información</button>');
+  saveBtn.onclick=function(){
+    note.updated_at=new Date().toISOString();
+    note.normalized_address=normalizeAddress(note.full_address);
+    save();
+    saveBtn.textContent="✓ Guardado";saveBtn.style.background="var(--ok)";
+    saveConfirm.innerHTML='<div class="status" style="margin-top:8px">✓ Información guardada correctamente para esta dirección.</div>';
+    setTimeout(function(){saveBtn.textContent="💾 Guardar información";saveBtn.style.background="";saveConfirm.innerHTML="";},3000);
+  };
+  main.appendChild(saveBtn);
+  main.appendChild(saveConfirm);
+
+  var delBtn=h('<button class="ghost" style="margin-top:10px;color:var(--sp);border-color:var(--sp)">🗑 Eliminar esta dirección</button>');
+  delBtn.onclick=function(){if(confirm("¿Eliminar esta nota de dirección?")){S.addressNotes.splice(idx,1);S.notesActive=null;save();render();}};
+  main.appendChild(delBtn);
+}
+
+/* ============ Chat Examples (Training Data) ============ */
+var CHAT_EXAMPLES=[
+{driver:"Hi Nancy, they don't have the smaller containers for this brand. They only have the larger tubs available in 0% or 2%. Which one would you prefer?",customer:"How about Cabot!?;)",decision:"alternative_offered_with_options"},
+{driver:"I can get you a similar prebiotic soda like Poppi or Olipop in a different flavor if that works for you.",customer:"Just sub with the different flavor but same brand.Thanks",decision:"substitution_accepted"},
+{driver:"Biotic Soda. Would you like a different soda or should I mark it as no substitution?",customer:"Wait... Is not in the front? By the entrance? ... no",decision:"no_sub_needed"},
+{driver:"I only found heavy whipping cream options, and there are no smaller Great Value Half & Half sizes available. The closest option is Horizon Organic Heavy Whipping Cream, but it is not the same as Half & Half and may cost more. Would you like that, or would you prefer a refund?",customer:"refund pls. Thank you!",decision:"refund_offered"},
+{driver:"Hi, the Great Value Half & Half 64 fl oz is out of stock. Would you prefer Horizon Organic Heavy Whipping Cream, or would you like a different substitute?",customer:"If there are smaller great value half and half, please grab that. Cheaper options please! Thank you so much.",decision:"customer_directed_search"},
+{driver:"Did you get the Fun Pops",customer:"yes I did",followUp:"Just get 1 mix vegetable bag",decision:"item_found"},
+{driver:"Hi, unfortunately this item is unavailable because the meat department is currently being sanitized and the products are not accessible. I'm sorry for the inconvenience.",customer:"So are you telling me there's no meats at all? ... Can you ask somebody for the items out the back please",decision:"dept_closed_offer_backstock"},
+{driver:"I asked an associate, but they said the meat area is currently unavailable because it's being cleaned/sanitized, and they can't provide those items right now. I'm sorry about that.",customer:"Can you check the frozen section",decision:"alternative_location_suggested"},
+{driver:"Hi Nancy, the app isn't letting me substitute that yogurt on my side. Could you please try updating it from your end? I'll keep shopping the rest of your order for now, and I'll check again at the end to see if it lets me replace it.",customer:"Sure thing",decision:"app_workaround"},
+{driver:"Hi, are the clears iridescent party favor bags with the white/clear background you ordered are not available. These are the options currently available in the store. Please let me know if you would like one of these as a substitute, or if you prefer a refund.",customer:"Thank you for letting me know. I see you have the two.",decision:"option_selection"},
+{driver:"If I don't hear back from you shortly, I'll go with two white frosting packs since they are in better condition.",customer:"2 white is fine. thank you again!",decision:"fallback_accepted"},
+{driver:"No substitute please thank you",customer:"(decline)",decision:"no_substitution"},
+{driver:"Hi, only 1 of the Weber Chicago Steak Seasoning is available. Would you like a substitute for the missing one? Please let me know in the chat. Thank you.",customer:"No just the one will do for now thank you",decision:"partial_qty_ok"}
+];
+
+/* ============ ETA Messages ============ */
+function copyText(txt,btn,label){
+  var restore=label||btn.textContent;
+  if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){btn.textContent="✓ Copiado";setTimeout(function(){btn.textContent=restore;},2000);});}
+  else{var ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");btn.textContent="✓ Copiado";setTimeout(function(){btn.textContent=restore;},2000);}catch(e){}document.body.removeChild(ta);}
+}
+function getGreeting(){var hr=new Date().getHours();if(hr>=5&&hr<12)return"morning";if(hr>=12&&hr<18)return"afternoon";return"evening";}
+function buildETA(g,m){return"Good "+g+"! Your Spark driver here. I should arrive in about "+m+" minute"+(m===1?"":"s")+". Thank you!";}
+function renderMsg(main){
+  var g=getGreeting(),m=5;
+  main.appendChild(h('<p class="lead">Mensajes listos para pegar en el chat de Spark.</p>'));
+  main.appendChild(h('<div class="section-title">ETA al cliente</div>'));
+
+  /* greeting selector */
+  var gRow=h('<div class="row-btns"></div>');
+  var gBtns={};
+  [{k:"morning",l:"🌅 Morning"},{k:"afternoon",l:"☀️ Afternoon"},{k:"evening",l:"🌙 Evening"}].forEach(function(x){
+    var btn=h('<button class="ghost sm" style="flex:1;font-size:11px">'+x.l+'</button>');
+    gBtns[x.k]=btn;
+    btn.onclick=function(){g=x.k;refresh();updateMsg();};
+    gRow.appendChild(btn);
+  });
+  main.appendChild(gRow);
+  function refresh(){
+    Object.keys(gBtns).forEach(function(k){
+      var b=gBtns[k];
+      if(k===g){b.style.background="var(--acc)";b.style.color="#1A1300";b.style.borderColor="var(--acc)";}
+      else{b.style.background="";b.style.color="";b.style.borderColor="";}
+    });
+  }
+  refresh();
+
+  /* minutes */
+  var mRow=h('<div style="display:flex;align-items:center;gap:10px;margin:12px 0 10px"></div>');
+  mRow.appendChild(h('<span style="font-size:13px;color:var(--mut);font-weight:700">Minutos:</span>'));
+  var btnM=h('<button class="ghost sm" style="width:38px;flex:none;padding:8px 0;font-size:18px;line-height:1">−</button>');
+  var mVal=h('<span style="font-size:22px;font-weight:900;min-width:36px;text-align:center;color:var(--acc)">5</span>');
+  var btnP=h('<button class="ghost sm" style="width:38px;flex:none;padding:8px 0;font-size:18px;line-height:1">+</button>');
+  btnM.onclick=function(){if(m>1){m--;mVal.textContent=m;updateMsg();}};
+  btnP.onclick=function(){if(m<30){m++;mVal.textContent=m;updateMsg();}};
+  mRow.appendChild(btnM);mRow.appendChild(mVal);mRow.appendChild(btnP);
+  main.appendChild(mRow);
+
+  /* message */
+  var msgBox=h('<div class="msg-box"></div>');
+  function updateMsg(){msgBox.textContent=buildETA(g,m);}
+  updateMsg();
+  main.appendChild(msgBox);
+  var cpBtn=h('<button class="copy-btn">Copiar mensaje</button>');
+  cpBtn.onclick=function(){copyText(msgBox.textContent,cpBtn,"Copiar mensaje");};
+  main.appendChild(cpBtn);
+
+  /* AI personalized — only if there's context */
+  var openOOS=S.oosChats.filter(function(c){return!c.closed;});
+  var clients=Array.from(new Set(S.items.map(function(it){return(it.client||"").toUpperCase();}).filter(Boolean))).sort();
+  if(openOOS.length||clients.length){
+    main.appendChild(h('<div class="section-title" style="margin-top:20px">ETA personalizado ✨</div>'));
+    main.appendChild(h('<p class="hint">Genera un mensaje que considera las sustituciones y el batch.</p>'));
+    if(!S.apiKey){
+      main.appendChild(h('<p class="hint">⚠ Necesita clave de API en Ajustes.</p>'));
+    } else {
+      var aiCard=h('<div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px"></div>');
+      var genBtn=h('<button class="ghost sm" style="width:100%">✨ Generar mensaje con IA</button>');
+      var aiBox=h('<div></div>');
+      genBtn.onclick=function(){
+        genBtn.textContent="Generando…";genBtn.disabled=true;
+        var ctx="You help a Walmart Spark driver send professional messages via customer chat. Your tone is: honest, empathetic, clear about limitations, collaborative (not prescriptive). Time of day: "+g+". ETA: ~"+m+" minute"+(m===1?"":"s")+".";
+        if(openOOS.length){ctx+=" Substitution situations during shopping: "+openOOS.map(function(c){var last=null;c.thread.forEach(function(t){if(t.role==="suggestion")last=t;});return'"'+c.itemName+'"'+(last?" → "+last.text:"");}).join("; ")+".";}
+        if(clients.length>1){ctx+=" This is a batched order with "+clients.length+" customers ("+clients.join(", ")+").";}
+        ctx+=" Reference these real examples of excellent communication: ";
+        ctx+="\n— When offering alternatives, explain why: 'The closest option is Horizon Organic Heavy Whipping Cream, but it is not the same as Half & Half and may cost more.'";
+        ctx+="\n— Offer refund when substitute is very different: 'Would you like that, or would you prefer a refund?'";
+        ctx+="\n— Be honest about app/system limits: \"the app isn't letting me substitute that yogurt on my side. Could you try updating it?\"";
+        ctx+="\n— Declare fallbacks early: 'If I don't hear back shortly, I'll go with the white frosting packs.'";
+        ctx+="\n— When customer finds the item themselves, acknowledge: 'I see you have the two. Great!'";
+        ctx+="\n— Respect 'no sub' decisions immediately, no pushback.";
+        ctx+=" Write a warm, brief (2-3 sentences) message. If dealing with OOS/substitutions, explain clearly and offer customer control. Output ONLY the message text — no labels, no quotes.";
+        fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:S.model,max_tokens:200,messages:[{role:"user",content:ctx}]})})
+        .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+        .then(function(data){
+          var txt=(data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("").trim();
+          aiBox.innerHTML="";
+          var ab=h('<div class="msg-box" style="margin-top:8px">'+esc(txt)+'</div>');
+          var cb=h('<button class="copy-btn" style="margin-top:6px">Copiar</button>');
+          cb.onclick=function(){copyText(txt,cb,"Copiar");};
+          aiBox.appendChild(ab);aiBox.appendChild(cb);
+          genBtn.textContent="✨ Regenerar";genBtn.disabled=false;
+        })
+        .catch(function(err){genBtn.textContent="✨ Generar";genBtn.disabled=false;aiBox.innerHTML='<div class="error" style="margin-top:8px">Error: '+esc(err.message||"error")+'</div>';});
+      };
+      aiCard.appendChild(genBtn);aiCard.appendChild(aiBox);
+      main.appendChild(aiCard);
+    }
+  }
+}
+
+/* ============ Render ============ */
+function render(){try{_render();}catch(e){
+  var app=document.getElementById("app");
+  if(app)app.innerHTML='<div style="padding:24px 16px;color:#FFD23F;font-family:monospace;font-size:13px;background:#0F1420;min-height:100vh"><b style="color:#FB7185">⚠ Error de render</b><br><br>'+String(e.message).replace(/</g,"&lt;")+'<br><br><button onclick="localStorage.removeItem(\'spark2483\');location.reload()" style="background:#FB7185;color:#fff;border:none;border-radius:8px;padding:10px 18px;font-weight:800;margin-top:8px">Limpiar datos y recargar</button><br><br><small style="color:#8C9BB8">O recarga la página manualmente si el botón no funciona.</small></div>';
+  console.error("render error",e);
+}}
+function _render(){
+  var route=buildRoute(S.items,S.specials);
+  var normal=route.filter(function(g){return !g.special;});
+  var special=route.filter(function(g){return g.special;});
+  var total=S.items.length, done=S.items.filter(function(it){return it.status==="picked";}).length;
+  var pending=S.items.filter(function(it){return it.status!=="picked"&&it.status!=="manual_delete";}).length;
+  var cart=suggestCart(S.items);
+  var clients=Array.from(new Set(S.items.map(function(it){return(it.client||"").toUpperCase();}).filter(Boolean))).sort();
+  var units=S.items.reduce(function(s,it){return s+(Number(it.qty)||0);},0);
+
+  var app=document.getElementById("app");
+  app.innerHTML="";
+
+  // header
+  var head=h('<div class="head"><div class="head-row"><div><div class="kicker">Spark Ruta · '+esc(APP_VERSION)+'</div><div class="store">Walmart #2483 · Enterprise</div></div><div class="entrada">entrada/salida ▸ derecha</div></div></div>');
+  if(total>0){head.appendChild(h('<div class="prog"><div class="prog-bar"><span style="width:'+(total?(done/total*100):0)+'%"></span></div><div class="prog-txt">'+done+'/'+total+' recogidos</div></div>'));}
+  app.appendChild(head);
+
+  // steps
+  var steps=h('<div class="steps"></div>');
+  [["load","1 · Cargar"],["review","2 · Revisar"],["route","3 · Ruta"],["cart","4 · Carrito"],["oos","5 · Subs"],["gate","🔑 Gate"],["notes","📍 Notas"],["msg","💬 ETA"]].forEach(function(p){
+    var openCount=p[0]==="oos"?S.oosChats.filter(function(c){return!c.closed;}).length:0;
+    var label=p[1]+(openCount>0?' <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--sp);vertical-align:middle;margin-left:2px;margin-bottom:1px"></span>':"");
+    var b=h('<button class="step'+(S.view===p[0]?" on":"")+'">'+label+'</button>');b.onclick=function(){set("view",p[0]);};steps.appendChild(b);
+  });
+  app.appendChild(steps);
+
+  var main=h('<div class="pad"></div>');
+  app.appendChild(main);
+
+  if(S.view==="load") renderLoad(main);
+  else if(S.view==="review") renderReview(main,total);
+  else if(S.view==="route") renderRoute(main,normal,special,total,units);
+  else if(S.view==="cart") renderCart(main,cart,clients,total);
+  else if(S.view==="oos") renderOOS(main);
+  else if(S.view==="gate") renderGate(main);
+  else if(S.view==="notes") renderNotes(main);
+  else if(S.view==="msg") renderMsg(main);
+
+  // config footer
+  var cfg=h('<div class="cfg"></div>');
+  var ct=h('<button class="cfg-toggle">'+(S.showCfg?"▾":"▸")+' Ajustes · clave de IA · estantes especiales</button>');
+  ct.onclick=function(){set("showCfg",!S.showCfg);};
+  cfg.appendChild(ct);
+  if(S.showCfg){
+    var cb=h('<div class="cfg-body"></div>');
+    cb.appendChild(h('<div class="opt-h">Clave de API de Anthropic</div>'));
+    cb.appendChild(h('<p class="hint">Necesaria para leer las capturas. Se guarda solo en este teléfono.</p>'));
+    var kin=h('<input class="in" type="password" placeholder="sk-ant-..." value="'+esc(S.apiKey)+'">');
+    kin.oninput=function(){S.apiKey=kin.value;save();};
+    cb.appendChild(kin);
+    var min=h('<input class="in" style="margin-top:8px" placeholder="modelo" value="'+esc(S.model)+'">');
+    min.oninput=function(){S.model=min.value;save();};
+    cb.appendChild(h('<p class="hint">Modelo (si da error de modelo, cámbialo):</p>'));
+    cb.appendChild(min);
+    var clr=h('<button class="ghost sm" style="margin-top:10px;width:100%">Borrar clave</button>');
+    clr.onclick=function(){S.apiKey="";save();render();};
+    cb.appendChild(clr);
+
+    cb.appendChild(h('<div class="opt-h" style="margin-top:16px">Estantes especiales (caja)</div>'));
+    cb.appendChild(h('<p class="hint">Productos que se recogen en caja. La ruta los manda al final.</p>'));
+    S.specials.forEach(function(s,i){
+      var row=h('<div class="sp-edit"></div>');
+      var a=h('<label>Aisle<input class="in" value="'+esc(s.aisle)+'"></label>');a.querySelector("input").oninput=function(e){s.aisle=e.target.value.toUpperCase();save();};
+      var fr=h('<label>De<input class="in" type="number" value="'+s.from+'"></label>');fr.querySelector("input").oninput=function(e){s.from=Number(e.target.value);save();};
+      var to=h('<label>A<input class="in" type="number" value="'+s.to+'"></label>');to.querySelector("input").oninput=function(e){s.to=Number(e.target.value);save();};
+      var d=h('<button class="del">✕</button>');d.onclick=function(){S.specials.splice(i,1);save();render();};
+      row.appendChild(a);row.appendChild(fr);row.appendChild(to);row.appendChild(d);cb.appendChild(row);
+    });
+    var add=h('<button class="ghost sm" style="width:100%">+ Estante especial</button>');
+    add.onclick=function(){S.specials.push({aisle:"",from:1,to:1,label:"Caja"});save();render();};
+    cb.appendChild(add);
+    cfg.appendChild(cb);
+  }
+  app.appendChild(cfg);
+
+  // toast deshacer (eliminar/recoger)
+  if(S.undoToast){
+    var label=S.undoToast.from==="picked"?"Producto marcado como recogido":"Producto eliminado";
+    var t=h('<div class="undo-toast"><span>'+esc(label)+'</span></div>');
+    var ub=h('<button>Deshacer</button>');ub.onclick=function(){undoLast();};
+    t.appendChild(ub);
+    app.appendChild(t);
+  }
+}
+
+function renderLoad(main){
+  main.appendChild(h('<p class="lead">Sube las capturas de tu pedido de Spark. Cada imagen se procesa por separado para no perder datos si alguna falla.</p>'));
+
+  // Panel de estado de imágenes
+  if(S.imgQueue&&S.imgQueue.length){    var STATUS_ICON={pending:"⏳",processing:"🔄",done:"✓",error:"❌",error_api:"❌",timeout:"⏱"};
+    var STATUS_LABEL={pending:"Pendiente",processing:"Procesando…",done:"Lista",error:"Error de lectura",error_api:"Error de API",timeout:"Timeout"};
+    var qCard=h('<div class="opt"></div>');
+    var done=S.imgQueue.filter(function(e){return e.status==="done";}).length;
+    var errs=S.imgQueue.filter(function(e){return e.status==="error"||e.status==="timeout"||e.status==="error_api";}).length;
+    var proc=S.imgQueue.filter(function(e){return e.status==="processing";}).length;
+    qCard.appendChild(h('<div class="opt-h">'+done+'/'+S.imgQueue.length+' imágenes procesadas'+(errs?' · <span style="color:var(--sp)">'+errs+' fallaron</span>':'')+(proc?' · <span style="color:var(--acc)">procesando…</span>':'')+'</div>'));
+    S.imgQueue.forEach(function(entry,i){
+      var row=h('<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line)"></div>');
+      var icon=STATUS_ICON[entry.status]||"?";
+      var col=entry.status==="done"?"var(--ok)":entry.status==="processing"?"var(--acc)":entry.status==="pending"?"var(--mut)":"var(--sp)";
+      row.appendChild(h('<span style="font-size:16px;flex:none">'+icon+'</span>'));
+      var statusTxt=STATUS_LABEL[entry.status]||"?";
+      var countTxt=entry.status==="done"?(" \u2014 "+entry.count+" nuevo"+(entry.count!==1?"s":"")+(entry.skipped?" · "+entry.skipped+" omitido"+(entry.skipped!==1?"s":"")+" (dup/parcial)":"")):"";
+      var errTxt=entry.error?(" \u2014 "+esc(entry.error)):"";
+      var nameTxt=esc(entry.name);
+      var info=document.createElement("div");info.style.cssText="flex:1;min-width:0";
+      var d1=document.createElement("div");d1.style.cssText="font-size:12px;font-weight:700;color:"+col;d1.textContent=statusTxt;
+      var d2=document.createElement("div");d2.style.cssText="font-size:11px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap";d2.textContent=entry.name+countTxt+(entry.error?" \u2014 "+entry.error:"");
+      info.appendChild(d1);info.appendChild(d2);
+      row.appendChild(info);
+      if(entry.status==="error"||entry.status==="timeout"||entry.status==="error_api"){
+        var rb=h('<button style="background:transparent;border:1px solid var(--acc);color:var(--acc);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;flex:none">🔁</button>');
+        rb.onclick=function(){entry.status="pending";entry.error="";S.loading=true;processImageQueue(S.imgQueue);};
+        row.appendChild(rb);
+      }
+      qCard.appendChild(row);
+    });
+    var qBtns=h('<div class="row-btns" style="margin-top:10px"></div>');
+    if(errs){var retr=h('<button class="ghost sm">🔁 Reintentar fallidas</button>');retr.onclick=function(){S.imgQueue.filter(function(e){return e.status!=="done";}).forEach(function(e){e.status="pending";e.error="";});S.loading=true;processImageQueue(S.imgQueue);};qBtns.appendChild(retr);}
+    var clrQ=h('<button class="ghost sm">Limpiar cola</button>');clrQ.onclick=function(){S.imgQueue=[];S.loading=false;render();};qBtns.appendChild(clrQ);
+    qCard.appendChild(qBtns);
+    if(S.items.length){var goBtn=h('<button class="big" style="margin-top:8px">Ver items extraídos ('+S.items.length+')</button>');goBtn.onclick=function(){S.view="review";render();};qCard.appendChild(goBtn);}
+    main.appendChild(qCard);
+    main.appendChild(h('<hr style="border:none;border-top:1px solid var(--line);margin:16px 0">'));
+  }
+
+  var opt=h('<div class="opt"><div class="opt-h">Subir capturas (lee con IA)</div></div>');
+  var fi=h('<input class="file" type="file" accept="image/*" multiple'+(S.loading?" disabled":"")+'>');
+  fi.onchange=function(e){onPick(e.target);};
+  opt.appendChild(fi);
+  if(!S.apiKey)opt.appendChild(h('<p class="hint">⚠ Falta tu clave de IA. Ábrela en <b>Ajustes</b> abajo.</p>'));
+  opt.appendChild(h('<p class="hint">Sube hasta 12 imágenes. Cada una se analiza por separado.</p>'));
+  if(S.error)opt.appendChild(h('<div class="error">'+esc(S.error)+'</div>'));
+  main.appendChild(opt);
+
+  var ex=h('<button class="ghost">Cargar ejemplo (pedido Emily Y.)</button>');
+  ex.onclick=function(){S.items=EXAMPLE.map(function(g){return Object.assign({},g,{done:false,status:"pending"});});S.imgQueue=[];S.view="review";S.error="";save();render();};
+  main.appendChild(ex);
+
+  var opt2=h('<div class="opt"><div class="opt-h">Escribir / pegar lista (respaldo)</div><p class="hint">Una línea por item: <code>Nombre | Aisle | Sección | Cant | Cliente</code></p></div>');
+  var ta=h('<textarea class="ta" rows="4" placeholder="Leche | A31 | 7 | 1 | A\nOreo | A24 | 1 | 1 | B"></textarea>');
+  ta.value=S.bulk; ta.oninput=function(){S.bulk=ta.value;};
+  opt2.appendChild(ta);
+  var rb=h('<div class="row-btns"></div>');
+  var ab=h('<button class="ghost sm">Agregar lista</button>');ab.onclick=parseBulk;
+  var ib=h('<button class="ghost sm">Item en blanco</button>');ib.onclick=function(){addBlank();S.view="review";render();};
+  rb.appendChild(ab);rb.appendChild(ib);opt2.appendChild(rb);
+  main.appendChild(opt2);
+}
+
+function onPick(input){
+  var files=Array.prototype.slice.call(input.files||[]);
+  if(!files.length){S.error="No se seleccionó ninguna imagen.";render();return;}
+  S.error="";
+  startImageQueue(files);
+  try{input.value="";}catch(e){}
+}
+
+function parseBulk(){
+  var lines=S.bulk.split("\n").map(function(l){return l.trim();}).filter(Boolean);
+  var got=lines.map(function(l){var p=l.split("|").map(function(x){return x.trim();});return{name:p[0]||"Item",aisle:(p[1]||"").toUpperCase().replace(/\s+/g,""),section:p[2]?Number(p[2]):null,modular:null,qty:p[3]?Number(p[3]):1,perishable:false,client:p[4]?(p[4].toUpperCase().replace(/[^ABC]/g,"")||null):null,done:false,status:"pending"};});
+  if(got.length){S.items=S.items.concat(got);S.bulk="";S.view="review";save();render();}
+}
+function addBlank(){S.items.push({name:"",aisle:"",section:null,modular:null,qty:1,perishable:false,client:null,done:false,status:"pending"});save();}
+
+function renderReview(main,total){
+  if(total===0){main.appendChild(h('<div class="empty">Aún no hay items. Ve a <b>Cargar</b>.</div>'));return;}
+  main.appendChild(h('<p class="lead">Revisa lo extraído y corrige lo necesario antes de armar la ruta.</p>'));
+  S.items.forEach(function(it,i){
+    var sp=isSpecial(it,S.specials);
+    var card=h('<div class="edit'+(sp?" sp":"")+'"></div>');
+    var nm=h('<input class="in name" placeholder="Nombre del producto" value="'+esc(it.name)+'">');nm.oninput=function(){it.name=nm.value;save();};
+    card.appendChild(nm);
+    var row=h('<div class="edit-row"></div>');
+    var la=h('<label>Aisle<input class="in" value="'+esc(it.aisle)+'"></label>');la.querySelector("input").oninput=function(e){it.aisle=e.target.value.toUpperCase().replace(/\s+/g,"");save();render();};
+    var ls=h('<label>Sec<input class="in" type="number" value="'+(it.section==null?"":it.section)+'"></label>');ls.querySelector("input").oninput=function(e){it.section=e.target.value===""?null:Number(e.target.value);save();render();};
+    var lq=h('<label>Cant<input class="in" type="number" value="'+it.qty+'"></label>');lq.querySelector("input").oninput=function(e){it.qty=Number(e.target.value);save();};
+    var del=h('<button class="del">✕</button>');del.onclick=function(){S.items.splice(i,1);save();render();};
+    row.appendChild(la);row.appendChild(ls);row.appendChild(lq);row.appendChild(del);card.appendChild(row);
+    var cr=h('<div class="client-row"><span class="client-lbl">Cliente</span></div>');
+    ["A","B","C"].forEach(function(c){var b=h('<button class="client-btn">'+c+'</button>');if(it.client===c){b.style.background=CLIENT_COLORS[c];b.style.color="#1A1300";b.style.borderColor=CLIENT_COLORS[c];}b.onclick=function(){it.client=it.client===c?null:c;save();render();};cr.appendChild(b);});
+    card.appendChild(cr);
+    if(sp)card.appendChild(h('<div class="tag-sp">🔒 Recoger en caja — irá al final</div>'));
+    main.appendChild(card);
+  });
+  var rb=h('<div class="row-btns"></div>');
+  var ai=h('<button class="ghost sm">+ Item</button>');ai.onclick=function(){addBlank();render();};
+  var vc=h('<button class="ghost sm">Vaciar pedido</button>');vc.onclick=function(){S.items=[];S.view="load";save();render();};
+  rb.appendChild(ai);rb.appendChild(vc);main.appendChild(rb);
+  var gen=h('<button class="big">Generar ruta</button>');gen.onclick=function(){set("view","route");};main.appendChild(gen);
+}
+
+function pickItem(it){var orig=S.items[it._i]||it;orig.status="picked";orig.done=true;save();showUndo(orig,"picked");}
+function deleteItem(it){var orig=S.items[it._i]||it;orig.status="manual_delete";orig.done=false;save();showUndo(orig,"manual_delete");}
+function showUndo(it,fromStatus){S.undoToast={it:it,from:fromStatus};render();
+  clearTimeout(window._undoTimer);
+  window._undoTimer=setTimeout(function(){if(S.undoToast&&S.undoToast.it===it){S.undoToast=null;render();}},4000);
+}
+function undoLast(){if(!S.undoToast)return;var it=S.undoToast.it;it.status="pending";it.done=false;S.undoToast=null;clearTimeout(window._undoTimer);save();render();}
+function aisleCard(g,step){
+  var z=ZONE_LABEL[zoneOf(g.prefix)]||"";
+  var isPair=g.aisle.indexOf("-")>=0;
+  var card=h('<div class="aisle'+(g.special?" sp":"")+'"></div>');
+  card.appendChild(h('<div class="aisle-head"><div class="aisle-id"><span class="step-no">'+step+'</span><span class="aisle-code">'+esc(g.aisle)+'</span></div><div class="aisle-meta"><div class="zone">'+esc(z)+'</div><div class="count">'+g.items.length+' '+(g.items.length===1?"producto":"productos")+'</div></div></div>'));
+  var box=h('<div></div>');
+  g.items.forEach(function(it){
+    var wrap=h('<div class="item-wrap"></div>');
+    var row=h('<div class="item-row"></div>');
+    var sub="";
+    if(it.client)sub+='<em class="cl" style="background:'+CLIENT_COLORS[it.client]+';color:#1A1300">Cliente '+it.client+'</em>';
+    if(isPair)sub+='<em>'+esc(it.aisle)+'</em>'; // en pares, aclarar de qué lado exacto es
+    if(it.section!=null)sub+='<em>Sec '+it.section+'</em>';
+    if(it.qty>1)sub+='<em>×'+it.qty+'</em>';
+    if(it.perishable)sub+='<em class="frio">frío</em>';
+    row.innerHTML='<span class="check"></span><span class="item-body"><span class="item-name">'+esc(it.name)+'</span><span class="item-sub">'+sub+'</span></span>';
+    wrap.appendChild(row);
+    var acts=h('<div class="item-acts"></div>');
+    var bp=h('<button class="act-btn pick">✓ Recogido</button>');bp.onclick=function(){pickItem(it);};
+    var bd=h('<button class="act-btn rm">✕ Eliminar</button>');bd.onclick=function(){deleteItem(it);};
+    acts.appendChild(bp);acts.appendChild(bd);wrap.appendChild(acts);
+    box.appendChild(wrap);
+  });
+  card.appendChild(box);
+  return card;
+}
+
+function renderRoute(main,normal,special,total,units){
+  if(total===0){main.appendChild(h('<div class="empty">No hay items para rutear.</div>'));return;}
+  var pendCount=normal.reduce(function(s,g){return s+g.items.length;},0)+special.reduce(function(s,g){return s+g.items.length;},0);
+  main.appendChild(h('<div class="summary"><div><b>'+(normal.length+special.length)+'</b><span>aisles</span></div><div><b>'+pendCount+'</b><span>pendientes</span></div><div><b>'+units+'</b><span>unidades</span></div></div>'));
+  if(pendCount===0){main.appendChild(h('<div class="empty">🎉 Todo recogido o gestionado.</div>'));}
+  normal.forEach(function(g,i){main.appendChild(aisleCard(g,i+1));});
+  if(special.length){main.appendChild(h('<div class="sp-head">🔒 Recoger en caja — al final</div>'));special.forEach(function(g,i){main.appendChild(aisleCard(g,normal.length+i+1));});}
+  main.appendChild(h('<div class="foot">Salida por la puerta derecha →</div>'));
+  var nb=h('<button class="ghost">Nuevo pedido</button>');nb.onclick=function(){S.items=[];S.view="load";save();render();};main.appendChild(nb);
+}
+
+function zoneCard(title,hint,items,icon){
+  var c=h('<div class="zone-card"></div>');
+  c.appendChild(h('<div class="zone-h"><span class="zone-icon">'+icon+'</span><div><div class="zone-title">'+title+'</div><div class="zone-hint">'+hint+'</div></div><div class="zone-n">'+items.length+'</div></div>'));
+  if(!items.length){c.appendChild(h('<div class="zone-empty">—</div>'));}
+  else{items.forEach(function(it){var cl=it.client?'<span class="cl" style="background:'+CLIENT_COLORS[it.client]+';color:#1A1300">'+it.client+'</span>':"";c.appendChild(h('<div class="zone-item">'+cl+'<span class="zone-name">'+esc(it.name)+'</span>'+(it.qty>1?'<span class="zone-qty">×'+it.qty+'</span>':"")+'</div>'));});}
+  return c;
+}
+function renderCart(main,cart,clients,total){
+  if(total===0){main.appendChild(h('<div class="empty">No hay items. Carga un pedido.</div>'));return;}
+  var lead=cart.mode==="multi"?("Pedido de "+clients.length+" clientes ("+clients.join(", ")+"). El de más bulto va al área grande; el resto se reparte por tamaño."):(clients.length===0?"Un solo pedido. Reparto por tamaño/peso.":("Un cliente ("+clients.join(", ")+"). Reparto por tamaño/peso."));
+  main.appendChild(h('<p class="lead">'+lead+'</p>'));
+  main.appendChild(zoneCard("Área grande","Canasta principal",cart.zones.grande,"▣"));
+  main.appendChild(zoneCard("Canasta pequeña","Cesta de arriba · chico / frágil",cart.zones.canasta,"▢"));
+  main.appendChild(zoneCard("Rejilla inferior","Bandeja de abajo · pesado / voluminoso",cart.zones.rejilla,"▤"));
+  main.appendChild(h('<p class="hint" style="margin-top:14px">El bulto se estima del tamaño en el nombre (lb, oz, fl oz, gallon, count) × cantidad. Es una guía.</p>'));
+  var vb=h('<button class="ghost">Ver ruta</button>');vb.onclick=function(){set("view","route");};main.appendChild(vb);
+}
+
+render();
+</script>
+</body>
+</html>
