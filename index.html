@@ -1451,6 +1451,20 @@ function _render(){
     var add=h('<button class="ghost sm" style="width:100%">+ Estante especial</button>');
     add.onclick=function(){S.specials.push({aisle:"",from:1,to:1,label:"Caja"});save();render();};
     cb.appendChild(add);
+
+    cb.appendChild(h('<div class="opt-h" style="margin-top:16px">Calibracion de ruta #2483</div>'));
+    cb.appendChild(h('<p class="hint">Ajusta una ubicacion del mapa 2D de prueba. X: 0=fondo, 100=entrada derecha. Y: 0=frente, 100=fondo de pasillos. Las correcciones quedan solo en este dispositivo.</p>'));
+    var calKeys=Object.keys(STORE_GRAPH_CAL).sort();
+    cb.appendChild(h('<p class="hint"><b>'+calKeys.length+'</b> ubicaciones calibradas.</p>'));
+    var cr=h('<div class="sp-edit"></div>');
+    var ca=h('<label>Grupo<input class="in" placeholder="A20-A21 / A33 / G1"></label>');
+    var cx=h('<label>X<input class="in" type="number" min="0" max="100" step="1"></label>');
+    var cy=h('<label>Y<input class="in" type="number" min="0" max="100" step="1"></label>');
+    cr.appendChild(ca);cr.appendChild(cx);cr.appendChild(cy);cb.appendChild(cr);
+    var csave=h('<button class="ghost sm" style="width:100%">Guardar calibracion</button>');
+    csave.onclick=function(){var key=ca.querySelector("input").value.trim().toUpperCase(),x=Number(cx.querySelector("input").value),y=Number(cy.querySelector("input").value);if(!key||!Number.isFinite(x)||!Number.isFinite(y)||x<0||x>100||y<0||y>100){S.error="Calibracion: completa grupo, X e Y entre 0 y 100.";render();return;}STORE_GRAPH_CAL[key]={x:x,y:y,updatedAt:new Date().toISOString()};saveStoreGraph();S.status="Mapa calibrado: "+key;render();};
+    cb.appendChild(csave);
+    if(calKeys.length){var creset=h('<button class="ghost sm" style="width:100%">Borrar calibraciones del mapa</button>');creset.onclick=function(){if(confirm("Borrar todas las calibraciones locales del mapa?")){STORE_GRAPH_CAL={};saveStoreGraph();render();}};cb.appendChild(creset);}
     cfg.appendChild(cb);
   }
   app.appendChild(cfg);
