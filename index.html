@@ -302,13 +302,17 @@ function graphDistance(a,b){return Math.abs(a.x-b.x)+Math.abs(a.y-b.y);}
 function parseRouteNodeKey(key){var k=String(key||"").trim().toUpperCase();if(STORE_GRAPH_DEFAULTS[k])return{aisle:k,prefix:k,num:null};var m=k.match(/^([A-Z]+)(\d+)(?:-[A-Z]+\d+)?$/);return m?{aisle:k,prefix:m[1],num:Number(m[2])}:{aisle:k,prefix:k,num:null};}
 function learnRelativeRoute(aKey,bKey,relation){var a=parseRouteNodeKey(aKey),b=parseRouteNodeKey(bKey);if(!a.aisle||!b.aisle||a.aisle===b.aisle)return false;var ap=groupPoint(a),bp=groupPoint(b),step=6,np={x:ap.x,y:ap.y};if(relation==="before")np.x=Math.min(100,ap.x+step);else if(relation==="after")np.x=Math.max(0,ap.x-step);else if(relation==="near"){np.x=Math.max(0,Math.min(100,(ap.x+bp.x)/2));np.y=Math.max(0,Math.min(100,(ap.y+bp.y)/2));}else return false;STORE_GRAPH_CAL[b.aisle]={x:np.x,y:np.y,learnedFrom:a.aisle+":"+relation,updatedAt:new Date().toISOString()};saveStoreGraph();return true;}
 loadStoreGraph();
-var ROUTE_OBS_KEY="spark2483_route_observations_v1",ROUTE_OBS=[];
+var ROUTE_OBS_KEY="spark2483_route_observations_v1",ROUTE_EVIDENCE_KEY="spark2483_route_evidence_v1",ROUTE_OBS=[],ROUTE_EVIDENCE={};
 function loadRouteObs(){try{var d=JSON.parse(localStorage.getItem(ROUTE_OBS_KEY)||"[]");ROUTE_OBS=Array.isArray(d)?d.slice(-500):[];}catch(e){ROUTE_OBS=[];}}
 function saveRouteObs(){try{localStorage.setItem(ROUTE_OBS_KEY,JSON.stringify(ROUTE_OBS.slice(-500)));}catch(e){}}
+function loadRouteEvidence(){try{var d=JSON.parse(localStorage.getItem(ROUTE_EVIDENCE_KEY)||"{}");ROUTE_EVIDENCE=d&&typeof d==="object"?d:{};}catch(e){ROUTE_EVIDENCE={};}}
+function saveRouteEvidence(){try{localStorage.setItem(ROUTE_EVIDENCE_KEY,JSON.stringify(ROUTE_EVIDENCE));}catch(e){}}
+function evidenceKey(a,b){return String(a||"").toUpperCase()+">"+String(b||"").toUpperCase();}
+function addRouteEvidence(a,b){var k=evidenceKey(a,b),e=ROUTE_EVIDENCE[k]||{count:0,sessions:{},applied:0};if(!e.sessions[ROUTE_OBS_SESSION]){e.sessions[ROUTE_OBS_SESSION]=1;e.count++;}ROUTE_EVIDENCE[k]=e;saveRouteEvidence();if(e.count>=3&&e.applied<Math.floor(e.count/3)){if(learnRelativeRoute(a,b,"after")){e.applied=Math.floor(e.count/3);saveRouteEvidence();return true;}}return false;}
 function itemRouteKey(it){var p=parseAisle(it&&it.aisle),k=pairKey(p.prefix,p.num);return k||String(it&&it.aisle||"").trim().toUpperCase();}
-function recordPickedObservation(it){var key=itemRouteKey(it);if(!key)return;var prev=null;for(var i=ROUTE_OBS.length-1;i>=0;i--){if(ROUTE_OBS[i].session===ROUTE_OBS_SESSION&&ROUTE_OBS[i].key!==key){prev=ROUTE_OBS[i];break;}}var rec={session:ROUTE_OBS_SESSION,key:key,at:new Date().toISOString()};ROUTE_OBS.push(rec);saveRouteObs();if(prev)learnRelativeRoute(prev.key,key,"after");}
+function recordPickedObservation(it){var key=itemRouteKey(it);if(!key)return;var prev=null;for(var i=ROUTE_OBS.length-1;i>=0;i--){if(ROUTE_OBS[i].session===ROUTE_OBS_SESSION&&ROUTE_OBS[i].key!==key){prev=ROUTE_OBS[i];break;}}var rec={session:ROUTE_OBS_SESSION,key:key,at:new Date().toISOString()};ROUTE_OBS.push(rec);saveRouteObs();if(prev)addRouteEvidence(prev.key,key);}
 function removeLastPickedObservation(it){var key=itemRouteKey(it);for(var i=ROUTE_OBS.length-1;i>=0;i--){if(ROUTE_OBS[i].session===ROUTE_OBS_SESSION&&ROUTE_OBS[i].key===key){ROUTE_OBS.splice(i,1);saveRouteObs();break;}}}
-var ROUTE_OBS_SESSION="shop-"+Date.now();loadRouteObs();
+var ROUTE_OBS_SESSION="shop-"+Date.now();loadRouteObs();loadRouteEvidence();
 function buildRouteOrder(groups){
   if(groups.length<=1)return groups;
   var remaining=groups.slice(),ordered=[],current={x:100,y:5},forwardX=100;
