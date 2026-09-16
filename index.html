@@ -186,7 +186,7 @@ PARED DERECHA (desde entrada hacia fondo):
 
 ============================================== */
 
-var APP_VERSION="v3.2.0";
+var APP_VERSION="v3.3.0-dev";
 var ZONE_BASE={Y:10,I:20,GM:25,L:30,K:40,H:50,F:60,BK:75,D:80,C:90,B:100,J:110,G:120,GR:115,FT:127};
 /* E es paralela a A24-A25 (Snacks) según mapeo físico — seq especial cerca de ese tramo, no zona aparte */
 var ZONE_LABEL={Y:"Garden / Exterior",I:"Toys / Sports",GM:"Pasillo interno (I↔H)",L:"Auto / Hardware / Paint",K:"Electronics",H:"Home",F:"Office / Arts / Party / Seasonal",E:"Baby / Girls",BK:"Pasillo interno (E↔J)",D:"Mens / Boys",C:"Intimates / Jewelry",B:"Womens",J:"Shoes / Pets",G:"Health / Beauty / Personal Care",A:"Grocery",AP:"Fresh Produce",AB:"Bakery",AD:"Deli",AC:"Meat & Seafood",GR:"Pasillo interno (A↔E)",FT:"Pasillo interno (Z/G↔frente)",Z:"Checkout"};
@@ -279,27 +279,24 @@ function pairKey(prefix,num){
    Heurística: nearest-neighbor empezando desde la entrada (seq más bajo disponible),
    con penalización fuerte por retroceder más allá del punto ya alcanzado.
    Prioridad #1: distancia mínima total. NO se reordena por frío/perecedero (eso es solo desempate opcional, inactivo por defecto). */
+/* v3.3: grafo físico aproximado; coordenadas relativas, no metros. */
+function storePoint(prefix,num){
+  if(prefix==="A"&&num!=null){if(num===36)return{x:98,y:8};if(num===35)return{x:98,y:16};return{x:Math.max(8,94-(num*2.35)),y:58};}
+  if(prefix==="AP")return{x:80,y:18};if(prefix==="AD")return{x:90,y:18};if(prefix==="AB")return{x:70,y:18};
+  if(prefix==="AC")return{x:num>=4?22:12,y:66};if(prefix==="E")return{x:36,y:52};
+  var lanes={Y:8,I:16,GM:21,L:27,K:34,H:41,F:48,BK:55,D:62,C:69,B:76,J:83,G:90,GR:94,FT:98,Z:100};
+  var x=lanes[prefix]!=null?lanes[prefix]:50;
+  return{x:x,y:num==null?42:Math.min(82,18+(num%20)*3)};
+}
+function groupPoint(g){if(g.aisle==="FRONTZONE")return{x:92,y:15};if(g.aisle==="A30-A31")return{x:23,y:60};if(g.aisle==="A33")return{x:15,y:64};return storePoint(g.prefix,g.num);}
+function graphDistance(a,b){return Math.abs(a.x-b.x)+Math.abs(a.y-b.y);}
 function buildRouteOrder(groups){
   if(groups.length<=1)return groups;
-  var remaining=groups.slice();
-  var ordered=[];
-  // Empezar por el grupo de seq más bajo (más cerca de la entrada)
-  remaining.sort(function(a,b){return a.seq-b.seq;});
-  var current=remaining.shift();
-  ordered.push(current);
-  var maxSeqReached=current.seq;
+  var remaining=groups.slice(),ordered=[],current={x:100,y:5},forwardX=100;
   while(remaining.length){
     var bestIdx=0,bestCost=Infinity;
-    for(var i=0;i<remaining.length;i++){
-      var cand=remaining[i];
-      var dist=Math.abs(cand.seq-current.seq);
-      var isBacktrack=cand.seq<maxSeqReached-0.5; // retroceder a una zona ya pasada
-      var cost=dist+(isBacktrack?500:0); // penalización fuerte por retroceso
-      if(cost<bestCost){bestCost=cost;bestIdx=i;}
-    }
-    current=remaining.splice(bestIdx,1)[0];
-    ordered.push(current);
-    if(current.seq>maxSeqReached)maxSeqReached=current.seq;
+    for(var i=0;i<remaining.length;i++){var p=groupPoint(remaining[i]),dist=graphDistance(current,p),backtrack=p.x>forwardX+8,cost=dist+(backtrack?35:0);if(cost<bestCost){bestCost=cost;bestIdx=i;}}
+    var next=remaining.splice(bestIdx,1)[0],np=groupPoint(next);next.routePoint=np;ordered.push(next);current=np;if(np.x<forwardX)forwardX=np.x;
   }
   return ordered;
 }
