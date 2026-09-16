@@ -299,6 +299,8 @@ function groupPoint(g){var k=routeNodeKey(g),c=STORE_GRAPH_CAL[k],p=defaultGroup
 function calibrateRouteNode(g,x,y){var k=routeNodeKey(g);if(!k)return false;STORE_GRAPH_CAL[k]={x:Number(x),y:Number(y),updatedAt:new Date().toISOString()};saveStoreGraph();return true;}
 function resetRouteCalibration(g){var k=routeNodeKey(g);if(STORE_GRAPH_CAL[k]){delete STORE_GRAPH_CAL[k];saveStoreGraph();return true;}return false;}
 function graphDistance(a,b){return Math.abs(a.x-b.x)+Math.abs(a.y-b.y);}
+function parseRouteNodeKey(key){var k=String(key||"").trim().toUpperCase();if(STORE_GRAPH_DEFAULTS[k])return{aisle:k,prefix:k,num:null};var m=k.match(/^([A-Z]+)(\d+)(?:-[A-Z]+\d+)?$/);return m?{aisle:k,prefix:m[1],num:Number(m[2])}:{aisle:k,prefix:k,num:null};}
+function learnRelativeRoute(aKey,bKey,relation){var a=parseRouteNodeKey(aKey),b=parseRouteNodeKey(bKey);if(!a.aisle||!b.aisle||a.aisle===b.aisle)return false;var ap=groupPoint(a),bp=groupPoint(b),step=6,np={x:ap.x,y:ap.y};if(relation==="before")np.x=Math.min(100,ap.x+step);else if(relation==="after")np.x=Math.max(0,ap.x-step);else if(relation==="near"){np.x=Math.max(0,Math.min(100,(ap.x+bp.x)/2));np.y=Math.max(0,Math.min(100,(ap.y+bp.y)/2));}else return false;STORE_GRAPH_CAL[b.aisle]={x:np.x,y:np.y,learnedFrom:a.aisle+":"+relation,updatedAt:new Date().toISOString()};saveStoreGraph();return true;}
 loadStoreGraph();
 function buildRouteOrder(groups){
   if(groups.length<=1)return groups;
@@ -1464,6 +1466,14 @@ function _render(){
     var csave=h('<button class="ghost sm" style="width:100%">Guardar calibracion</button>');
     csave.onclick=function(){var key=ca.querySelector("input").value.trim().toUpperCase(),x=Number(cx.querySelector("input").value),y=Number(cy.querySelector("input").value);if(!key||!Number.isFinite(x)||!Number.isFinite(y)||x<0||x>100||y<0||y>100){S.error="Calibracion: completa grupo, X e Y entre 0 y 100.";render();return;}STORE_GRAPH_CAL[key]={x:x,y:y,updatedAt:new Date().toISOString()};saveStoreGraph();S.status="Mapa calibrado: "+key;render();};
     cb.appendChild(csave);
+    cb.appendChild(h('<p class="hint" style="margin-top:12px"><b>Aprender sin coordenadas</b>: indica una relacion que hayas comprobado caminando.</p>'));
+    var lr=h('<div class="sp-edit"></div>');
+    var la=h('<label>Ubicacion A<input class="in" placeholder="G1"></label>');
+    var lb=h('<label>Ubicacion B<input class="in" placeholder="A20-A21"></label>');
+    var ls=h('<label>Relacion<select class="in"><option value="after">B esta despues de A</option><option value="before">B esta antes de A</option><option value="near">B esta cerca de A</option></select></label>');
+    lr.appendChild(la);lr.appendChild(lb);lr.appendChild(ls);cb.appendChild(lr);
+    var lsave=h('<button class="ghost sm" style="width:100%">Aprender relacion</button>');
+    lsave.onclick=function(){var av=la.querySelector("input").value,bv=lb.querySelector("input").value,rv=ls.querySelector("select").value;if(!learnRelativeRoute(av,bv,rv)){S.error="Relacion invalida: completa dos ubicaciones diferentes.";render();return;}S.status="Mapa aprendido: "+bv.toUpperCase()+" respecto a "+av.toUpperCase();render();};cb.appendChild(lsave);
     if(calKeys.length){var creset=h('<button class="ghost sm" style="width:100%">Borrar calibraciones del mapa</button>');creset.onclick=function(){if(confirm("Borrar todas las calibraciones locales del mapa?")){STORE_GRAPH_CAL={};saveStoreGraph();render();}};cb.appendChild(creset);}
     cfg.appendChild(cb);
   }
