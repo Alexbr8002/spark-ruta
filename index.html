@@ -313,6 +313,7 @@ function itemRouteKey(it){var p=parseAisle(it&&it.aisle),k=pairKey(p.prefix,p.nu
 function recordPickedObservation(it){var key=itemRouteKey(it);if(!key)return;var prev=null;for(var i=ROUTE_OBS.length-1;i>=0;i--){if(ROUTE_OBS[i].session===ROUTE_OBS_SESSION&&ROUTE_OBS[i].key!==key){prev=ROUTE_OBS[i];break;}}var rec={session:ROUTE_OBS_SESSION,key:key,at:new Date().toISOString()};ROUTE_OBS.push(rec);saveRouteObs();if(prev)addRouteEvidence(prev.key,key);}
 function removeLastPickedObservation(it){var key=itemRouteKey(it);for(var i=ROUTE_OBS.length-1;i>=0;i--){if(ROUTE_OBS[i].session===ROUTE_OBS_SESSION&&ROUTE_OBS[i].key===key){ROUTE_OBS.splice(i,1);saveRouteObs();break;}}}
 var ROUTE_OBS_SESSION="shop-"+Date.now();loadRouteObs();loadRouteEvidence();
+function routeLearningStats(){var sessionObs=ROUTE_OBS.filter(function(o){return o.session===ROUTE_OBS_SESSION;});var maxEvidence=0;Object.keys(ROUTE_EVIDENCE).forEach(function(k){maxEvidence=Math.max(maxEvidence,Number(ROUTE_EVIDENCE[k].count)||0);});return{session:sessionObs.length,total:ROUTE_OBS.length,relations:Object.keys(ROUTE_EVIDENCE).length,maxEvidence:maxEvidence,calibrated:Object.keys(STORE_GRAPH_CAL).length};}
 function buildRouteOrder(groups){
   if(groups.length<=1)return groups;
   var remaining=groups.slice(),ordered=[],current={x:100,y:5},forwardX=100;
@@ -1466,6 +1467,8 @@ function _render(){
     cb.appendChild(add);
 
     cb.appendChild(h('<div class="opt-h" style="margin-top:16px">Calibracion de ruta #2483</div>'));
+    var rls=routeLearningStats();
+    cb.appendChild(h('<p class="hint">Aprendizaje automatico: <b>'+rls.session+'</b> recogidas esta sesion · <b>'+rls.relations+'</b> relaciones observadas · evidencia maxima <b>'+rls.maxEvidence+'/3</b> · <b>'+rls.calibrated+'</b> calibradas.</p>'));
     cb.appendChild(h('<p class="hint">Ajusta una ubicacion del mapa 2D de prueba. X: 0=fondo, 100=entrada derecha. Y: 0=frente, 100=fondo de pasillos. Las correcciones quedan solo en este dispositivo.</p>'));
     var calKeys=Object.keys(STORE_GRAPH_CAL).sort();
     cb.appendChild(h('<p class="hint"><b>'+calKeys.length+'</b> ubicaciones calibradas.</p>'));
