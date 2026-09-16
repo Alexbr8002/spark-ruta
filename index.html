@@ -314,7 +314,7 @@ function recordPickedObservation(it){var key=itemRouteKey(it);if(!key)return;var
 function removeLastPickedObservation(it){var key=itemRouteKey(it);for(var i=ROUTE_OBS.length-1;i>=0;i--){if(ROUTE_OBS[i].session===ROUTE_OBS_SESSION&&ROUTE_OBS[i].key===key){ROUTE_OBS.splice(i,1);saveRouteObs();break;}}}
 function newOrderSession(){S.orderSessionId="shop-"+Date.now()+"-"+Math.random().toString(36).slice(2,8);ROUTE_OBS_SESSION=S.orderSessionId;return ROUTE_OBS_SESSION;}
 var ROUTE_OBS_SESSION="";loadRouteObs();loadRouteEvidence();
-function routeLearningStats(){var sessionObs=ROUTE_OBS.filter(function(o){return o.session===ROUTE_OBS_SESSION;});var maxEvidence=0;Object.keys(ROUTE_EVIDENCE).forEach(function(k){maxEvidence=Math.max(maxEvidence,Number(ROUTE_EVIDENCE[k].count)||0);});return{session:sessionObs.length,total:ROUTE_OBS.length,relations:Object.keys(ROUTE_EVIDENCE).length,maxEvidence:maxEvidence,calibrated:Object.keys(STORE_GRAPH_CAL).length};}
+function routeLearningStats(){var sessionObs=ROUTE_OBS.filter(function(o){return o.session===ROUTE_OBS_SESSION;}),pairs=Object.keys(ROUTE_EVIDENCE).map(function(k){var e=ROUTE_EVIDENCE[k]||{};return{key:k,count:Number(e.count)||0,applied:Number(e.applied)||0};}).sort(function(a,b){return b.count-a.count||a.key.localeCompare(b.key);});var maxEvidence=pairs.length?pairs[0].count:0;return{session:sessionObs.length,total:ROUTE_OBS.length,relations:pairs.length,maxEvidence:maxEvidence,calibrated:Object.keys(STORE_GRAPH_CAL).length,pairs:pairs};}
 function buildRouteOrder(groups){
   if(groups.length<=1)return groups;
   var remaining=groups.slice(),ordered=[],current={x:100,y:5},forwardX=100;
@@ -1471,6 +1471,7 @@ function _render(){
     cb.appendChild(h('<div class="opt-h" style="margin-top:16px">Calibracion de ruta #2483</div>'));
     var rls=routeLearningStats();
     cb.appendChild(h('<p class="hint">Aprendizaje automatico: <b>'+rls.session+'</b> recogidas esta sesion · <b>'+rls.relations+'</b> relaciones observadas · evidencia maxima <b>'+rls.maxEvidence+'/3</b> · <b>'+rls.calibrated+'</b> calibradas.</p>'));
+    if(rls.pairs.length){var ev=h('<div class="hint" style="margin-top:8px"><b>Evidencia por relacion:</b></div>');rls.pairs.slice(0,12).forEach(function(p){ev.appendChild(h('<div><code>'+esc(p.key.replace('>',' -> '))+'</code>: <b>'+Math.min(p.count,3)+'/3</b>'+(p.applied?' - aplicada':'')+'</div>'));});cb.appendChild(ev);}
     cb.appendChild(h('<p class="hint">Ajusta una ubicacion del mapa 2D de prueba. X: 0=fondo, 100=entrada derecha. Y: 0=frente, 100=fondo de pasillos. Las correcciones quedan solo en este dispositivo.</p>'));
     var calKeys=Object.keys(STORE_GRAPH_CAL).sort();
     cb.appendChild(h('<p class="hint"><b>'+calKeys.length+'</b> ubicaciones calibradas.</p>'));
