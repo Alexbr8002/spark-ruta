@@ -288,8 +288,18 @@ function storePoint(prefix,num){
   var x=lanes[prefix]!=null?lanes[prefix]:50;
   return{x:x,y:num==null?42:Math.min(82,18+(num%20)*3)};
 }
-function groupPoint(g){if(g.aisle==="FRONTZONE")return{x:92,y:15};if(g.aisle==="A30-A31")return{x:23,y:60};if(g.aisle==="A33")return{x:15,y:64};return storePoint(g.prefix,g.num);}
+var STORE_GRAPH_KEY="spark2483_store_graph_v1";
+var STORE_GRAPH_DEFAULTS={FRONTZONE:{x:92,y:15},"A30-A31":{x:23,y:60},A33:{x:15,y:64}};
+var STORE_GRAPH_CAL={};
+function loadStoreGraph(){try{var d=JSON.parse(localStorage.getItem(STORE_GRAPH_KEY)||"{}");if(d&&typeof d==="object")STORE_GRAPH_CAL=d;}catch(e){STORE_GRAPH_CAL={};}}
+function saveStoreGraph(){try{localStorage.setItem(STORE_GRAPH_KEY,JSON.stringify(STORE_GRAPH_CAL));}catch(e){}}
+function routeNodeKey(g){return g.aisle||((g.prefix||"?")+(g.num==null?"":g.num));}
+function defaultGroupPoint(g){if(STORE_GRAPH_DEFAULTS[g.aisle])return STORE_GRAPH_DEFAULTS[g.aisle];return storePoint(g.prefix,g.num);}
+function groupPoint(g){var k=routeNodeKey(g),c=STORE_GRAPH_CAL[k],p=defaultGroupPoint(g);return c&&Number.isFinite(Number(c.x))&&Number.isFinite(Number(c.y))?{x:Number(c.x),y:Number(c.y)}:p;}
+function calibrateRouteNode(g,x,y){var k=routeNodeKey(g);if(!k)return false;STORE_GRAPH_CAL[k]={x:Number(x),y:Number(y),updatedAt:new Date().toISOString()};saveStoreGraph();return true;}
+function resetRouteCalibration(g){var k=routeNodeKey(g);if(STORE_GRAPH_CAL[k]){delete STORE_GRAPH_CAL[k];saveStoreGraph();return true;}return false;}
 function graphDistance(a,b){return Math.abs(a.x-b.x)+Math.abs(a.y-b.y);}
+loadStoreGraph();
 function buildRouteOrder(groups){
   if(groups.length<=1)return groups;
   var remaining=groups.slice(),ordered=[],current={x:100,y:5},forwardX=100;
