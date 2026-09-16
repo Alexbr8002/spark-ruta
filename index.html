@@ -302,6 +302,13 @@ function graphDistance(a,b){return Math.abs(a.x-b.x)+Math.abs(a.y-b.y);}
 function parseRouteNodeKey(key){var k=String(key||"").trim().toUpperCase();if(STORE_GRAPH_DEFAULTS[k])return{aisle:k,prefix:k,num:null};var m=k.match(/^([A-Z]+)(\d+)(?:-[A-Z]+\d+)?$/);return m?{aisle:k,prefix:m[1],num:Number(m[2])}:{aisle:k,prefix:k,num:null};}
 function learnRelativeRoute(aKey,bKey,relation){var a=parseRouteNodeKey(aKey),b=parseRouteNodeKey(bKey);if(!a.aisle||!b.aisle||a.aisle===b.aisle)return false;var ap=groupPoint(a),bp=groupPoint(b),step=6,np={x:ap.x,y:ap.y};if(relation==="before")np.x=Math.min(100,ap.x+step);else if(relation==="after")np.x=Math.max(0,ap.x-step);else if(relation==="near"){np.x=Math.max(0,Math.min(100,(ap.x+bp.x)/2));np.y=Math.max(0,Math.min(100,(ap.y+bp.y)/2));}else return false;STORE_GRAPH_CAL[b.aisle]={x:np.x,y:np.y,learnedFrom:a.aisle+":"+relation,updatedAt:new Date().toISOString()};saveStoreGraph();return true;}
 loadStoreGraph();
+var ROUTE_OBS_KEY="spark2483_route_observations_v1",ROUTE_OBS=[];
+function loadRouteObs(){try{var d=JSON.parse(localStorage.getItem(ROUTE_OBS_KEY)||"[]");ROUTE_OBS=Array.isArray(d)?d.slice(-500):[];}catch(e){ROUTE_OBS=[];}}
+function saveRouteObs(){try{localStorage.setItem(ROUTE_OBS_KEY,JSON.stringify(ROUTE_OBS.slice(-500)));}catch(e){}}
+function itemRouteKey(it){var p=parseAisle(it&&it.aisle),k=pairKey(p.prefix,p.num);return k||String(it&&it.aisle||"").trim().toUpperCase();}
+function recordPickedObservation(it){var key=itemRouteKey(it);if(!key)return;var prev=null;for(var i=ROUTE_OBS.length-1;i>=0;i--){if(ROUTE_OBS[i].session===ROUTE_OBS_SESSION&&ROUTE_OBS[i].key!==key){prev=ROUTE_OBS[i];break;}}var rec={session:ROUTE_OBS_SESSION,key:key,at:new Date().toISOString()};ROUTE_OBS.push(rec);saveRouteObs();if(prev)learnRelativeRoute(prev.key,key,"after");}
+function removeLastPickedObservation(it){var key=itemRouteKey(it);for(var i=ROUTE_OBS.length-1;i>=0;i--){if(ROUTE_OBS[i].session===ROUTE_OBS_SESSION&&ROUTE_OBS[i].key===key){ROUTE_OBS.splice(i,1);saveRouteObs();break;}}}
+var ROUTE_OBS_SESSION="shop-"+Date.now();loadRouteObs();
 function buildRouteOrder(groups){
   if(groups.length<=1)return groups;
   var remaining=groups.slice(),ordered=[],current={x:100,y:5},forwardX=100;
@@ -1597,13 +1604,13 @@ function renderReview(main,total){
   var gen=h('<button class="big">Generar ruta</button>');gen.onclick=function(){set("view","route");};main.appendChild(gen);
 }
 
-function pickItem(it){var orig=S.items[it._i]||it;orig.status="picked";orig.done=true;save();showUndo(orig,"picked");}
+function pickItem(it){var orig=S.items[it._i]||it;orig.status="picked";orig.done=true;recordPickedObservation(orig);save();showUndo(orig,"picked");}
 function deleteItem(it){var orig=S.items[it._i]||it;orig.status="manual_delete";orig.done=false;save();showUndo(orig,"manual_delete");}
 function showUndo(it,fromStatus){S.undoToast={it:it,from:fromStatus};render();
   clearTimeout(window._undoTimer);
   window._undoTimer=setTimeout(function(){if(S.undoToast&&S.undoToast.it===it){S.undoToast=null;render();}},4000);
 }
-function undoLast(){if(!S.undoToast)return;var it=S.undoToast.it;it.status="pending";it.done=false;S.undoToast=null;clearTimeout(window._undoTimer);save();render();}
+function undoLast(){if(!S.undoToast)return;var it=S.undoToast.it;if(S.undoToast.from==="picked")removeLastPickedObservation(it);it.status="pending";it.done=false;S.undoToast=null;clearTimeout(window._undoTimer);save();render();}
 function aisleCard(g,step){
   var isFrontZone=g.aisle==="FRONTZONE";
   var displayCode=isFrontZone?"A36/A35/AD/AP/A1":g.aisle;
